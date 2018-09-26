@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:layout_editor_absoluteY="73dp">
+
+    <TextView
+        android:id="@+id/titulo_resta"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/txtreshomo"
+        android:textStyle="italic|bold"
+        android:textSize="19dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/txteoriares"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="15dp"
+        android:layout_marginTop="9dp"
+        android:text="@string/txteoriareshomo"
+        android:textSize="17dp"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="@+id/txteoriares2"
+        app:layout_constraintTop_toTopOf="@+id/txteoriares2" />
+
+    <TextView
+        android:id="@+id/txteoriares2"
+        android:layout_width="506dp"
+        android:layout_height="75dp"
+        android:layout_marginEnd="43dp"
+        android:layout_marginStart="43dp"
+        android:layout_marginTop="12dp"
+        android:text="@string/txteoriareshete"
+        android:textSize="17dp"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/titulo_resta" />
+
+    <ImageView
+        android:id="@+id/retornares"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/devolver" />
+
+    <ImageView
+        android:id="@+id/resta1"
+        android:layout_width="208dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="118dp"
+        android:layout_marginStart="119dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/resta2"
+        app:layout_constraintEnd_toEndOf="@+id/resta2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/resta2"
+        app:srcCompat="@drawable/fracreshomo" />
+
+    <ImageView
+        android:id="@+id/resta2"
+        android:layout_width="104dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="27dp"
+        android:layout_marginEnd="89dp"
+        android:layout_marginTop="24dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/txteoriares"
+        app:layout_constraintTop_toBottomOf="@+id/txteoriares"
+        app:srcCompat="@drawable/fracreshomo2" />
+
+    <ImageView
+        android:id="@+id/resta3"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="11dp"
+        android:layout_marginStart="15dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/resta4"
+        app:layout_constraintEnd_toStartOf="@+id/resta4"
+        app:layout_constraintStart_toStartOf="@+id/txteoriares"
+        app:layout_constraintTop_toTopOf="@+id/resta4"
+        app:srcCompat="@drawable/fracreshete" />
+
+    <ImageView
+        android:id="@+id/resta4"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="9dp"
+        android:layout_marginEnd="21dp"
+        android:layout_marginStart="18dp"
+        android:layout_marginTop="12dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/resta2"
+        app:layout_constraintEnd_toStartOf="@+id/nextres"
+        app:layout_constraintStart_toStartOf="@+id/resta2"
+        app:layout_constraintTop_toBottomOf="@+id/txteoriares2"
+        app:srcCompat="@drawable/fracreshete2" />
+
+    <ImageView
+        android:id="@+id/backres"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:layout_marginStart="16dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/back" />
+
+    <ImageView
+        android:id="@+id/nextres"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="16dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/next" />
+
+</android.support.constraint.ConstraintLayout>

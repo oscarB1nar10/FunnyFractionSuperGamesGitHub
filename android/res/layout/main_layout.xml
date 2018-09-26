@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_mountain_landscape"
+    tools:context="androidlogic.login.MainActivity"
+    tools:layout_editor_absoluteY="73dp"
+    android:gravity="center"
+    android:weightSum="6">
+
+    <LinearLayout
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="left"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="16dp"
+                android:paddingLeft="16dp"
+                android:src="@drawable/settings"
+                android:onClick="banderasVisibles">
+
+            </ImageView>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/lenguaje"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:orientation="vertical">
+
+            <ImageButton
+                android:id="@+id/english"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/transparente"
+                android:src="@drawable/english"
+                android:visibility="invisible"
+                android:onClick="idioma"/>
+
+            <ImageButton
+                android:id="@+id/espanol"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/transparente"
+                android:src="@drawable/spanish"
+                android:visibility="invisible"
+                android:onClick="idioma"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:layout_weight="5"
+        android:paddingRight="100dp"
+        android:weightSum="8"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center_horizontal">
+
+            <ImageView
+                android:layout_width="150dp"
+                android:layout_height="130dp"
+                android:src="@drawable/logonicolas" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="15dp"
+                android:src="@drawable/candado" />
+            <EditText
+                android:id="@+id/txtUsuario"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="13dp"
+                android:ems="10"
+                android:hint="@string/txtUsuario"
+                android:inputType="textPersonName"
+                tools:layout_editor_absoluteX="239dp"
+                tools:layout_editor_absoluteY="105dp"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="15dp"
+                android:src="@drawable/llave"
+                />
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/tilPassword"
+                android:layout_width="wrap_content"
+                android:layout_height="45dp"
+                android:layout_marginBottom="10dp"
+                android:minHeight="40dp"
+                app:hintEnabled="false"
+                app:passwordToggleEnabled = "true">
+                <EditText
+                    android:id="@+id/txtPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:textSize="13dp"
+                    android:hint="@string/txtPassword"
+                    android:inputType="textPassword"
+                    tools:layout_editor_absoluteX="240dp"
+                    tools:layout_editor_absoluteY="144dp"/>
+            </android.support.design.widget.TextInputLayout>
+        </LinearLayout>
+        <Button
+            android:id="@+id/btnIngresar"
+            android:layout_width="wrap_content"
+            android:layout_height="38dp"
+            android:layout_weight="1"
+            android:background="@drawable/boton_login"
+            android:paddingHorizontal="20dp"
+            android:textSize="13dp"
+            android:text="@string/btnIngresar"
+            tools:layout_editor_absoluteX="295dp"
+            tools:layout_editor_absoluteY="188dp" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingLeft="50dp">
+
+            <TextView
+                android:id="@+id/txtRegistrarse"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/txtRegistrarse" />
+
+            <android.support.v4.widget.Space
+                android:layout_width="20dp"
+                android:layout_height="0dp" />
+
+            <TextView
+                android:id="@+id/txtRecuperar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/txtRecuperar" />
+        </LinearLayout>
+
+    </LinearLayout>
+</LinearLayout>

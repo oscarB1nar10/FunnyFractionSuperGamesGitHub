@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/fondo_recuperar_contrasena"
+    tools:layout_editor_absoluteY="73dp">
+
+    <Button
+        android:id="@+id/btnRecupera"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="35dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/boton_login"
+        android:text="@string/btnRecuperar"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/linearLayout2" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="0dp"
+        android:layout_height="235dp"
+        android:layout_marginEnd="25dp"
+        android:layout_marginStart="191dp"
+        android:layout_marginTop="102dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toStartOf="@+id/btnRecupera"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="299dp"
+            android:orientation="vertical"
+            android:rowCount="4">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingBottom="10dp">
+
+                <ImageView
+                    android:id="@+id/userr"
+                    android:layout_width="63dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    app:srcCompat="@drawable/llave"
+                    tools:layout_editor_absoluteX="16dp"
+                    tools:layout_editor_absoluteY="121dp" />
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/tilrecusu"
+                    android:layout_width="match_parent"
+                    android:layout_height="43dp"
+                    android:layout_weight="1"
+                    tools:ignore="MissingConstraints"
+                    tools:layout_editor_absoluteX="256dp"
+                    tools:layout_editor_absoluteY="103dp">
+
+                    <EditText
+                        android:id="@+id/txtrecusu"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ems="10"
+                        android:hint="@string/txtUsuario"
+                        android:inputType="textPersonName"
+                        android:textSize="12sp"
+                        tools:layout_editor_absoluteX="361dp"
+                        tools:layout_editor_absoluteY="56dp" />
+                </android.support.design.widget.TextInputLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingBottom="10dp">
+
+                <ImageView
+                    android:id="@+id/gamer"
+                    android:layout_width="63dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    app:srcCompat="@drawable/control_videogames"
+                    tools:layout_editor_absoluteX="208dp"
+                    tools:layout_editor_absoluteY="167dp" />
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/tilrecupre1"
+                    android:layout_width="match_parent"
+                    android:layout_height="43dp"
+                    android:layout_weight="1"
+                    tools:ignore="MissingConstraints"
+                    tools:layout_editor_absoluteX="256dp"
+                    tools:layout_editor_absoluteY="151dp">
+
+                    <EditText
+                        android:id="@+id/txtrecupre1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ems="10"
+                        android:hint="@string/txtPregunta1"
+                        android:inputType="textPersonName"
+                        android:textSize="12sp"
+                        tools:layout_editor_absoluteX="361dp"
+                        tools:layout_editor_absoluteY="56dp" />
+                </android.support.design.widget.TextInputLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingBottom="10dp">
+
+                <ImageView
+                    android:id="@+id/colorr"
+                    android:layout_width="65dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    app:srcCompat="@drawable/color_favorito"
+                    tools:layout_editor_absoluteX="208dp"
+                    tools:layout_editor_absoluteY="212dp" />
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/tilrecupre2"
+                    android:layout_width="match_parent"
+                    android:layout_height="43dp"
+                    tools:ignore="MissingConstraints"
+                    tools:layout_editor_absoluteX="256dp"
+                    tools:layout_editor_absoluteY="199dp">
+
+                    <EditText
+                        android:id="@+id/txtrecupre2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ems="10"
+                        android:hint="@string/txtPregunta2"
+                        android:inputType="textPersonName"
+                        android:textSize="12sp"
+                        tools:layout_editor_absoluteX="361dp"
+                        tools:layout_editor_absoluteY="56dp" />
+                </android.support.design.widget.TextInputLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingBottom="10dp">
+
+
+                <ImageView
+                    android:id="@+id/sportr"
+                    android:layout_width="67dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    app:srcCompat="@drawable/deporte_favorito"
+                    tools:layout_editor_absoluteX="208dp"
+                    tools:layout_editor_absoluteY="262dp" />
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/tilrecupre3"
+                    android:layout_width="match_parent"
+                    android:layout_height="43dp"
+                    tools:ignore="MissingConstraints"
+                    tools:layout_editor_absoluteX="0dp"
+                    tools:layout_editor_absoluteY="54dp">
+
+                    <EditText
+                        android:id="@+id/txtrecupre3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ems="10"
+                        android:hint="@string/txtPregunta3"
+                        android:inputType="textPersonName"
+                        android:textSize="12sp"
+                        tools:layout_editor_absoluteX="361dp"
+                        tools:layout_editor_absoluteY="56dp" />
+                </android.support.design.widget.TextInputLayout>
+            </LinearLayout>
+
+        </GridLayout>
+
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>

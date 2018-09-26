@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Funny Fractions</string>
+    <string name="txtUsuario">Usuario</string>
+    <string name="txtPassword">Password</string>
+    <string name="txtNombre">Nombres</string>
+    <string name="txtApellidos">Apellidos</string>
+    <string name="txtPassword2">Repetir Password</string>
+    <string name="txtPregunta1">VideoJuego favorito</string>
+    <string name="txtPregunta2">Color favorito</string>
+    <string name="txtPregunta3">Deporte favorito</string>
+    <string name="btnIngresar">Ingresar</string>
+    <string name="btnRegistrar">Registrar</string>
+    <string name="txtRegistrarse">Registrarse</string>
+    <string name="txtRegistrate">Registrate</string>
+    <string name="txtRecuperar">Olvide mi contraseña</string>
+    <string name="btnRecuperar">Recuperar contraseña</string>
+    <string name="title_activity_registro">registro</string>
+    <string name="btnTutoriales">Tutoriales</string>
+    <string name="btnPracticas">Practicas</string>
+    <string name="btnEvaluacion">Evaluacion</string>
+    <string name="btnqueson">¿Que son?</string>
+    <string name="btnsuma">Suma</string>
+    <string name="btnresta">Resta</string>
+    <string name="btnmultli">Multiplicacion</string>
+    <string name="btndivi">Division</string>
+    <string name="txtQueson">¿QUE SON LAS FRACCIONES?</string>
+    <string name="txtdefinicion">La fracción se utiliza para representar las partes que se toman de un objeto (Numerador) que ha sido dividido en partes iguales (Denominador) y se representa de la siguiente manera:</string>
+    <string name="txtejemplo">Por ejemplo, dividimos una pizza en 8 partes iguales y cogemos tres.</string>
+    <string name="txtsumhomo">SUMAR FRACCIONES CON IGUAL DENOMINADOR (HOMOGENEAS)</string>
+    <string name="txtsumhete">SUMAR FRACCIONES CON IGUAL DENOMINADOR (HETEROGENEAS)</string>
+    <string name="txteoriasumhomo">Debemos sumar sus numeradores y dejar su denominador igual</string>
+    <string name="txteoriasumhete">El producto cruzado de numerador por denominador se debe sumar para obtener el numerador resultado, mientras que para el denominador resultado es la multiplicacion de los denominadores</string>
+    <string name="txtreshomo">RESTAR FRACCIONES CON IGUAL DENOMINADOR (HOMOGENEAS)</string>
+    <string name="txtreshete">RESTAR FRACCIONES CON IGUAL DENOMINADOR (HETEROGENEAS)</string>
+    <string name="txteoriareshomo">Debemos restar sus numeradores y dejar su denominador igual</string>
+    <string name="txteoriareshete">El producto cruzado de numerador por denominador se debe restar para obtener el numerador resultado, mientras que para el denominador resultado es la multiplicacion de los denominadores</string>
+    <string name="txtmul">MULTIPLICACION DE FRACCIONES</string>
+    <string name="txteoriamul">Solo debemos multiplicar numeradores y denominadores</string>
+    <string name="txtdiv">DIVISION DE FRACCIONES</string>
+    <string name="txteoriadiv">Para ello debemos multiplicar numerador por denominador</string>
+    <string name="txtr_ingresa_datos">Ingresa tus datos</string>
+
+</resources>

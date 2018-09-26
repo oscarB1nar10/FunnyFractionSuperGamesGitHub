@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/fondobuho4"
+    android:orientation="vertical"
+    tools:layout_editor_absoluteY="73dp">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="left">
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/txtRegistrate"
+            android:textColor="@color/colorPrimary"
+            android:textSize="24sp"
+            tools:ignore="MissingConstraints"
+            android:layout_marginLeft="210dp"
+            tools:layout_editor_absoluteX="265dp"
+            tools:layout_editor_absoluteY="16dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:gravity="left"
+        android:orientation="horizontal">
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/tilnom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="73dp"
+            android:layout_marginRight="38dp"
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteX="16dp"
+            tools:layout_editor_absoluteY="32dp">
+
+            <EditText
+                android:id="@+id/txtNombres"
+                android:layout_width="wrap_content"
+                android:layout_height="33dp"
+                android:background="@drawable/edit_text_style"
+                android:ems="10"
+                android:hint="@string/txtNombre"
+                android:inputType="textPersonName"
+                android:textSize="14sp"
+                tools:ignore="MissingConstraints"
+                tools:layout_editor_absoluteX="16dp"
+                tools:layout_editor_absoluteY="32dp" />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/tilapell"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteX="453dp"
+            tools:layout_editor_absoluteY="32dp">
+
+            <EditText
+                android:id="@+id/txtApellidos"
+                android:layout_width="wrap_content"
+                android:layout_height="33dp"
+                android:ems="10"
+                android:hint="@string/txtApellidos"
+                android:inputType="textPersonName"
+                android:textSize="14sp"
+                android:focusedByDefault="false"
+                android:background="@drawable/edit_text_style"
+                tools:layout_editor_absoluteX="361dp"
+                tools:layout_editor_absoluteY="56dp" />
+        </android.support.design.widget.TextInputLayout>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:gravity="left"
+        android:orientation="horizontal">
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/tilusu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="73dp"
+            android:layout_marginRight="38dp"
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteX="16dp"
+            tools:layout_editor_absoluteY="32dp">
+
+            <EditText
+                android:id="@+id/txtUsuario"
+                android:layout_width="wrap_content"
+                android:layout_height="33dp"
+                android:ems="10"
+                android:hint="@string/txtUsuario"
+                android:inputType="textPersonName"
+                android:textSize="14sp"
+                android:focusedByDefault="false"
+                android:background="@drawable/edit_text_style"
+                tools:ignore="MissingConstraints"
+                tools:layout_editor_absoluteX="16dp"
+                tools:layout_editor_absoluteY="32dp" />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/tilPassword"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteX="453dp"
+            tools:layout_editor_absoluteY="32dp">
+
+            <EditText
+                android:id="@+id/txtPassword"
+                android:layout_width="wrap_content"
+                android:layout_height="33dp"
+                android:ems="10"
+                android:hint="@string/txtPassword"
+                android:inputType="textPersonName"
+                android:textSize="14sp"
+                android:focusedByDefault="false"
+                android:background="@drawable/edit_text_style"
+                tools:layout_editor_absoluteX="361dp"
+                tools:layout_editor_absoluteY="56dp" />
+        </android.support.design.widget.TextInputLayout>
+
+    </LinearLayout>
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:gravity="left"
+        android:orientation="horizontal">
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/tilRepetirPaswword"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="73dp"
+            android:layout_marginRight="38dp"
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteX="16dp"
+            tools:layout_editor_absoluteY="167dp">
+
+            <EditText
+                android:id="@+id/txtPassword2"
+                android:layout_width="wrap_content"
+                android:layout_height="33dp"
+                android:background="@drawable/edit_text_style"
+                android:ems="10"
+                android:focusedByDefault="false"
+                android:hint="@string/txtPassword2"
+                android:inputType="textPersonName"
+                android:textSize="14sp"
+                tools:layout_editor_absoluteX="16dp"
+                tools:layout_editor_absoluteY="51dp" />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/tilpre1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteX="453dp"
+            tools:layout_editor_absoluteY="167dp">
+
+            <EditText
+                android:id="@+id/txtPregunta1"
+                android:layout_width="wrap_content"
+                android:layout_height="33dp"
+                android:ems="10"
+                android:hint="@string/txtPregunta1"
+                android:inputType="textPersonName"
+                android:textSize="14sp"
+                android:focusedByDefault="false"
+                android:background="@drawable/edit_text_style"
+                tools:layout_editor_absoluteX="361dp"
+                tools:layout_editor_absoluteY="169dp" />
+        </android.support.design.widget.TextInputLayout>
+
+        <TextView
+            android:id="@+id/ingresaDatos"
+            android:layout_width="80dp"
+            android:layout_height="30dp"
+            android:layout_weight="1"
+            android:background="@drawable/textview_style"
+            android:gravity="center_horizontal"
+            android:paddingTop="10dp"
+            android:text="@string/txtr_ingresa_datos"
+            android:textColor="#ff2d3f" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:gravity="left"
+        android:orientation="horizontal">
+        <android.support.design.widget.TextInputLayout
+        android:id="@+id/tilpre2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+            android:layout_marginLeft="73dp"
+            android:layout_marginRight="38dp"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="237dp">
+
+            <EditText
+                android:id="@+id/txtPregunta2"
+                android:layout_width="wrap_content"
+                android:layout_height="33dp"
+                android:ems="10"
+                android:hint="@string/txtPregunta2"
+                android:inputType="textPersonName"
+                android:textSize="14sp"
+                android:focusedByDefault="false"
+                android:background="@drawable/edit_text_style"
+                tools:layout_editor_absoluteX="16dp"
+                tools:layout_editor_absoluteY="226dp" />
+        </android.support.design.widget.TextInputLayout>
+        <android.support.design.widget.TextInputLayout
+        android:id="@+id/tilpre3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="453dp"
+        tools:layout_editor_absoluteY="237dp">
+            <EditText
+                android:id="@+id/txtPregunta3"
+                android:layout_width="wrap_content"
+                android:layout_height="33dp"
+                android:ems="10"
+                android:hint="@string/txtPregunta3"
+                android:inputType="textPersonName"
+                android:textSize="14sp"
+                android:focusedByDefault="false"
+                android:background="@drawable/edit_text_style"
+                tools:layout_editor_absoluteX="361dp"
+                tools:layout_editor_absoluteY="226dp" />
+    </android.support.design.widget.TextInputLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_horizontal"
+        android:orientation="horizontal">
+
+
+        <Button
+            android:id="@+id/btnRegistrarR"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/boton_login"
+            android:onClick="ejecutar"
+            android:text="@string/btnRegistrar"
+            android:textSize="12sp"
+            android:layout_marginLeft="210dp"
+            tools:layout_editor_absoluteX="292dp"
+            tools:layout_editor_absoluteY="275dp" />
+    </LinearLayout>
+
+
+</android.support.v7.widget.LinearLayoutCompat>

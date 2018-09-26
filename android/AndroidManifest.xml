@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.funnyfractions.game" >
+
+    <uses-sdk android:minSdkVersion="19" android:targetSdkVersion="27" />
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.VIBRATE"/>
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/usuario"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme"
+        android:screenOrientation="sensorLandscape">
+        <activity
+            android:name="androidlogic.login.MainActivity"
+            android:label="@string/app_name" 
+            android:screenOrientation="sensorLandscape"
+            android:configChanges="keyboard|keyboardHidden|navigation|orientation|screenSize">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name="androidlogic.login.Registro"
+            android:screenOrientation="sensorLandscape">
+
+        </activity>
+        <activity android:name="androidlogic.login.Recupera"
+            android:screenOrientation="sensorLandscape">
+
+        </activity>
+        <activity android:name=".tutorials.AndroidLauncher2"
+            android:screenOrientation="fullSensor">
+
+        </activity>
+        <activity android:name="androidlogic.home.Home"
+            android:screenOrientation="sensorLandscape">
+
+        </activity>
+        <activity android:name="androidlogic.tutorials.Tutorial"
+            android:screenOrientation="sensorLandscape">
+
+        </activity>
+        <activity android:name="androidlogic.tutorials.TutorialDivision"
+            android:screenOrientation="sensorLandscape">
+
+        </activity>
+        <activity android:name="androidlogic.tutorials.TutorialMultiplicacion"
+            android:screenOrientation="sensorLandscape">
+
+        </activity>
+        <activity android:name="androidlogic.tutorials.TutorialQueSon"
+            android:screenOrientation="sensorLandscape">
+
+        </activity>
+        <activity android:name="androidlogic.tutorials.TutorialResta"
+            android:screenOrientation="sensorLandscape">
+
+        </activity>
+        <activity android:name="androidlogic.tutorials.TutorialSuma"
+            android:screenOrientation="sensorLandscape">
+
+        </activity>
+        <activity android:name="androidlogic.practice.Practica">
+
+        </activity>
+        <activity android:name="androidlogic.games.archery_game.MainMenu">
+
+        </activity>
+        <activity android:name="androidlogic.games.archery_game.Levels"
+            android:screenOrientation="sensorLandscape">
+
+        </activity>
+    </application>
+
+</manifest>
