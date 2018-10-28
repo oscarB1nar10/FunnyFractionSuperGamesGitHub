@@ -8,6 +8,7 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.Box2D;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
+import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
@@ -21,7 +22,9 @@ public class Box2D_WorldCreator {
         BodyDef bodyDef=new BodyDef();
         PolygonShape polygon=new PolygonShape();
         FixtureDef fixture=new FixtureDef();
+        Fixture fix;
         Body body;
+        int mainFloor = 0;
 
 
         /*
@@ -31,17 +34,40 @@ public class Box2D_WorldCreator {
         Box2D.init();
 
         for(MapObject mapObject: map.getLayers().get(4).getObjects().getByType(RectangleMapObject.class)){
-            Rectangle rect=((RectangleMapObject)mapObject).getRectangle();
 
-            // body will be Static type
-            bodyDef.type=BodyDef.BodyType.StaticBody;
-            //its position is in the center
-            bodyDef.position.set((rect.getX()+rect.width/2),(rect.getY()+rect.height/2));
-            body=world.createBody(bodyDef);
-            //the shape of our polygon
-            polygon.setAsBox((rect.getWidth()/2),(rect.getHeight()/2));//?
-            fixture.shape=polygon;
-            body.createFixture(fixture);
+            if(mainFloor < 3) {
+                Rectangle rect = ((RectangleMapObject) mapObject).getRectangle();
+
+                // body will be Static type
+                bodyDef.type = BodyDef.BodyType.StaticBody;
+                //its position is in the center
+                bodyDef.position.set((rect.getX() + rect.width / 2), (rect.getY() + rect.height / 2));
+                body = world.createBody(bodyDef);
+                //the shape of our polygon
+                polygon.setAsBox((rect.getWidth() / 2), (rect.getHeight() / 2));//?
+                fixture.shape = polygon;
+                fixture.friction = 5;
+                fix = body.createFixture(fixture);
+                fix.setUserData("Main_floor");
+                mainFloor++;
+            }else{
+                Rectangle rect = ((RectangleMapObject) mapObject).getRectangle();
+
+                // body will be Static type
+                bodyDef.type = BodyDef.BodyType.StaticBody;
+                //its position is in the center
+                bodyDef.position.set((rect.getX() + rect.width / 2), (rect.getY() + rect.height / 2));
+                body = world.createBody(bodyDef);
+                //the shape of our polygon
+                polygon.setAsBox((rect.getWidth() / 2), (rect.getHeight() / 2));//?
+                fixture.shape = polygon;
+                fixture.friction = 5;
+                fix = body.createFixture(fixture);
+                fix.setUserData("floor");
+                mainFloor++;
+
+            }
+
 
 
         }

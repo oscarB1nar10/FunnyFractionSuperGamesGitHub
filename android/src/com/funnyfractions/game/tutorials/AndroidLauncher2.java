@@ -10,6 +10,8 @@ import com.funnyfractions.game.archery_game.FirstScreen;
 
 public class AndroidLauncher2 extends AndroidApplication {
 
+    ActionResolverAndroid actionResolver;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -19,8 +21,10 @@ public class AndroidLauncher2 extends AndroidApplication {
         config.useAccelerometer=true;
         config.useCompass=true;
 
+        actionResolver = new ActionResolverAndroid(this);
 
 
-        initialize(new FirstScreen(), config);
+
+        initialize(new FirstScreen(actionResolver), config);
     }
 }

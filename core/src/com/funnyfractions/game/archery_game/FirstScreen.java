@@ -1,6 +1,7 @@
 package com.funnyfractions.game.archery_game;
 
 import com.badlogic.gdx.ApplicationAdapter;
+import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -73,14 +74,22 @@ import static com.badlogic.gdx.scenes.scene2d.actions.Actions.parallel;
 public class FirstScreen extends Game {
 
     public SpriteBatch batch;
+    public static final double V_HEIGHT=719.437;
     public static  final int V_WIDTH=128000;
     public static final int PPM=100;
+    public ActionResolver actionResolver;
+
+    public FirstScreen(ActionResolver actionResolver){
+        this.actionResolver = actionResolver;
+
+        //actionResolver.showToast("Inside to libgdx screen",5000);
+    }
 
 
     @Override
     public void create() {
         batch=new SpriteBatch();
-        setScreen(new PlayScreen(this));
+        setScreen(new PlayScreen(this, actionResolver));
 
     }
 
@@ -88,4 +97,7 @@ public class FirstScreen extends Game {
     public void render() {
         super.render();
     }
+
+
+
 }
