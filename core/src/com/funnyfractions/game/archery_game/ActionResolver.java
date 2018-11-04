@@ -6,6 +6,9 @@ public interface ActionResolver {
     public void showAlertBox(String alertBoxTitle, String alertBoxMessage, String alertBoxButtonText);
     public void openUri(String uri);
     public void goToAndroid();
+    public void cleanPreferences();
+    public void saveScore(int score);
+    public void pauseArcheryGame();
 
 
 }

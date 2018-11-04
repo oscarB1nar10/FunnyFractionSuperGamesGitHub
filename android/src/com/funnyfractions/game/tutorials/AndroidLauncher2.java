@@ -1,5 +1,7 @@
 package com.funnyfractions.game.tutorials;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 

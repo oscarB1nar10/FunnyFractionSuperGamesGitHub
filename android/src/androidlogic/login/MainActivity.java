@@ -4,8 +4,10 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -53,10 +55,18 @@ public class MainActivity extends Activity {
     private ProgressDialog progreso;
     private RequestQueue requestQueue;
     private JsonObjectRequest jsonObjectRequest;
+    private SharedPreferences sharedP;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_layout);
+
+        sharedP = getSharedPreferences("SHARED_PREFERENCES", Context.MODE_PRIVATE);
+
+        SharedPreferences.Editor editor2 = sharedP.edit();
+        editor2.putInt("currentLevel", 0);
+        editor2.putInt("score",0);
+        editor2.apply();
 
         //------------------------------ImageButton----------------
         US=findViewById(R.id.english);
@@ -229,9 +239,9 @@ public class MainActivity extends Activity {
 
     @Override
     protected void onDestroy() {
-        super.onDestroy();
         US.setImageDrawable(null);
         ES.setImageDrawable(null);
+        super.onDestroy();
 
     }
 
@@ -264,4 +274,6 @@ public class MainActivity extends Activity {
         } catch (Exception ignored) {
         }
     }
+
+
 }

@@ -32,7 +32,7 @@
 
         </activity>
         <activity android:name=".tutorials.AndroidLauncher2"
-            android:screenOrientation="fullSensor">
+            android:screenOrientation="sensorLandscape">
 
         </activity>
         <activity android:name="androidlogic.home.Home"
@@ -70,6 +70,10 @@
 
         </activity>
         <activity android:name="androidlogic.games.archery_game.Levels"
+            android:screenOrientation="sensorLandscape">
+
+        </activity>
+        <activity android:name="androidlogic.games.archery_game.MenuArcheryActivity"
             android:screenOrientation="sensorLandscape">
 
         </activity>

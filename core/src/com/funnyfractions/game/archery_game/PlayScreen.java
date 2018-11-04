@@ -1,13 +1,17 @@
 package com.funnyfractions.game.archery_game;
 
 import com.badlogic.gdx.ApplicationListener;
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -24,6 +28,7 @@ import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -38,11 +43,22 @@ import com.funnyfractions.game.archery_game.tools.InputProcessorsV2;
 
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 
 
 public class PlayScreen  extends InputProcessorsV2 implements Screen , ApplicationListener {
     private FirstScreen fs;
+    //here we define the level an score text{
+    private BitmapFont level, score;
+    private int levelValue = 0;
+    private int scoreValue = 0;
+    //}
+    // here we restrict the number shots
+    private int numberShots = 2;
+    //pause button
+    private Texture pauseButton;
 
     //_-------------------------------CameraAndrProperties
     /*
@@ -93,7 +109,7 @@ public class PlayScreen  extends InputProcessorsV2 implements Screen , Applicati
     // response options
     ArrayList <Texture> questons;
     ArrayList <Texture> answers;
-    Sprite[] resOp = new Sprite[3];
+    ArrayList<Sprite> resOp = new ArrayList<Sprite>();
     //input processor
     boolean arcTouch = false;
      boolean shootinDart = false;
@@ -115,11 +131,22 @@ public class PlayScreen  extends InputProcessorsV2 implements Screen , Applicati
     //sounds
     private Music mp3Sound ;
     private Sound archery_sound, collition;
+    //coorect answer position
+    private int correctAnswerPosition = 0;
 
 
     public PlayScreen(FirstScreen firstScreen, ActionResolver actionResolver) {
         this.fs = firstScreen;
         this.actionResolver = actionResolver;
+        getPreferences();
+        //labels
+        level = new BitmapFont();
+        score = new BitmapFont();
+
+        level.setColor(Color.WHITE);
+        level.getData().setScale(4);
+        score.getData().setScale(4);
+        score.setColor(Color.WHITE);
 
         crossbowAtlas = new TextureAtlas(Gdx.files.internal("crossbow.atlas"));
         fruitsAtlas = new TextureAtlas(Gdx.files.internal("sprite.txt"));
@@ -149,7 +176,7 @@ public class PlayScreen  extends InputProcessorsV2 implements Screen , Applicati
         fillAnswers();
         fillQuestions();
         //----------------------Select a question and three posible answers
-        questionAndThreeAnswers();
+        questionAndThreeAnswers2();
         //------------------WorldAndProperties
         Box2D.init();
         addSprites();
@@ -202,8 +229,10 @@ public class PlayScreen  extends InputProcessorsV2 implements Screen , Applicati
         //here we specify the recpective  projectionMatriz to our batch.
         fs.batch.setProjectionMatrix(camera.combined);
 
-
         fs.batch.begin();
+        level.draw(fs.batch,"Level: "+ levelValue, 100,800);
+        score.draw(fs.batch,"Score: "+ scoreValue, 100,500);
+        fs.batch.draw(pauseButton,0,(1280- pauseButton.getHeight()));
         crossBow.draw(fs.batch);//here we draw the crossbow sprite.
         //here we check if  the dart exists
         if(dart != null) {
@@ -231,11 +260,11 @@ public class PlayScreen  extends InputProcessorsV2 implements Screen , Applicati
         }
 
 
-        if (elapsedTime >= 70 && elapsedTime <= 170) {
+        if ((elapsedTime >= 70 && elapsedTime <= 170)) {
 
             System.out.println("inside to this place after x seconds");
-            for (int i=0; i<resOp.length ; i++) {
-                drawSprite(resOp[i], fruit[i].getPosition().x, fruit[i].getPosition().y , 0);
+            for (int i=0; i<resOp.size(); i++) {
+                drawSprite(resOp.get(i), fruit[i].getPosition().x, fruit[i].getPosition().y , 0);
             }
 
             changeSprites = false;
@@ -309,6 +338,7 @@ public class PlayScreen  extends InputProcessorsV2 implements Screen , Applicati
         fruitsAtlas.dispose();
         world.dispose();
         box2DDebugRenderer.dispose();
+        actionResolver.cleanPreferences();
 
     }
 
@@ -359,9 +389,9 @@ public class PlayScreen  extends InputProcessorsV2 implements Screen , Applicati
         Orange orange = new Orange();
 
         fruit[0] = bannana.createBody("banana", 95200 / FirstScreen.PPM,
-                85000 / FirstScreen.PPM, 0, fruitBodies, world);
-        fruit[1] = cherry.createBody("cherries", 97000 / FirstScreen.PPM,
-                150000 / FirstScreen.PPM, 0, fruitBodies, world);
+                84000 / FirstScreen.PPM, 0, fruitBodies, world);
+        fruit[1] = cherry.createBody("cherries", 99000 / FirstScreen.PPM,
+                106000 / FirstScreen.PPM, 0, fruitBodies, world);
         fruit[2] = orange.createBody("orange", 97000 / FirstScreen.PPM,
                 60000 / FirstScreen.PPM, 0, fruitBodies, world);
 
@@ -422,7 +452,39 @@ public class PlayScreen  extends InputProcessorsV2 implements Screen , Applicati
                                 ((fixtureB.getUserData().equals("banana") || fixtureB.getUserData().equals("cherry")
                                         || fixtureB.getUserData().equals("orange")) && fixtureA.getUserData().equals("Main_floor")) ){
 
-                            System.out.println("the fruit has collide whit the main floor");
+                            if((correctAnswerPosition-1) == 0 && ((fixtureA.getUserData().equals("banana") || (fixtureB.getUserData().equals("banana"))))){
+                                //actionResolver.showToast("Has ganado",2000);
+                                System.out.println("has ganado");
+                                if(numberShots == 1){
+                                    actionResolver.saveScore(100);
+                                }else {
+                                    actionResolver.saveScore(50);
+                                }
+                                actionResolver.goToAndroid();
+                                correctAnswerPosition = 10;
+
+                            }else if((correctAnswerPosition-1) == 1 && ((fixtureA.getUserData().equals("cherry") || (fixtureB.getUserData().equals("cherry"))))){
+                                //actionResolver.showToast("Has ganado",2000);
+                                System.out.println("has ganado");
+                                if(numberShots == 1){
+                                    actionResolver.saveScore(100);
+                                }else {
+                                    actionResolver.saveScore(50);
+                                }
+                                actionResolver.goToAndroid();
+                                correctAnswerPosition = 10;
+                            }else if((correctAnswerPosition-1) == 2 && ((fixtureA.getUserData().equals("orange") || (fixtureB.getUserData().equals("orange"))))){
+                                //actionResolver.showToast("Has ganado",2000);
+                                System.out.println("has ganado");
+                                if(numberShots == 1){
+                                    actionResolver.saveScore(100);
+                                }else {
+                                    actionResolver.saveScore(50);
+                                }
+                                actionResolver.goToAndroid();
+                                correctAnswerPosition = 10;
+                            }
+
                         }
                 }
 
@@ -478,24 +540,60 @@ public class PlayScreen  extends InputProcessorsV2 implements Screen , Applicati
         if(Math.toDegrees(angle)>45) {
 
                 if(isPosibleShot) {
+                    if(numberShots >0) {
 
-                    arcBody = dartBody.createBody("arc",world,1,1);
+                        arcBody = dartBody.createBody("arc", world, 1, 1);
+                        Array<Fixture> fixturesArray = arcBody.getFixtureList();
+
+                        for (Fixture fixture : fixturesArray) {
+                            fixture.setUserData("dart");
+
+                        }
+
+                        float differenceAngle = (angle - 45);
+                        arcBody.setTransform((CrossBow.CROSS_BOW_POSITION_X + (differenceAngle + 80)),
+                                (CrossBow.CROSS_BOW_POSITION_Y - 64), angle);
+
+                        dart = new Dart(new Texture(Gdx.files.internal("arc.png")), arcBody);
+                        shootinDart = true;
+                        arcBody.setLinearVelocity(2500, 2500);
+                        archery_sound.play();
+
+                        //when the dart is shot the arc must contract
+                        crossBow.changeTexture(0, 0, CrossBow.CROSS_BOW_POSITION_X, CrossBow.CROSS_BOW_POSITION_Y);
+                        //restore the arc . The stretch distance, the initial texture {
+                        higerH = 0;
+                        actualTexture = 0;
+                        stretched = true;
+                        isPosibleShot = false;
+                        numberShots--;
+                    }else{
+                        actionResolver.goToAndroid();
+                    }
+                }
+
+            //isPosibleShot = false;
+            //}
+            //actionResolver.goToAndroid();
+        }else if(Math.toDegrees(angle)>= 0 ){
+
+            if(isPosibleShot) {
+                if (numberShots > 0) {
+                    arcBody = dartBody.createBody("arc", world, 1, 1);
                     Array<Fixture> fixturesArray = arcBody.getFixtureList();
 
-                    for(Fixture fixture: fixturesArray){
+                    for (Fixture fixture : fixturesArray) {
                         fixture.setUserData("dart");
 
                     }
 
-                    float differenceAngle = (angle - 45);
-                    arcBody.setTransform((CrossBow.CROSS_BOW_POSITION_X + (differenceAngle + 80)),
-                            (CrossBow.CROSS_BOW_POSITION_Y - 64), angle);
+                    arcBody.setTransform(CrossBow.CROSS_BOW_POSITION_X,
+                            CrossBow.CROSS_BOW_POSITION_Y - 64, angle);
 
                     dart = new Dart(new Texture(Gdx.files.internal("arc.png")), arcBody);
                     shootinDart = true;
-                    arcBody.setLinearVelocity(2500, 2500);
+                    arcBody.setLinearVelocity(2500, 500);
                     archery_sound.play();
-
                     //when the dart is shot the arc must contract
                     crossBow.changeTexture(0, 0, CrossBow.CROSS_BOW_POSITION_X, CrossBow.CROSS_BOW_POSITION_Y);
                     //restore the arc . The stretch distance, the initial texture {
@@ -503,36 +601,10 @@ public class PlayScreen  extends InputProcessorsV2 implements Screen , Applicati
                     actualTexture = 0;
                     stretched = true;
                     isPosibleShot = false;
+                    numberShots --;
+                }else {
+                    actionResolver.goToAndroid();
                 }
-
-            //isPosibleShot = false;
-            //}
-            //actionResolver.goToAndroid();
-        }else if(Math.toDegrees(angle)>= 0){
-
-            if(isPosibleShot) {
-                arcBody = dartBody.createBody("arc",world,1,1);
-                Array<Fixture> fixturesArray = arcBody.getFixtureList();
-
-                for(Fixture fixture: fixturesArray){
-                    fixture.setUserData("dart");
-
-                }
-
-                arcBody.setTransform(CrossBow.CROSS_BOW_POSITION_X,
-                        CrossBow.CROSS_BOW_POSITION_Y - 64, angle);
-
-                dart = new Dart(new Texture(Gdx.files.internal("arc.png")), arcBody);
-                shootinDart = true;
-                arcBody.setLinearVelocity(2500, 500);
-                archery_sound.play();
-                //when the dart is shot the arc must contract
-                crossBow.changeTexture(0, 0, CrossBow.CROSS_BOW_POSITION_X, CrossBow.CROSS_BOW_POSITION_Y);
-                //restore the arc . The stretch distance, the initial texture {
-                higerH = 0;
-                actualTexture = 0;
-                stretched = true;
-                isPosibleShot = false;
             }
 
             //isPosibleShot = false;
@@ -540,28 +612,32 @@ public class PlayScreen  extends InputProcessorsV2 implements Screen , Applicati
         }else if((Math.toDegrees(angle))>-45){
 
             if(isPosibleShot) {
+                if (numberShots > 0) {
+                    arcBody = dartBody.createBody("arc", world, 1, 1);
+                    Array<Fixture> fixturesArray = arcBody.getFixtureList();
 
-                arcBody = dartBody.createBody("arc",world,1,1);
-                Array<Fixture> fixturesArray = arcBody.getFixtureList();
+                    for (Fixture fixture : fixturesArray) {
+                        fixture.setUserData("dart");
 
-                for(Fixture fixture: fixturesArray){
-                    fixture.setUserData("dart");
+                    }
 
+                    arcBody.setTransform(CrossBow.CROSS_BOW_POSITION_X - 75,
+                            CrossBow.CROSS_BOW_POSITION_Y - 64, angle);
+                    dart = new Dart(new Texture(Gdx.files.internal("arc.png")), arcBody);
+                    shootinDart = true;
+                    arcBody.setLinearVelocity(7200, -1000);
+                    archery_sound.play();
+                    //when the dart is shot the arc must contract
+                    crossBow.changeTexture(0, 0, CrossBow.CROSS_BOW_POSITION_X, CrossBow.CROSS_BOW_POSITION_Y);
+                    //restore the arc . The stretch distance, the initial texture {
+                    higerH = 0;
+                    actualTexture = 0;
+                    stretched = true;
+                    isPosibleShot = false;
+                    numberShots --;
+                }else {
+                    actionResolver.goToAndroid();
                 }
-
-                arcBody.setTransform(CrossBow.CROSS_BOW_POSITION_X - 75,
-                        CrossBow.CROSS_BOW_POSITION_Y - 64, angle);
-                dart = new Dart(new Texture(Gdx.files.internal("arc.png")), arcBody);
-                shootinDart = true;
-                arcBody.setLinearVelocity(3200, -1000);
-                archery_sound.play();
-                //when the dart is shot the arc must contract
-                crossBow.changeTexture(0, 0, CrossBow.CROSS_BOW_POSITION_X, CrossBow.CROSS_BOW_POSITION_Y);
-                //restore the arc . The stretch distance, the initial texture {
-                higerH = 0;
-                actualTexture = 0;
-                stretched = true;
-                isPosibleShot = false;
             }
 
 
@@ -580,6 +656,9 @@ public class PlayScreen  extends InputProcessorsV2 implements Screen , Applicati
         System.out.println("arc position: ( "+xValue+", "+yValue+")");
         System.out.println("you touch at: ( X = "+screenX+" , Y = "+screenY);
         System.out.println("the screen size: width= "+Gdx.graphics.getWidth()+" , "+Gdx.graphics.getHeight());
+        if((screenX == 0 || screenX < 85.4) && (screenY == 0 || screenY < 85.4)){
+            actionResolver.pauseArcheryGame();
+        }
         return false;
     }
 
@@ -675,63 +754,62 @@ public class PlayScreen  extends InputProcessorsV2 implements Screen , Applicati
         questons.add(new Texture(Gdx.files.internal("operations/5_7+3_4.png")));
     }
 
-    public  void questionAndThreeAnswers(){
 
-        int [] historyAnswerRandom = new int [2];
+
+    public void questionAndThreeAnswers2(){
+
         int randomquestion = (int) (Math.random()*9);
         operationImage = new Sprite(questons.get(randomquestion));
         operationImage.setBounds(640,8000/FirstScreen.PPM,33700/FirstScreen.PPM,25600/FirstScreen.PPM);
 
-        int randomAnswers = (int) (Math.random()*9);
+        int randomAnswers = (int) (Math.random() * 9);
+        int secondValue = 0;
+        Sprite correctAnswer = null;
 
-        while (randomAnswers == randomquestion){
-                randomAnswers = (int) (Math.random()*9);
-                if(randomAnswers != randomquestion){
-                    resOp[0] = new Sprite(answers.get(randomAnswers));
-                    historyAnswerRandom[0] = randomAnswers;
-                    randomAnswers = (int) (Math.random()*9);
-                    break;
-                }
-        }
+        resOp.add(new Sprite(answers.get(randomquestion)));
+        correctAnswer = resOp.get(0);
+         while(randomAnswers == randomquestion){
+             randomAnswers = (int) (Math.random() * 9);
+         }
+         secondValue = randomAnswers;
+         resOp.add(new Sprite(answers.get(randomAnswers)));
 
-        while ((randomAnswers == randomquestion) || (randomAnswers == historyAnswerRandom[0])  ){
-            randomAnswers = (int) (Math.random()*9);
-            if((randomAnswers != randomquestion) && (randomAnswers != historyAnswerRandom[0])){
-                resOp[1] = new Sprite(answers.get(randomAnswers));
-                historyAnswerRandom[1] = randomAnswers;
-                randomAnswers = (int) (Math.random()*9);
-                break;
-            }
-        }
+         randomAnswers = (int) (Math.random() * 9);
+         while(randomAnswers == secondValue || randomAnswers == randomquestion){
+             randomAnswers = (int) (Math.random() * 9);
+         }
+         resOp.add(new Sprite(answers.get(randomAnswers)));
 
-        while ((randomAnswers == randomquestion) || (randomAnswers == historyAnswerRandom[0]) ||  (randomAnswers == historyAnswerRandom[1])){
-            randomAnswers = (int) (Math.random()*9);
-            if((randomAnswers != randomquestion) && (randomAnswers != historyAnswerRandom[0]) && (randomAnswers != historyAnswerRandom[1])){
-                resOp[2] = new Sprite(answers.get(randomAnswers));
-                historyAnswerRandom[2] = randomAnswers;
-                break;
-            }
-        }
-
-
-
-
-        /*resOp[0] = new Sprite(answers.get(randomAnswers));
-             if((randomAnswers-1) < 0){
-                resOp[1] = new Sprite(answers.get(randomAnswers+3));
-                resOp[2] = new Sprite(answers.get(randomAnswers+5));
-            }else if((randomAnswers+1) > answers.size()){
-                resOp[1] = new Sprite(answers.get(randomAnswers-3));
-                resOp[2] = new Sprite(answers.get(randomAnswers-5));
-            }*/
-        resOp[0] = new Sprite(answers.get(randomquestion));
-
-
-
-
+         Collections.shuffle(resOp);
+        getCorrectPosition(correctAnswer);
 
 
     }
+
+    public void getCorrectPosition(Sprite correctAnswer){
+        int counter = 0;
+        for(Sprite sprite : resOp){
+            counter++;
+            if(sprite == correctAnswer){
+                correctAnswerPosition = counter;
+            }
+        }
+    }
+
+
+    public void getPreferences (){
+        Preferences pref = Gdx.app.getPreferences("SHARED_PREFERENCES");
+         levelValue = pref.getInteger("currentLevel",0);
+         scoreValue = pref.getInteger("score",0);
+
+         //pause button
+        pauseButton = new Texture(Gdx.files.internal("pause_button.png"));
+
+    }
+
+
+
+
 
 
 
