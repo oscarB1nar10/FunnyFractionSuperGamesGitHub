@@ -181,7 +181,7 @@ public class PlayScreen  extends InputProcessorsV2 implements Screen , Applicati
         Box2D.init();
         addSprites();
 
-        world = new World(new Vector2(0, -60), true);
+        world = new World(new Vector2(0, -9f), true);
         captureContacts();
         //Our ground (world basic structure)-{
         Box2D_WorldCreator box2D_worldCreator = new Box2D_WorldCreator(world, map);//}
@@ -283,7 +283,7 @@ public class PlayScreen  extends InputProcessorsV2 implements Screen , Applicati
     }
 
     private void update(float delta) {
-        world.step(1/100f, 6, 2);
+        world.step(delta, 6, 2);
         camera.update();
         crossBow.update(delta);//here we callback the rexpective method to update the  sprite position.
         if(isDartCollideWF) {
@@ -542,7 +542,7 @@ public class PlayScreen  extends InputProcessorsV2 implements Screen , Applicati
                 if(isPosibleShot) {
                     if(numberShots >0) {
 
-                        arcBody = dartBody.createBody("arc", world, 1, 1);
+                        arcBody = dartBody.createBody("arc", world, 1f, 1f);
                         Array<Fixture> fixturesArray = arcBody.getFixtureList();
 
                         for (Fixture fixture : fixturesArray) {
