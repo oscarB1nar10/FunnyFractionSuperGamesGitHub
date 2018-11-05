@@ -13,7 +13,6 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.funnyfractions.game.tutorials.AndroidLauncher2;
 import com.funnyfractions.game.R;
 
 import java.util.Locale;
