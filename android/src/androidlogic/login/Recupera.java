@@ -141,7 +141,7 @@ public class Recupera extends Activity {
                 tilpre3.getEditText().setError("Datos incorrectos");
             } else {
                 AlertDialog.Builder confirma = new AlertDialog.Builder(this);
-                confirma.setIcon(R.drawable.a0_0);
+                confirma.setIcon(R.mipmap.ic_launcher);
                 confirma.setTitle("Funny Fractions");
                 confirma.setMessage("Su contraseña es: " + clave);
                 confirma.setPositiveButton("OK", new DialogInterface.OnClickListener() {
