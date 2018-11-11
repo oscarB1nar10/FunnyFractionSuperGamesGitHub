@@ -5,4 +5,6 @@
     <color name="colorAccent">#FF4081</color>
     <color name="transparente">#51ffffff</color>
     <color name="red_pause">#ff0000</color>
+    <color name="login_color">#00ffcc</color>
+    <color name="login_color2">#00ffcc</color>
 </resources>

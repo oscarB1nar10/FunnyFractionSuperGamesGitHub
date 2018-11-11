@@ -1,17 +1,19 @@
 package com.funnyfractions.game.tutorials;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.support.v7.app.AlertDialog;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.funnyfractions.game.R;
 import com.funnyfractions.game.archery_game.ActionResolver;
 
-import androidlogic.games.archery_game.MainMenu;
 import androidlogic.games.archery_game.MenuArcheryActivity;
-import androidlogic.home.Home;
-
-import static android.content.Context.MODE_PRIVATE;
 
 public class ActionResolverAndroid implements ActionResolver {
 
@@ -87,6 +89,103 @@ public class ActionResolverAndroid implements ActionResolver {
         //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         //intent.putExtra("usuario", "MiUsuario");
         context.startActivity(intent);
+    }
+
+    @Override
+    public void menu() {
+         createMenu();
+
+    }
+
+    public void createMenu (){
+
+        final Activity activity = (Activity) context;
+
+        /*
+            Here we show a menu to control the game run.
+         */
+        activity.runOnUiThread(new Runnable() {
+            public void run() {
+                //here it's necessary get reference to shared preferences
+                SharedPreferences prefs = context.getSharedPreferences("SHARED_PREFERENCES", Context.MODE_PRIVATE);
+                final AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                 boolean soundV = true;
+                // Get the layout inflater
+                 LayoutInflater inflater = activity.getLayoutInflater();
+                View view = inflater.inflate(R.layout.pause_menu_archery_game, null);
+
+                ImageButton restar = view.findViewById(R.id.btn_restar);
+                ImageButton play = view.findViewById(R.id.btn_play);
+                final ImageButton sound = view.findViewById(R.id.btn_sound);
+
+                //check whether the sound state
+                if(prefs.getBoolean("sound",true) == true){
+                    sound.setImageResource(R.drawable.sonido);
+                    soundV = true;
+                }else{
+                    sound.setImageResource(R.drawable.mute);
+                    soundV = false;
+                }
+                // Inflate and set the layout for the dialog
+                // Pass null as the parent view because its going in the dialog layout
+                builder.setView(view);
+                // Add action buttons
+                builder.create();
+                final AlertDialog alertDialog = builder.show();
+                alertDialog.setCanceledOnTouchOutside(false);
+
+
+
+
+                restar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(context, AndroidLauncher2.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        context.startActivity(intent);
+                    }
+                });
+
+                play.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        alertDialog.dismiss();
+                        SharedPreferences.Editor editor2 = sharedP.edit();
+                        editor2.putBoolean("pause",false);
+                        editor2.commit();
+
+                    }
+
+                });
+
+                final boolean finalSoundV = soundV;
+                sound.setOnClickListener(new View.OnClickListener() {
+                    private boolean so = finalSoundV;
+                    @Override
+                    public void onClick(View v) {
+                        if(so){
+                            sound.setImageResource(R.drawable.mute);
+                            SharedPreferences.Editor editor2 = sharedP.edit();
+                            editor2.putBoolean("sound",false);
+                            editor2.commit();
+                            so = false;
+                        }else{
+                            sound.setImageResource(R.drawable.sonido);
+                            SharedPreferences.Editor editor2 = sharedP.edit();
+                            editor2.putBoolean("sound",true);
+                            editor2.commit();
+                            so = true;
+                        }
+
+
+                    }
+                });
+
+
+            }
+        });
+
+
     }
 
 

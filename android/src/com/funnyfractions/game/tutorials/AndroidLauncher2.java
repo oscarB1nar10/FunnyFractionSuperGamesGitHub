@@ -18,7 +18,6 @@ public class AndroidLauncher2 extends AndroidApplication {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
-
         config.useGLSurfaceView20API18=true;
         config.useAccelerometer=true;
         config.useCompass=true;
@@ -29,4 +28,5 @@ public class AndroidLauncher2 extends AndroidApplication {
 
         initialize(new FirstScreen(actionResolver), config);
     }
+
 }

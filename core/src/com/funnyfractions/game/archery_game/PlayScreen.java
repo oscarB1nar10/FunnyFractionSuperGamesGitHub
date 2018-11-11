@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -30,6 +31,7 @@ import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.codeandweb.physicseditor.PhysicsShapeCache;
@@ -46,6 +48,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.TimerTask;
 
 
 public class PlayScreen  extends InputProcessorsV2 implements Screen , ApplicationListener {
@@ -59,6 +62,8 @@ public class PlayScreen  extends InputProcessorsV2 implements Screen , Applicati
     private int numberShots = 2;
     //pause button
     private Texture pauseButton;
+    private boolean pause = false;
+    private boolean sound = true;
 
     //_-------------------------------CameraAndrProperties
     /*
@@ -168,7 +173,6 @@ public class PlayScreen  extends InputProcessorsV2 implements Screen , Applicati
         mp3Sound = Gdx.audio.newMusic(Gdx.files.internal("sounds/adventure_island.mp3"));
         mp3Sound.setVolume(0.2f);
         mp3Sound.setLooping(true);
-        mp3Sound.play();
 
         archery_sound = Gdx.audio.newSound(Gdx.files.internal("sounds/archery_sound.mp3"));
         collition = Gdx.audio.newSound(Gdx.files.internal("sounds/collition.mp3"));
@@ -181,7 +185,7 @@ public class PlayScreen  extends InputProcessorsV2 implements Screen , Applicati
         Box2D.init();
         addSprites();
 
-        world = new World(new Vector2(0, -9f), true);
+        world = new World(new Vector2(0, -60f), true);
         captureContacts();
         //Our ground (world basic structure)-{
         Box2D_WorldCreator box2D_worldCreator = new Box2D_WorldCreator(world, map);//}
@@ -228,62 +232,74 @@ public class PlayScreen  extends InputProcessorsV2 implements Screen , Applicati
         box2DDebugRenderer.render(world, camera.combined);
         //here we specify the recpective  projectionMatriz to our batch.
         fs.batch.setProjectionMatrix(camera.combined);
+        getPause();
 
-        fs.batch.begin();
-        level.draw(fs.batch,"Level: "+ levelValue, 100,800);
-        score.draw(fs.batch,"Score: "+ scoreValue, 100,500);
-        fs.batch.draw(pauseButton,0,(1280- pauseButton.getHeight()));
-        crossBow.draw(fs.batch);//here we draw the crossbow sprite.
-        //here we check if  the dart exists
-        if(dart != null) {
+            fs.batch.begin();
+            level.draw(fs.batch, "Level: " + levelValue, 100, 800);
+            score.draw(fs.batch, "Score: " + scoreValue, 100, 500);
+            fs.batch.draw(pauseButton, 0, (1280 - pauseButton.getHeight()));
+            crossBow.draw(fs.batch);//here we draw the crossbow sprite.
+            //here we check if  the dart exists
+            if (dart != null) {
 
-            if (dart.getPosition().x >= 1280) {
-                isPosibleShot = true;
-                dartToDelete = dart.getDart();
+                if (dart.getPosition().x >= 1280) {
+                    isPosibleShot = true;
+                    dartToDelete = dart.getDart();
+                }
             }
-        }
-        //here we draw the dart sprite if it's posible to shot
-        if(shootinDart) {
-            dart.draw(fs.batch);
-        }
-
-        elapsedTime = (System.nanoTime() - beginTime) / 100000000;
-        System.out.println("t: " + elapsedTime);
-
-        if (changeSprites) {
-
-            for (int i = 0; i < fruit.length; i++) {
-                float degree = (float) Math.toDegrees(fruit[i].getAngle());
-                drawSprite(fName[i], fruit[i].getPosition().x, fruit[i].getPosition().y, degree);
-
-            }
-        }
-
-
-        if ((elapsedTime >= 70 && elapsedTime <= 170)) {
-
-            System.out.println("inside to this place after x seconds");
-            for (int i=0; i<resOp.size(); i++) {
-                drawSprite(resOp.get(i), fruit[i].getPosition().x, fruit[i].getPosition().y , 0);
+            //here we draw the dart sprite if it's posible to shot
+            if (shootinDart) {
+                dart.draw(fs.batch);
             }
 
-            changeSprites = false;
+            elapsedTime = (System.nanoTime() - beginTime) / 100000000;
+            System.out.println("t: " + elapsedTime);
 
-        } else {
-            changeSprites = true;
-        }
+            if (changeSprites) {
+
+                for (int i = 0; i < fruit.length; i++) {
+                    float degree = (float) Math.toDegrees(fruit[i].getAngle());
+                    drawSprite(fName[i], fruit[i].getPosition().x, fruit[i].getPosition().y, degree);
+
+                }
+            }
 
 
+            if ((elapsedTime >= 70 && elapsedTime <= 170)) {
+
+                System.out.println("inside to this place after x seconds");
+                for (int i = 0; i < resOp.size(); i++) {
+                    drawSprite(resOp.get(i), fruit[i].getPosition().x, fruit[i].getPosition().y, 0);
+                }
+
+                changeSprites = false;
+
+            } else {
+                changeSprites = true;
+            }
 
 
-        operationImage.draw(fs.batch);
-        fs.batch.end();
+            operationImage.draw(fs.batch);
+            fs.batch.end();
 
-        update(delta);
+            if(!pause) {
+                update(delta);
+            }
+    }
+
+    private void getPause() {
+        Preferences pref = Gdx.app.getPreferences("SHARED_PREFERENCES");
+        pause = pref.getBoolean("pause",true);
+        sound = pref.getBoolean("sound",true);
+            if(!sound){
+                mp3Sound.pause();
+            }else{
+                mp3Sound.play();
+            }
     }
 
     private void update(float delta) {
-        world.step(delta, 6, 2);
+        world.step(1/100f, 6, 2);
         camera.update();
         crossBow.update(delta);//here we callback the rexpective method to update the  sprite position.
         if(isDartCollideWF) {
@@ -402,19 +418,7 @@ public class PlayScreen  extends InputProcessorsV2 implements Screen , Applicati
 
     }
 
-    /*public void createResponseSprites() {
-        Texture t1 = new Texture(Gdx.files.internal("answers/answer1.png"));
-        Texture t2 = new Texture(Gdx.files.internal("answers/answer1.png"));
-        Texture t3 = new Texture(Gdx.files.internal("answers/answer1.png"));
 
-        resOp[0] = new Sprite(t1);
-        resOp[0].setPosition(500, 500);
-        resOp[1] = new Sprite(t2);
-        resOp[2] = new Sprite(t3);
-
-
-
-    }*/
 
     public void captureContacts() {
         world.setContactListener(new ContactListener() {
@@ -653,13 +657,19 @@ public class PlayScreen  extends InputProcessorsV2 implements Screen , Applicati
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        System.out.println("arc position: ( "+xValue+", "+yValue+")");
-        System.out.println("you touch at: ( X = "+screenX+" , Y = "+screenY);
-        System.out.println("the screen size: width= "+Gdx.graphics.getWidth()+" , "+Gdx.graphics.getHeight());
-        if((screenX == 0 || screenX < 85.4) && (screenY == 0 || screenY < 85.4)){
-            actionResolver.pauseArcheryGame();
+        System.out.println("arc position: ( " + xValue + ", " + yValue + ")");
+        System.out.println("you touch at: ( X = " + screenX + " , Y = " + screenY);
+        System.out.println("the screen size: width= " + Gdx.graphics.getWidth() + " , " + Gdx.graphics.getHeight());
+        int btnBounds = (128 * Gdx.graphics.getWidth()) / 1280;
+        if ((screenX == 0 || screenX < btnBounds) && (screenY == 0 || screenY < btnBounds)) {
+            Preferences pref = Gdx.app.getPreferences("SHARED_PREFERENCES");
+            pref.putBoolean("pause",true);
+            pref.flush();
+            actionResolver.menu();
+
         }
-        return false;
+
+        return true;
     }
 
     public void calculateShootingAngle() {
@@ -801,6 +811,8 @@ public class PlayScreen  extends InputProcessorsV2 implements Screen , Applicati
         Preferences pref = Gdx.app.getPreferences("SHARED_PREFERENCES");
          levelValue = pref.getInteger("currentLevel",0);
          scoreValue = pref.getInteger("score",0);
+         pref.putBoolean("pause",false);
+         pref.flush();
 
          //pause button
         pauseButton = new Texture(Gdx.files.internal("pause_button.png"));

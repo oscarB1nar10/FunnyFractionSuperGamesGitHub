@@ -5,14 +5,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/fondo_recuperar_contrasena"
-    tools:layout_editor_absoluteY="73dp">
+    android:orientation="vertical"
+    tools:context="androidlogic.login.Recupera"
+    tools:layout_editor_absoluteY="25dp">
+
 
     <Button
         android:id="@+id/btnRecupera"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="15dp"
         android:layout_marginBottom="35dp"
-        android:layout_marginEnd="16dp"
         android:background="@drawable/boton_login"
         android:text="@string/btnRecuperar"
         android:textSize="12sp"
@@ -23,14 +26,14 @@
     <LinearLayout
         android:id="@+id/linearLayout2"
         android:layout_width="0dp"
-        android:layout_height="235dp"
-        android:layout_marginEnd="25dp"
-        android:layout_marginStart="191dp"
-        android:layout_marginTop="102dp"
+        android:layout_height="249dp"
+        android:layout_marginStart="158dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="8dp"
         android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/btnRecupera"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintStart_toStartOf="parent">
 
         <GridLayout
             android:layout_width="match_parent"
@@ -41,6 +44,7 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
                 android:orientation="horizontal"
                 android:paddingBottom="10dp">
 
@@ -49,7 +53,7 @@
                     android:layout_width="63dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    app:srcCompat="@drawable/llave"
+                    android:src="@drawable/llave"
                     tools:layout_editor_absoluteX="16dp"
                     tools:layout_editor_absoluteY="121dp" />
 
@@ -79,6 +83,7 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
                 android:orientation="horizontal"
                 android:paddingBottom="10dp">
 
@@ -87,7 +92,7 @@
                     android:layout_width="63dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    app:srcCompat="@drawable/control_videogames"
+                    android:src="@drawable/control_videogames"
                     tools:layout_editor_absoluteX="208dp"
                     tools:layout_editor_absoluteY="167dp" />
 
@@ -117,6 +122,7 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
                 android:orientation="horizontal"
                 android:paddingBottom="10dp">
 
@@ -125,7 +131,7 @@
                     android:layout_width="65dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    app:srcCompat="@drawable/color_favorito"
+                    android:src="@drawable/color_favorito"
                     tools:layout_editor_absoluteX="208dp"
                     tools:layout_editor_absoluteY="212dp" />
 
@@ -153,8 +159,9 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
                 android:orientation="horizontal"
-                android:paddingBottom="10dp">
+                android:paddingBottom="20dp">
 
 
                 <ImageView
@@ -162,7 +169,7 @@
                     android:layout_width="67dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    app:srcCompat="@drawable/deporte_favorito"
+                    android:src="@drawable/deporte_favorito"
                     tools:layout_editor_absoluteX="208dp"
                     tools:layout_editor_absoluteY="262dp" />
 
@@ -170,6 +177,7 @@
                     android:id="@+id/tilrecupre3"
                     android:layout_width="match_parent"
                     android:layout_height="43dp"
+                    android:layout_marginBottom="10dp"
                     tools:ignore="MissingConstraints"
                     tools:layout_editor_absoluteX="0dp"
                     tools:layout_editor_absoluteY="54dp">
@@ -188,6 +196,7 @@
             </LinearLayout>
 
         </GridLayout>
+
 
     </LinearLayout>
 

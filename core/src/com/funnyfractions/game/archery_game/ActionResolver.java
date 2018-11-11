@@ -9,6 +9,7 @@ public interface ActionResolver {
     public void cleanPreferences();
     public void saveScore(int score);
     public void pauseArcheryGame();
+    public void menu ();
 
 
 }
