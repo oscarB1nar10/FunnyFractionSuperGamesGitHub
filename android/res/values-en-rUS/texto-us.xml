@@ -28,11 +28,11 @@
     <string name="txtdefinicion">The fraction is used to represent the parts that are taken from an object (Numerator) that has been divided into equal parts (Denominator) and is represented as follows:</string>
     <string name="txtejemplo">For example, we divide a pizza into 8 equal parts and take three.</string>
     <string name="txtsumhomo">ADD FRACTIONS WITH THE SAME DENOMINATOR (HOMOGENEOUS)</string>
-    <string name="txtsumhete">ADD FRACTIONS WITH THE SAME DENOMINATOR (HETEROGENEOUS)</string>
+    <string name="txtsumhete">ADD FRACTIONS WITH DIFFERENT DENOMINATOR (HETEROGENEOUS)</string>
     <string name="txteoriasumhomo">Debemos sumar sus numeradores y dejar su denominador igual</string>
-    <string name="txteoriasumhete">El producto cruzado de numerador por denominador se debe sumar para obtener el numerador resultado, mientras que para el denominador resultado es la multiplicacion de los denominadores</string>
-    <string name="txtreshomo">RESTAR FRACCIONES CON IGUAL DENOMINADOR (HOMOGENEAS)</string>
-    <string name="txtreshete">RESTAR FRACCIONES CON IGUAL DENOMINADOR (HETEROGENEAS)</string>
+    <string name="txteoriasumhete">The cross product of numerator by denominator must be added to obtain the numerator result, while for the denominator result is the multiplication of denominators</string>
+    <string name="txtreshomo">SUBTRACT FRACTIONS WITH THE SAME DENOMINATOR (HOMOGENEOUS)</string>
+    <string name="txtreshete">SUBTRACT FRACTIONS WITH DIFFERENT DENOMINATOR (HETEROGENEOUS)</string>
     <string name="txteoriareshomo">We must subtract their numerators and leave their denominator equal</string>
     <string name="txteoriareshete">The cross product of numerator by denominator must be subtracted to obtain the numerator result, while for the denominator result is the multiplication of the denominators</string>
     <string name="txtmul">MULTIPLICATION OF FRACTIONS</string>

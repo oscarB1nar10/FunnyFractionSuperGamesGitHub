@@ -1,203 +1,172 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/fondo_recuperar_contrasena"
-    android:orientation="vertical"
+    android:orientation="horizontal"
+    android:gravity="center"
     tools:context="androidlogic.login.Recupera"
     tools:layout_editor_absoluteY="25dp">
 
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="175dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="200dp"
+        android:layout_marginTop="30dp"
+        android:orientation="vertical"
+        tools:layout_editor_absoluteX="270dp"
+        tools:layout_editor_absoluteY="141dp">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:orientation="horizontal"
+            android:paddingBottom="10dp">
+
+            <ImageView
+                android:id="@+id/userr"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/usuario"
+                tools:layout_editor_absoluteY="121dp" />
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/tilrecusu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:ignore="MissingConstraints"
+                tools:layout_editor_absoluteY="103dp">
+
+                <EditText
+                    android:id="@+id/txtrecusu"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="@string/txtUsuario"
+                    android:inputType="textPersonName"
+                    android:textSize="12sp"
+                    tools:layout_editor_absoluteY="56dp" />
+            </android.support.design.widget.TextInputLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:orientation="horizontal"
+            android:paddingBottom="10dp">
+
+            <ImageView
+                android:id="@+id/gamer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/control_videogames"
+                tools:layout_editor_absoluteY="167dp" />
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/tilrecupre1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:ignore="MissingConstraints"
+                tools:layout_editor_absoluteY="151dp">
+
+                <EditText
+                    android:id="@+id/txtrecupre1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="@string/txtPregunta1"
+                    android:inputType="textPersonName"
+                    android:textSize="12sp"
+                    tools:layout_editor_absoluteY="56dp" />
+            </android.support.design.widget.TextInputLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:orientation="horizontal"
+            android:paddingBottom="10dp">
+
+            <ImageView
+                android:id="@+id/color"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/color_favorito"
+                tools:layout_editor_absoluteY="212dp" />
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/tilrecupre2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:ignore="MissingConstraints"
+                tools:layout_editor_absoluteY="199dp">
+
+                <EditText
+                    android:id="@+id/txtrecupre2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="@string/txtPregunta2"
+                    android:inputType="textPersonName"
+                    android:textSize="12sp"
+                    tools:layout_editor_absoluteY="56dp" />
+            </android.support.design.widget.TextInputLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:orientation="horizontal"
+            android:paddingBottom="10dp">
+
+
+            <ImageView
+                android:id="@+id/sport"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/deporte_favorito"
+                tools:layout_editor_absoluteY="212dp" />
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/tilrecupre3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:ignore="MissingConstraints"
+                tools:layout_editor_absoluteY="199dp">
+
+                <EditText
+                    android:id="@+id/txtrecupre3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="@string/txtPregunta3"
+                    android:inputType="textPersonName"
+                    android:textSize="12sp"
+                    tools:layout_editor_absoluteY="56dp" />
+            </android.support.design.widget.TextInputLayout>
+        </LinearLayout>
+
+    </LinearLayout>
 
     <Button
         android:id="@+id/btnRecupera"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="15dp"
-        android:layout_marginBottom="35dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="100dp"
         android:background="@drawable/boton_login"
         android:text="@string/btnRecuperar"
         android:textSize="12sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/linearLayout2" />
+        tools:layout_editor_absoluteX="490dp"
+        tools:layout_editor_absoluteY="284dp" />
 
-    <LinearLayout
-        android:id="@+id/linearLayout2"
-        android:layout_width="0dp"
-        android:layout_height="249dp"
-        android:layout_marginStart="158dp"
-        android:layout_marginEnd="5dp"
-        android:layout_marginBottom="8dp"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/btnRecupera"
-        app:layout_constraintStart_toStartOf="parent">
-
-        <GridLayout
-            android:layout_width="match_parent"
-            android:layout_height="299dp"
-            android:orientation="vertical"
-            android:rowCount="4">
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:orientation="horizontal"
-                android:paddingBottom="10dp">
-
-                <ImageView
-                    android:id="@+id/userr"
-                    android:layout_width="63dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:src="@drawable/llave"
-                    tools:layout_editor_absoluteX="16dp"
-                    tools:layout_editor_absoluteY="121dp" />
-
-                <android.support.design.widget.TextInputLayout
-                    android:id="@+id/tilrecusu"
-                    android:layout_width="match_parent"
-                    android:layout_height="43dp"
-                    android:layout_weight="1"
-                    tools:ignore="MissingConstraints"
-                    tools:layout_editor_absoluteX="256dp"
-                    tools:layout_editor_absoluteY="103dp">
-
-                    <EditText
-                        android:id="@+id/txtrecusu"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:ems="10"
-                        android:hint="@string/txtUsuario"
-                        android:inputType="textPersonName"
-                        android:textSize="12sp"
-                        tools:layout_editor_absoluteX="361dp"
-                        tools:layout_editor_absoluteY="56dp" />
-                </android.support.design.widget.TextInputLayout>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:orientation="horizontal"
-                android:paddingBottom="10dp">
-
-                <ImageView
-                    android:id="@+id/gamer"
-                    android:layout_width="63dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:src="@drawable/control_videogames"
-                    tools:layout_editor_absoluteX="208dp"
-                    tools:layout_editor_absoluteY="167dp" />
-
-                <android.support.design.widget.TextInputLayout
-                    android:id="@+id/tilrecupre1"
-                    android:layout_width="match_parent"
-                    android:layout_height="43dp"
-                    android:layout_weight="1"
-                    tools:ignore="MissingConstraints"
-                    tools:layout_editor_absoluteX="256dp"
-                    tools:layout_editor_absoluteY="151dp">
-
-                    <EditText
-                        android:id="@+id/txtrecupre1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:ems="10"
-                        android:hint="@string/txtPregunta1"
-                        android:inputType="textPersonName"
-                        android:textSize="12sp"
-                        tools:layout_editor_absoluteX="361dp"
-                        tools:layout_editor_absoluteY="56dp" />
-                </android.support.design.widget.TextInputLayout>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:orientation="horizontal"
-                android:paddingBottom="10dp">
-
-                <ImageView
-                    android:id="@+id/colorr"
-                    android:layout_width="65dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:src="@drawable/color_favorito"
-                    tools:layout_editor_absoluteX="208dp"
-                    tools:layout_editor_absoluteY="212dp" />
-
-                <android.support.design.widget.TextInputLayout
-                    android:id="@+id/tilrecupre2"
-                    android:layout_width="match_parent"
-                    android:layout_height="43dp"
-                    tools:ignore="MissingConstraints"
-                    tools:layout_editor_absoluteX="256dp"
-                    tools:layout_editor_absoluteY="199dp">
-
-                    <EditText
-                        android:id="@+id/txtrecupre2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:ems="10"
-                        android:hint="@string/txtPregunta2"
-                        android:inputType="textPersonName"
-                        android:textSize="12sp"
-                        tools:layout_editor_absoluteX="361dp"
-                        tools:layout_editor_absoluteY="56dp" />
-                </android.support.design.widget.TextInputLayout>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
-                android:orientation="horizontal"
-                android:paddingBottom="20dp">
-
-
-                <ImageView
-                    android:id="@+id/sportr"
-                    android:layout_width="67dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:src="@drawable/deporte_favorito"
-                    tools:layout_editor_absoluteX="208dp"
-                    tools:layout_editor_absoluteY="262dp" />
-
-                <android.support.design.widget.TextInputLayout
-                    android:id="@+id/tilrecupre3"
-                    android:layout_width="match_parent"
-                    android:layout_height="43dp"
-                    android:layout_marginBottom="10dp"
-                    tools:ignore="MissingConstraints"
-                    tools:layout_editor_absoluteX="0dp"
-                    tools:layout_editor_absoluteY="54dp">
-
-                    <EditText
-                        android:id="@+id/txtrecupre3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:ems="10"
-                        android:hint="@string/txtPregunta3"
-                        android:inputType="textPersonName"
-                        android:textSize="12sp"
-                        tools:layout_editor_absoluteX="361dp"
-                        tools:layout_editor_absoluteY="56dp" />
-                </android.support.design.widget.TextInputLayout>
-            </LinearLayout>
-
-        </GridLayout>
-
-
-    </LinearLayout>
-
-</android.support.constraint.ConstraintLayout>
+</LinearLayout>
