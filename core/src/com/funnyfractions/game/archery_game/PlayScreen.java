@@ -64,6 +64,7 @@ public class PlayScreen  extends InputProcessorsV2 implements Screen , Applicati
     private Texture pauseButton;
     private boolean pause = false;
     private boolean sound = true;
+    private int levelV = 0;
 
     //_-------------------------------CameraAndrProperties
     /*
@@ -266,6 +267,8 @@ public class PlayScreen  extends InputProcessorsV2 implements Screen , Applicati
 
 
             if ((elapsedTime >= 70 && elapsedTime <= 170)) {
+                //while the posible answers is show we must disable the shot
+                //isPosibleShot = false;
 
                 System.out.println("inside to this place after x seconds");
                 for (int i = 0; i < resOp.size(); i++) {
@@ -275,6 +278,7 @@ public class PlayScreen  extends InputProcessorsV2 implements Screen , Applicati
                 changeSprites = false;
 
             } else {
+                //isPosibleShot = true;
                 changeSprites = true;
             }
 
@@ -291,10 +295,21 @@ public class PlayScreen  extends InputProcessorsV2 implements Screen , Applicati
         Preferences pref = Gdx.app.getPreferences("SHARED_PREFERENCES");
         pause = pref.getBoolean("pause",true);
         sound = pref.getBoolean("sound",true);
+        levelV = pref.getInteger("currentLevel",0);
+
             if(!sound){
                 mp3Sound.pause();
             }else{
                 mp3Sound.play();
+            }
+
+            if(levelV == 2){
+                levelV = 0;
+                pref.putBoolean("pause",true);
+                pref.flush();
+                actionResolver.menu();
+
+
             }
     }
 

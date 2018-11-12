@@ -68,7 +68,8 @@
         <activity android:name="androidlogic.practice.Practica">
 
         </activity>
-        <activity android:name="androidlogic.games.archery_game.MainMenu">
+        <activity android:name="androidlogic.games.archery_game.MainMenu"
+            android:screenOrientation="portrait">
 
         </activity>
         <activity android:name="androidlogic.games.archery_game.Levels"

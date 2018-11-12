@@ -7,4 +7,6 @@
     <color name="red_pause">#ff0000</color>
     <color name="login_color">#00ffcc</color>
     <color name="login_color2">#00ffcc</color>
+    <color name="opacque">#6534f1bb</color>
+    <color name="btn_color_game">#d6d6f911</color>
 </resources>

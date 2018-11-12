@@ -8,12 +8,14 @@ import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.funnyfractions.game.R;
 import com.funnyfractions.game.archery_game.ActionResolver;
 
 import androidlogic.games.archery_game.MenuArcheryActivity;
+import androidlogic.practice.Practica;
 
 public class ActionResolverAndroid implements ActionResolver {
 
@@ -108,6 +110,7 @@ public class ActionResolverAndroid implements ActionResolver {
             public void run() {
                 //here it's necessary get reference to shared preferences
                 SharedPreferences prefs = context.getSharedPreferences("SHARED_PREFERENCES", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor2 = sharedP.edit();
                 final AlertDialog.Builder builder = new AlertDialog.Builder(context);
                  boolean soundV = true;
                 // Get the layout inflater
@@ -116,7 +119,10 @@ public class ActionResolverAndroid implements ActionResolver {
 
                 ImageButton restar = view.findViewById(R.id.btn_restar);
                 ImageButton play = view.findViewById(R.id.btn_play);
+                ImageView stars = view.findViewById(R.id.imgv_stars);
+                ImageButton home = view.findViewById(R.id.btn_home);
                 final ImageButton sound = view.findViewById(R.id.btn_sound);
+
 
                 //check whether the sound state
                 if(prefs.getBoolean("sound",true) == true){
@@ -134,12 +140,39 @@ public class ActionResolverAndroid implements ActionResolver {
                 final AlertDialog alertDialog = builder.show();
                 alertDialog.setCanceledOnTouchOutside(false);
 
+                //check the level state
+                if(prefs.getInt("currentLevel",-1) == 2){
+                    if (prefs.getInt("score",-1)>=700 && prefs.getInt("score",-1)<=1000){
+
+                        editor2.putInt("currentLevel",0);
+                        editor2.commit();
+                        stars.setImageResource(R.drawable.star100);
+                        play.setEnabled(false);
+                    }else if(prefs.getInt("score",-1)>=500 && prefs.getInt("score",-1)<=699){
+                        editor2.putInt("currentLevel",0);
+                        editor2.commit();
+                        stars.setImageResource(R.drawable.star70);
+                        play.setEnabled(false);
+                    }else{
+                        editor2.putInt("currentLevel",0);
+                        editor2.commit();
+                        stars.setImageResource(R.drawable.star30);
+                        play.setEnabled(false);
+                    }
+                }else{
+                    stars.setVisibility(View.INVISIBLE);
+                }
+
 
 
 
                 restar.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        SharedPreferences.Editor editor2 = sharedP.edit();
+                        editor2.putInt("currentLevel",0);
+                        editor2.putInt("score",0);
+                        editor2.commit();
                         Intent intent = new Intent(context, AndroidLauncher2.class);
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                         context.startActivity(intent);
@@ -178,6 +211,15 @@ public class ActionResolverAndroid implements ActionResolver {
                         }
 
 
+                    }
+                });
+
+                home.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(context, Practica.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        context.startActivity(intent);
                     }
                 });
 
