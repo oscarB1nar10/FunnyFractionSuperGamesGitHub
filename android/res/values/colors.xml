@@ -9,4 +9,6 @@
     <color name="login_color2">#00ffcc</color>
     <color name="opacque">#6534f1bb</color>
     <color name="btn_color_game">#d6d6f911</color>
+    <color name="fondoDefecto">#f5c502</color>
+    <color name="fondoDefecto2">#11a2e6</color>
 </resources>

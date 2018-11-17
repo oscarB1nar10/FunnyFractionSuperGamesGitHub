@@ -104,9 +104,7 @@ public class MainActivity extends Activity {
         logueo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //evaluarAcceso();
-                Intent intent=new Intent(getApplicationContext(), AndroidLauncher2.class);
-                startActivity(intent);
+                evaluarAcceso();
             }
         });
         //-------------------------------END Action Buttons----------

@@ -13,6 +13,7 @@ import com.funnyfractions.game.R;
 
 import androidlogic.games.archery_game.MainMenu;
 import androidlogic.games.archery_game.MainMenu;
+import bateria.EjecutableBateria;
 
 public class Practica extends Activity {
     private ImageButton retornarHome;
@@ -42,6 +43,14 @@ public class Practica extends Activity {
                 startActivity(intent);
             }
         });
+        res.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), EjecutableBateria.class);
+                startActivity(intent);
+            }
+        });
+
     }
 
     public void validarIdioma(){

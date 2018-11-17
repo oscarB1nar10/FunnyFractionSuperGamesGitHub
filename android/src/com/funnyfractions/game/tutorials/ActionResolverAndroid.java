@@ -141,7 +141,7 @@ public class ActionResolverAndroid implements ActionResolver {
                 alertDialog.setCanceledOnTouchOutside(false);
 
                 //check the level state
-                if(prefs.getInt("currentLevel",-1) == 2){
+                if(prefs.getInt("currentLevel",-1) == 100){
                     if (prefs.getInt("score",-1)>=700 && prefs.getInt("score",-1)<=1000){
 
                         editor2.putInt("currentLevel",0);

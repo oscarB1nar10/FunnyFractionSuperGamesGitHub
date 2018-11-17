@@ -65,7 +65,8 @@
             android:screenOrientation="sensorLandscape">
 
         </activity>
-        <activity android:name="androidlogic.practice.Practica">
+        <activity android:name="androidlogic.practice.Practica"
+            android:screenOrientation="sensorLandscape">
 
         </activity>
         <activity android:name="androidlogic.games.archery_game.MainMenu"
@@ -77,6 +78,10 @@
 
         </activity>
         <activity android:name="androidlogic.games.archery_game.MenuArcheryActivity"
+            android:screenOrientation="sensorLandscape">
+        </activity>
+
+        <activity android:name="bateria.EjecutableBateria"
             android:screenOrientation="sensorLandscape">
 
         </activity>

@@ -304,8 +304,8 @@ public class PlayScreen  extends InputProcessorsV2 implements Screen , Applicati
             }
 
             if(levelV == 2){
-                levelV = 0;
                 pref.putBoolean("pause",true);
+                pref.putInteger("currentLevel",100);
                 pref.flush();
                 actionResolver.menu();
 
