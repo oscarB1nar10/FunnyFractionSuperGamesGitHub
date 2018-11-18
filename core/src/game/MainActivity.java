@@ -42,11 +42,11 @@ public class MainActivity extends Game implements InputProcessor {
 
 		LlenarOperaciones();
 
-		bucketImage = new Texture(Gdx.files.internal("imagenes/buho.png"));
-		pause = new Texture(Gdx.files.internal("imagenes/droplet.png"));
+		bucketImage = new Texture(Gdx.files.internal("buho.png"));
+		pause = new Texture(Gdx.files.internal("droplet.png"));
 
-		dropSound = Gdx.audio.newSound(Gdx.files.internal("sonidos/drop.wav"));
-		rainMusic = Gdx.audio.newMusic(Gdx.files.internal("sonidos/rain.mp3"));
+		dropSound = Gdx.audio.newSound(Gdx.files.internal("sounds/drop.wav"));
+		rainMusic = Gdx.audio.newMusic(Gdx.files.internal("sounds/rain.mp3"));
 
 		rainMusic.setLooping(true);
 		rainMusic.play();
@@ -63,146 +63,146 @@ public class MainActivity extends Game implements InputProcessor {
 
 		raindrops = new Array<Rectangle>();
 		toques = 1;
-		Gdx.input.setCatchBackKey(true);
-		Gdx.input.setInputProcessor(this);
+		//Gdx.input.setCatchBackKey(true);
+		//Gdx.input.setInputProcessor(this);
 		spawnRaindrop();
 	}
 
 	public void LlenarOperaciones(){
 		if(operacion.equals("3_4+5_4")) {
-			dropImage.add(new Texture(Gdx.files.internal("imagenes/respuestas/1_4.png")));
-			dropImage.add(new Texture(Gdx.files.internal("imagenes/respuestas/2_4.png")));
-			dropImage.add(new Texture(Gdx.files.internal("imagenes/respuestas/3_4.png")));
-			dropImage.add(new Texture(Gdx.files.internal("imagenes/respuestas/4_4.png")));
-			dropImage.add(new Texture(Gdx.files.internal("imagenes/respuestas/5_4.png")));
-			dropImage.add(new Texture(Gdx.files.internal("imagenes/respuestas/6_4.png")));
-			dropImage.add(new Texture(Gdx.files.internal("imagenes/respuestas/7_4.png")));
-			dropImage.add(new Texture(Gdx.files.internal("imagenes/respuestas/8_4.png")));
-			dropImage.add(new Texture(Gdx.files.internal("imagenes/respuestas/9_4.png")));
+			dropImage.add(new Texture(Gdx.files.internal("respuestas/1_4.png")));
+			dropImage.add(new Texture(Gdx.files.internal("respuestas/2_4.png")));
+			dropImage.add(new Texture(Gdx.files.internal("respuestas/3_4.png")));
+			dropImage.add(new Texture(Gdx.files.internal("respuestas/4_4.png")));
+			dropImage.add(new Texture(Gdx.files.internal("respuestas/5_4.png")));
+			dropImage.add(new Texture(Gdx.files.internal("respuestas/6_4.png")));
+			dropImage.add(new Texture(Gdx.files.internal("respuestas/7_4.png")));
+			dropImage.add(new Texture(Gdx.files.internal("respuestas/8_4.png")));
+			dropImage.add(new Texture(Gdx.files.internal("respuestas/9_4.png")));
 		}
 		else if (operacion.equals("7_3+2_3")){
-			dropImage.add(new Texture(Gdx.files.internal("imagenes/respuestas/1_3.png")));
-			dropImage.add(new Texture(Gdx.files.internal("imagenes/respuestas/2_3.png")));
-			dropImage.add(new Texture(Gdx.files.internal("imagenes/respuestas/3_3.png")));
-			dropImage.add(new Texture(Gdx.files.internal("imagenes/respuestas/4_3.png")));
-			dropImage.add(new Texture(Gdx.files.internal("imagenes/respuestas/5_3.png")));
-			dropImage.add(new Texture(Gdx.files.internal("imagenes/respuestas/6_3.png")));
-			dropImage.add(new Texture(Gdx.files.internal("imagenes/respuestas/7_3.png")));
-			dropImage.add(new Texture(Gdx.files.internal("imagenes/respuestas/8_3.png")));
-			dropImage.add(new Texture(Gdx.files.internal("imagenes/respuestas/9_3.png")));
+			dropImage.add(new Texture(Gdx.files.internal("respuestas/1_3.png")));
+			dropImage.add(new Texture(Gdx.files.internal("respuestas/2_3.png")));
+			dropImage.add(new Texture(Gdx.files.internal("respuestas/3_3.png")));
+			dropImage.add(new Texture(Gdx.files.internal("respuestas/4_3.png")));
+			dropImage.add(new Texture(Gdx.files.internal("respuestas/5_3.png")));
+			dropImage.add(new Texture(Gdx.files.internal("respuestas/6_3.png")));
+			dropImage.add(new Texture(Gdx.files.internal("respuestas/7_3.png")));
+			dropImage.add(new Texture(Gdx.files.internal("respuestas/8_3.png")));
+			dropImage.add(new Texture(Gdx.files.internal("respuestas/9_3.png")));
 		}
 		else if (operacion.equals("1_12+2_12")){
-			dropImage.add(new Texture(Gdx.files.internal("imagenes/respuestas/1_12.png")));
-			dropImage.add(new Texture(Gdx.files.internal("imagenes/respuestas/2_12.png")));
-			dropImage.add(new Texture(Gdx.files.internal("imagenes/respuestas/3_12.png")));
-			dropImage.add(new Texture(Gdx.files.internal("imagenes/respuestas/4_12.png")));
-			dropImage.add(new Texture(Gdx.files.internal("imagenes/respuestas/5_12.png")));
-			dropImage.add(new Texture(Gdx.files.internal("imagenes/respuestas/6_12.png")));
-			dropImage.add(new Texture(Gdx.files.internal("imagenes/respuestas/7_12.png")));
-			dropImage.add(new Texture(Gdx.files.internal("imagenes/respuestas/8_12.png")));
-			dropImage.add(new Texture(Gdx.files.internal("imagenes/respuestas/9_12.png")));
+			dropImage.add(new Texture(Gdx.files.internal("respuestas/1_12.png")));
+			dropImage.add(new Texture(Gdx.files.internal("respuestas/2_12.png")));
+			dropImage.add(new Texture(Gdx.files.internal("respuestas/3_12.png")));
+			dropImage.add(new Texture(Gdx.files.internal("respuestas/4_12.png")));
+			dropImage.add(new Texture(Gdx.files.internal("respuestas/5_12.png")));
+			dropImage.add(new Texture(Gdx.files.internal("respuestas/6_12.png")));
+			dropImage.add(new Texture(Gdx.files.internal("respuestas/7_12.png")));
+			dropImage.add(new Texture(Gdx.files.internal("respuestas/8_12.png")));
+			dropImage.add(new Texture(Gdx.files.internal("respuestas/9_12.png")));
 		}
 		else if (operacion.equals("4_8+5_8")){
-			dropImage.add(new Texture(Gdx.files.internal("imagenes/respuestas/1_8.png")));
-			dropImage.add(new Texture(Gdx.files.internal("imagenes/respuestas/2_8.png")));
-			dropImage.add(new Texture(Gdx.files.internal("imagenes/respuestas/3_8.png")));
-			dropImage.add(new Texture(Gdx.files.internal("imagenes/respuestas/4_8.png")));
-			dropImage.add(new Texture(Gdx.files.internal("imagenes/respuestas/5_8.png")));
-			dropImage.add(new Texture(Gdx.files.internal("imagenes/respuestas/6_8.png")));
-			dropImage.add(new Texture(Gdx.files.internal("imagenes/respuestas/7_8.png")));
-			dropImage.add(new Texture(Gdx.files.internal("imagenes/respuestas/8_8.png")));
-			dropImage.add(new Texture(Gdx.files.internal("imagenes/respuestas/9_8.png")));
+			dropImage.add(new Texture(Gdx.files.internal("respuestas/1_8.png")));
+			dropImage.add(new Texture(Gdx.files.internal("respuestas/2_8.png")));
+			dropImage.add(new Texture(Gdx.files.internal("respuestas/3_8.png")));
+			dropImage.add(new Texture(Gdx.files.internal("respuestas/4_8.png")));
+			dropImage.add(new Texture(Gdx.files.internal("respuestas/5_8.png")));
+			dropImage.add(new Texture(Gdx.files.internal("respuestas/6_8.png")));
+			dropImage.add(new Texture(Gdx.files.internal("respuestas/7_8.png")));
+			dropImage.add(new Texture(Gdx.files.internal("respuestas/8_8.png")));
+			dropImage.add(new Texture(Gdx.files.internal("respuestas/9_8.png")));
 		}
 		else if (operacion.equals("8_7+9_7")){
-			dropImage.add(new Texture(Gdx.files.internal("imagenes/respuestas/10_7.png")));
-			dropImage.add(new Texture(Gdx.files.internal("imagenes/respuestas/11_7.png")));
-			dropImage.add(new Texture(Gdx.files.internal("imagenes/respuestas/12_7.png")));
-			dropImage.add(new Texture(Gdx.files.internal("imagenes/respuestas/13_7.png")));
-			dropImage.add(new Texture(Gdx.files.internal("imagenes/respuestas/14_7.png")));
-			dropImage.add(new Texture(Gdx.files.internal("imagenes/respuestas/15_7.png")));
-			dropImage.add(new Texture(Gdx.files.internal("imagenes/respuestas/16_7.png")));
-			dropImage.add(new Texture(Gdx.files.internal("imagenes/respuestas/17_7.png")));
-			dropImage.add(new Texture(Gdx.files.internal("imagenes/respuestas/18_7.png")));
+			dropImage.add(new Texture(Gdx.files.internal("respuestas/10_7.png")));
+			dropImage.add(new Texture(Gdx.files.internal("respuestas/11_7.png")));
+			dropImage.add(new Texture(Gdx.files.internal("respuestas/12_7.png")));
+			dropImage.add(new Texture(Gdx.files.internal("respuestas/13_7.png")));
+			dropImage.add(new Texture(Gdx.files.internal("respuestas/14_7.png")));
+			dropImage.add(new Texture(Gdx.files.internal("respuestas/15_7.png")));
+			dropImage.add(new Texture(Gdx.files.internal("respuestas/16_7.png")));
+			dropImage.add(new Texture(Gdx.files.internal("respuestas/17_7.png")));
+			dropImage.add(new Texture(Gdx.files.internal("respuestas/18_7.png")));
 		}
 		else if (operacion.equals("3_3+2_3")){
-			dropImage.add(new Texture(Gdx.files.internal("imagenes/respuestas/1_3.png")));
-			dropImage.add(new Texture(Gdx.files.internal("imagenes/respuestas/2_3.png")));
-			dropImage.add(new Texture(Gdx.files.internal("imagenes/respuestas/3_3.png")));
-			dropImage.add(new Texture(Gdx.files.internal("imagenes/respuestas/4_3.png")));
-			dropImage.add(new Texture(Gdx.files.internal("imagenes/respuestas/5_3.png")));
-			dropImage.add(new Texture(Gdx.files.internal("imagenes/respuestas/6_3.png")));
-			dropImage.add(new Texture(Gdx.files.internal("imagenes/respuestas/7_3.png")));
-			dropImage.add(new Texture(Gdx.files.internal("imagenes/respuestas/8_3.png")));
-			dropImage.add(new Texture(Gdx.files.internal("imagenes/respuestas/9_3.png")));
+			dropImage.add(new Texture(Gdx.files.internal("respuestas/1_3.png")));
+			dropImage.add(new Texture(Gdx.files.internal("respuestas/2_3.png")));
+			dropImage.add(new Texture(Gdx.files.internal("respuestas/3_3.png")));
+			dropImage.add(new Texture(Gdx.files.internal("respuestas/4_3.png")));
+			dropImage.add(new Texture(Gdx.files.internal("respuestas/5_3.png")));
+			dropImage.add(new Texture(Gdx.files.internal("respuestas/6_3.png")));
+			dropImage.add(new Texture(Gdx.files.internal("respuestas/7_3.png")));
+			dropImage.add(new Texture(Gdx.files.internal("respuestas/8_3.png")));
+			dropImage.add(new Texture(Gdx.files.internal("respuestas/9_3.png")));
 		}
 		else if (operacion.equals("12_5+3_5")){
-			dropImage.add(new Texture(Gdx.files.internal("imagenes/respuestas/10_5.png")));
-			dropImage.add(new Texture(Gdx.files.internal("imagenes/respuestas/11_5.png")));
-			dropImage.add(new Texture(Gdx.files.internal("imagenes/respuestas/12_5.png")));
-			dropImage.add(new Texture(Gdx.files.internal("imagenes/respuestas/13_5.png")));
-			dropImage.add(new Texture(Gdx.files.internal("imagenes/respuestas/14_5.png")));
-			dropImage.add(new Texture(Gdx.files.internal("imagenes/respuestas/15_5.png")));
-			dropImage.add(new Texture(Gdx.files.internal("imagenes/respuestas/16_5.png")));
-			dropImage.add(new Texture(Gdx.files.internal("imagenes/respuestas/17_5.png")));
-			dropImage.add(new Texture(Gdx.files.internal("imagenes/respuestas/18_5.png")));
-			dropImage.add(new Texture(Gdx.files.internal("imagenes/respuestas/19_5.png")));
+			dropImage.add(new Texture(Gdx.files.internal("respuestas/10_5.png")));
+			dropImage.add(new Texture(Gdx.files.internal("respuestas/11_5.png")));
+			dropImage.add(new Texture(Gdx.files.internal("respuestas/12_5.png")));
+			dropImage.add(new Texture(Gdx.files.internal("respuestas/13_5.png")));
+			dropImage.add(new Texture(Gdx.files.internal("respuestas/14_5.png")));
+			dropImage.add(new Texture(Gdx.files.internal("respuestas/15_5.png")));
+			dropImage.add(new Texture(Gdx.files.internal("respuestas/16_5.png")));
+			dropImage.add(new Texture(Gdx.files.internal("respuestas/17_5.png")));
+			dropImage.add(new Texture(Gdx.files.internal("respuestas/18_5.png")));
+			dropImage.add(new Texture(Gdx.files.internal("respuestas/19_5.png")));
 		}
 		else if (operacion.equals("5_6+5_6")){
-			dropImage.add(new Texture(Gdx.files.internal("imagenes/respuestas/1_6.png")));
-			dropImage.add(new Texture(Gdx.files.internal("imagenes/respuestas/2_6.png")));
-			dropImage.add(new Texture(Gdx.files.internal("imagenes/respuestas/3_6.png")));
-			dropImage.add(new Texture(Gdx.files.internal("imagenes/respuestas/4_6.png")));
-			dropImage.add(new Texture(Gdx.files.internal("imagenes/respuestas/5_6.png")));
-			dropImage.add(new Texture(Gdx.files.internal("imagenes/respuestas/6_6.png")));
-			dropImage.add(new Texture(Gdx.files.internal("imagenes/respuestas/7_6.png")));
-			dropImage.add(new Texture(Gdx.files.internal("imagenes/respuestas/8_6.png")));
-			dropImage.add(new Texture(Gdx.files.internal("imagenes/respuestas/9_6.png")));
-			dropImage.add(new Texture(Gdx.files.internal("imagenes/respuestas/10_6.png")));
+			dropImage.add(new Texture(Gdx.files.internal("respuestas/1_6.png")));
+			dropImage.add(new Texture(Gdx.files.internal("respuestas/2_6.png")));
+			dropImage.add(new Texture(Gdx.files.internal("respuestas/3_6.png")));
+			dropImage.add(new Texture(Gdx.files.internal("respuestas/4_6.png")));
+			dropImage.add(new Texture(Gdx.files.internal("respuestas/5_6.png")));
+			dropImage.add(new Texture(Gdx.files.internal("respuestas/6_6.png")));
+			dropImage.add(new Texture(Gdx.files.internal("respuestas/7_6.png")));
+			dropImage.add(new Texture(Gdx.files.internal("respuestas/8_6.png")));
+			dropImage.add(new Texture(Gdx.files.internal("respuestas/9_6.png")));
+			dropImage.add(new Texture(Gdx.files.internal("respuestas/10_6.png")));
 		}
 		else if (operacion.equals("10_9+13_9")){
-			dropImage.add(new Texture(Gdx.files.internal("imagenes/respuestas/21_9.png")));
-			dropImage.add(new Texture(Gdx.files.internal("imagenes/respuestas/22_9.png")));
-			dropImage.add(new Texture(Gdx.files.internal("imagenes/respuestas/23_9.png")));
-			dropImage.add(new Texture(Gdx.files.internal("imagenes/respuestas/24_9.png")));
-			dropImage.add(new Texture(Gdx.files.internal("imagenes/respuestas/25_9.png")));
-			dropImage.add(new Texture(Gdx.files.internal("imagenes/respuestas/26_9.png")));
-			dropImage.add(new Texture(Gdx.files.internal("imagenes/respuestas/27_9.png")));
-			dropImage.add(new Texture(Gdx.files.internal("imagenes/respuestas/28_9.png")));
-			dropImage.add(new Texture(Gdx.files.internal("imagenes/respuestas/29_9.png")));
+			dropImage.add(new Texture(Gdx.files.internal("respuestas/21_9.png")));
+			dropImage.add(new Texture(Gdx.files.internal("respuestas/22_9.png")));
+			dropImage.add(new Texture(Gdx.files.internal("respuestas/23_9.png")));
+			dropImage.add(new Texture(Gdx.files.internal("respuestas/24_9.png")));
+			dropImage.add(new Texture(Gdx.files.internal("respuestas/25_9.png")));
+			dropImage.add(new Texture(Gdx.files.internal("respuestas/26_9.png")));
+			dropImage.add(new Texture(Gdx.files.internal("respuestas/27_9.png")));
+			dropImage.add(new Texture(Gdx.files.internal("respuestas/28_9.png")));
+			dropImage.add(new Texture(Gdx.files.internal("respuestas/29_9.png")));
 		}
 		else if (operacion.equals("2_6+6_6")){
-			dropImage.add(new Texture(Gdx.files.internal("imagenes/respuestas/1_6.png")));
-			dropImage.add(new Texture(Gdx.files.internal("imagenes/respuestas/2_6.png")));
-			dropImage.add(new Texture(Gdx.files.internal("imagenes/respuestas/3_6.png")));
-			dropImage.add(new Texture(Gdx.files.internal("imagenes/respuestas/4_6.png")));
-			dropImage.add(new Texture(Gdx.files.internal("imagenes/respuestas/5_6.png")));
-			dropImage.add(new Texture(Gdx.files.internal("imagenes/respuestas/6_6.png")));
-			dropImage.add(new Texture(Gdx.files.internal("imagenes/respuestas/7_6.png")));
-			dropImage.add(new Texture(Gdx.files.internal("imagenes/respuestas/8_6.png")));
-			dropImage.add(new Texture(Gdx.files.internal("imagenes/respuestas/9_6.png")));
+			dropImage.add(new Texture(Gdx.files.internal("respuestas/1_6.png")));
+			dropImage.add(new Texture(Gdx.files.internal("respuestas/2_6.png")));
+			dropImage.add(new Texture(Gdx.files.internal("respuestas/3_6.png")));
+			dropImage.add(new Texture(Gdx.files.internal("respuestas/4_6.png")));
+			dropImage.add(new Texture(Gdx.files.internal("respuestas/5_6.png")));
+			dropImage.add(new Texture(Gdx.files.internal("respuestas/6_6.png")));
+			dropImage.add(new Texture(Gdx.files.internal("respuestas/7_6.png")));
+			dropImage.add(new Texture(Gdx.files.internal("respuestas/8_6.png")));
+			dropImage.add(new Texture(Gdx.files.internal("respuestas/9_6.png")));
 		}
 		else if (operacion.equals("11_3+17_3")){
-			dropImage.add(new Texture(Gdx.files.internal("imagenes/respuestas/21_3.png")));
-			dropImage.add(new Texture(Gdx.files.internal("imagenes/respuestas/22_3.png")));
-			dropImage.add(new Texture(Gdx.files.internal("imagenes/respuestas/23_3.png")));
-			dropImage.add(new Texture(Gdx.files.internal("imagenes/respuestas/24_3.png")));
-			dropImage.add(new Texture(Gdx.files.internal("imagenes/respuestas/25_3.png")));
-			dropImage.add(new Texture(Gdx.files.internal("imagenes/respuestas/26_3.png")));
-			dropImage.add(new Texture(Gdx.files.internal("imagenes/respuestas/27_3.png")));
-			dropImage.add(new Texture(Gdx.files.internal("imagenes/respuestas/28_3.png")));
-			dropImage.add(new Texture(Gdx.files.internal("imagenes/respuestas/29_3.png")));
+			dropImage.add(new Texture(Gdx.files.internal("respuestas/21_3.png")));
+			dropImage.add(new Texture(Gdx.files.internal("respuestas/22_3.png")));
+			dropImage.add(new Texture(Gdx.files.internal("respuestas/23_3.png")));
+			dropImage.add(new Texture(Gdx.files.internal("respuestas/24_3.png")));
+			dropImage.add(new Texture(Gdx.files.internal("respuestas/25_3.png")));
+			dropImage.add(new Texture(Gdx.files.internal("respuestas/26_3.png")));
+			dropImage.add(new Texture(Gdx.files.internal("respuestas/27_3.png")));
+			dropImage.add(new Texture(Gdx.files.internal("respuestas/28_3.png")));
+			dropImage.add(new Texture(Gdx.files.internal("respuestas/29_3.png")));
 		}
 		else if (operacion.equals("14_10+3_10")){
-			dropImage.add(new Texture(Gdx.files.internal("imagenes/respuestas/10_10.png")));
-			dropImage.add(new Texture(Gdx.files.internal("imagenes/respuestas/11_10.png")));
-			dropImage.add(new Texture(Gdx.files.internal("imagenes/respuestas/12_10.png")));
-			dropImage.add(new Texture(Gdx.files.internal("imagenes/respuestas/13_10.png")));
-			dropImage.add(new Texture(Gdx.files.internal("imagenes/respuestas/14_10.png")));
-			dropImage.add(new Texture(Gdx.files.internal("imagenes/respuestas/15_10.png")));
-			dropImage.add(new Texture(Gdx.files.internal("imagenes/respuestas/16_10.png")));
-			dropImage.add(new Texture(Gdx.files.internal("imagenes/respuestas/17_10.png")));
-			dropImage.add(new Texture(Gdx.files.internal("imagenes/respuestas/18_10.png")));
-			dropImage.add(new Texture(Gdx.files.internal("imagenes/respuestas/19_10.png")));
+			dropImage.add(new Texture(Gdx.files.internal("respuestas/10_10.png")));
+			dropImage.add(new Texture(Gdx.files.internal("respuestas/11_10.png")));
+			dropImage.add(new Texture(Gdx.files.internal("respuestas/12_10.png")));
+			dropImage.add(new Texture(Gdx.files.internal("respuestas/13_10.png")));
+			dropImage.add(new Texture(Gdx.files.internal("respuestas/14_10.png")));
+			dropImage.add(new Texture(Gdx.files.internal("respuestas/15_10.png")));
+			dropImage.add(new Texture(Gdx.files.internal("respuestas/16_10.png")));
+			dropImage.add(new Texture(Gdx.files.internal("respuestas/17_10.png")));
+			dropImage.add(new Texture(Gdx.files.internal("respuestas/18_10.png")));
+			dropImage.add(new Texture(Gdx.files.internal("respuestas/19_10.png")));
 		}
 	}
 
