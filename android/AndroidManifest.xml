@@ -85,6 +85,11 @@
             android:screenOrientation="sensorLandscape">
 
         </activity>
+        <activity android:name="burbujas.BubblesMain"
+            android:screenOrientation="portrait"/>
+        <activity android:name="burbujas.GameOver"
+            android:screenOrientation="portrait"/>
+            
     </application>
 
 </manifest>

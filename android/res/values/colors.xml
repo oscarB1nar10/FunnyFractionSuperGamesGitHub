@@ -11,4 +11,8 @@
     <color name="btn_color_game">#d6d6f911</color>
     <color name="fondoDefecto">#f5c502</color>
     <color name="fondoDefecto2">#11a2e6</color>
+    <color name="fondo">#83f4fc</color>
+    <color name="blanco">#ffffff</color>
+    <color name="colorpuntaje">#fc0101</color>
+    <color name="color_Texto_burbuja">#181717</color>
 </resources>

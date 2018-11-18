@@ -14,6 +14,7 @@ import com.funnyfractions.game.R;
 import androidlogic.games.archery_game.MainMenu;
 import androidlogic.games.archery_game.MainMenu;
 import bateria.EjecutableBateria;
+import burbujas.BubblesMain;
 
 public class Practica extends Activity {
     private ImageButton retornarHome;
@@ -47,6 +48,13 @@ public class Practica extends Activity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), EjecutableBateria.class);
+                startActivity(intent);
+            }
+        });
+        mul.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), BubblesMain.class);
                 startActivity(intent);
             }
         });

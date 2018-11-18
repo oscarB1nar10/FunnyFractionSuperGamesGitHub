@@ -143,6 +143,7 @@ dependencies {
     implementation 'com.airbnb.android:lottie:2.5.4'
     implementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     implementation 'junit:junit:4.12'
+    implementation 'tyrantgit:explosionfield:1.0.1'
     implementation 'de.hdodenhof:circleimageview:2.2.0'
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'
 }

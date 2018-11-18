@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/fondo"
+    android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/options"
+            android:gravity="center"
+            android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/txtpuntuaciones"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical|center_horizontal"
+                    android:layout_marginTop="60dp"
+                    android:text="Puntuacion : "
+                    android:textColor="@color/colorpuntaje"
+                    android:textSize="35dp"
+                    android:textStyle="bold|italic" />
+
+                <TextView
+                    android:id="@+id/txtscore"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical|center_horizontal"
+                    android:textColor="@color/colorpuntaje"
+                    android:textSize="25dp"
+                    android:textStyle="bold" />
+
+                <Button
+                    android:id="@+id/restart"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical|center_horizontal"
+                    android:layout_marginTop="50dp"
+                    android:background="@drawable/botonamarillo"
+                    android:text="Reiniciar"
+                    android:textColor="@color/blanco"
+                    android:textSize="20dp" />
+
+                <Button
+                    android:id="@+id/home"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical|center_horizontal"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/botonverde"
+                    android:text="Home"
+                    android:textColor="@color/blanco"
+                    android:textSize="20dp" />
+
+                <Button
+                    android:id="@+id/ayuda"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical|center_horizontal"
+                    android:layout_marginBottom="40dp"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/botonverde"
+                    android:text="Ayuda"
+                    android:textColor="@color/blanco"
+                    android:textSize="20dp" />
+        </LinearLayout>
+
+</LinearLayout>
