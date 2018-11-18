@@ -89,6 +89,13 @@
             android:screenOrientation="portrait"/>
         <activity android:name="burbujas.GameOver"
             android:screenOrientation="portrait"/>
+        <activity android:name="gotas.AndroidLauncher"
+            android:screenOrientation="sensorLandscape">
+
+        </activity>
+        <activity android:name="gotas.Menu"
+            android:screenOrientation="sensorLandscape">
+        </activity>
             
     </application>
 
