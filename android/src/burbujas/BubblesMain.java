@@ -301,9 +301,14 @@ public class BubblesMain extends Activity implements View.OnClickListener {
         LayoutInflater layoutInflater = getLayoutInflater();
         View view = layoutInflater.inflate(R.layout.game_over,null);
 
-        Button btn_restar = view.findViewById(R.id.btn_restar);
-        Button btn_home = view.findViewById(R.id.btn_home);
-        Button btn_help = view.findViewById(R.id.btn_help);
+        Button btn_restar = view.findViewById(R.id.btn_restart_b);
+        Button btn_home = view.findViewById(R.id.btn_home_b);
+        Button btn_help = view.findViewById(R.id.btn_help_b);
+
+        final AlertDialog.Builder menu = new AlertDialog.Builder(BubblesMain.this);
+        menu.setView(view);
+        final AlertDialog ad = menu.create();
+        ad.show();
 
 
         btn_restar.setOnClickListener(new View.OnClickListener() {
@@ -311,16 +316,14 @@ public class BubblesMain extends Activity implements View.OnClickListener {
             public void onClick(View v) {
                 for (int i = 0; i < objectAnimators.size(); i++ ){
                     objectAnimators.get(i).start();
-                    dialog.cancel();
+                    ad.dismiss();
+
                 }
             }
         });
 
 
-        AlertDialog.Builder menu = new AlertDialog.Builder(BubblesMain.this);
-        menu.setView(view);
-        menu.create();
-        menu.show();
+
     }
 
     @Override
