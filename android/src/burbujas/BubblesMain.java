@@ -26,6 +26,7 @@ public class BubblesMain extends Activity implements View.OnClickListener {
     Button opcion1, opcion2, opcion3, opcion4;
     ImageView imgoperacion, cor1, cor2, cor3, pausa;
     int numjuegos = 0, puntuacion, heightDp,alea, vidas;
+    private long currentAnimation;
     Thread thread;
     Dialog dialog;
     boolean validateHeight = true;
@@ -167,7 +168,7 @@ public class BubblesMain extends Activity implements View.OnClickListener {
 
         heightDp = (displayMetrics.heightPixels*77)/100;
 
-        thread=new Thread(new Runnable() {
+        thread = new Thread(new Runnable() {
 
             @Override
             public void run() {
@@ -209,20 +210,8 @@ public class BubblesMain extends Activity implements View.OnClickListener {
                 opcion2.setEnabled(false);
                 opcion3.setEnabled(false);
                 opcion4.setEnabled(false);
-                View layout = MostrarDialogo();
-                Button reiniciar = (Button) layout.findViewById(R.id.restart);
-                TextView puntu = (TextView) layout.findViewById(R.id.txtscore);
-                puntu.setText(puntuacion+"/ 1000");
-                reiniciar.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent intent = getIntent();
-                        intent.putExtra("llave",0);
-                        intent.putExtra("puntuacion", 1000);
-                        finish();
-                        startActivity(intent);
-                    }
-                });
+
+                showMenu();
             }
         }catch (Exception e){
         }
@@ -301,7 +290,7 @@ public class BubblesMain extends Activity implements View.OnClickListener {
         LayoutInflater layoutInflater = getLayoutInflater();
         View view = layoutInflater.inflate(R.layout.game_over,null);
 
-        Button btn_restar = view.findViewById(R.id.btn_restart_b);
+        final Button btn_restar = view.findViewById(R.id.btn_restart_b);
         Button btn_home = view.findViewById(R.id.btn_home_b);
         Button btn_help = view.findViewById(R.id.btn_help_b);
 
@@ -310,15 +299,32 @@ public class BubblesMain extends Activity implements View.OnClickListener {
         final AlertDialog ad = menu.create();
         ad.show();
 
+        currentAnimation = objectAnimator1.getCurrentPlayTime();
+
+
+        if(numjuegos < 10){
+            btn_restar.setText("Resumen");
+        }
+
 
         btn_restar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                for (int i = 0; i < objectAnimators.size(); i++ ){
-                    objectAnimators.get(i).start();
+                if(btn_restar.getText().equals("Resumen")){
+                    for (int i = 0; i < objectAnimators.size(); i++ ){
+                        objectAnimators.get(i).setCurrentPlayTime(currentAnimation);
+                        objectAnimators.get(i).start();
+                    }
                     ad.dismiss();
-
+                }else{
+                    for (int i = 0; i < objectAnimators.size(); i++ ){
+                        objectAnimators.get(i).start();
+                    }
+                    ad.dismiss();
                 }
+
+
+
             }
         });
 
