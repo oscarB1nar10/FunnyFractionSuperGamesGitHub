@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.graphics.Point;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.View;
@@ -13,6 +15,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.funnyfractions.game.R;
 
 import java.util.ArrayList;
@@ -20,13 +24,13 @@ import java.util.ArrayList;
 import tyrantgit.explosionfield.ExplosionField;
 
 public class BubblesMain extends Activity implements View.OnClickListener {
+    Handler handler = new Handler();
     ArrayList<ObjectAnimator> objectAnimators = new <ObjectAnimator> ArrayList();
     MediaPlayer sonido,waterSound;
     ExplosionField explosionField;
     ObjectAnimator objectAnimator1, objectAnimator2, objectAnimator3, objectAnimator4;
     Button opcion1, opcion2, opcion3, opcion4;
     ImageView imgoperacion, cor1, cor2, cor3, pausa;
-    LinearLayout main_ll;
     int alea, vidas;
     int numjuegos = 0, puntuacion,heightDp;
     Thread thread;
@@ -58,7 +62,6 @@ public class BubblesMain extends Activity implements View.OnClickListener {
         waterSound.setLooping(true);
         waterSound.setVolume(0,0.2f);
         waterSound.start();
-        main_ll = findViewById(R.id.main_linearLayout);
         IniciarJuego();
         pausa.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,6 +69,7 @@ public class BubblesMain extends Activity implements View.OnClickListener {
                 for (int i = 0; i < objectAnimators.size(); i++ ){
                     objectAnimators.get(i).cancel();
                 }
+                handler.removeCallbacksAndMessages(null);
                 final View layout = MostrarDialogo();
                 Button reiniciar = (Button) layout.findViewById(R.id.restart);
                 TextView puntu = (TextView) layout.findViewById(R.id.txtpuntuaciones);
@@ -181,16 +185,19 @@ public class BubblesMain extends Activity implements View.OnClickListener {
 
 
         Display display = getWindowManager().getDefaultDisplay();
-        Point size = new Point();
-        //display.getSize(size);
-
-        DisplayMetrics displayMetrics=new DisplayMetrics();
+        DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-        display.getMetrics(displayMetrics);
+        display.getRealMetrics(displayMetrics);
 
-        int hg = main_ll.getMeasuredHeight();
-        heightDp = (displayMetrics.heightPixels - hg);
+        heightDp = (displayMetrics.heightPixels*77)/100;
 
+        thread=new Thread(new Runnable() {
+
+            @Override
+            public void run() {
+                checkHeight();
+            }
+        });
         objectAnimator1 = ObjectAnimator.ofFloat(opcion1,"translationY",0f, -heightDp);
         objectAnimator1.setDuration(11000);
         objectAnimator1.start();
@@ -207,6 +214,7 @@ public class BubblesMain extends Activity implements View.OnClickListener {
         objectAnimators.add(objectAnimator2);
         objectAnimators.add(objectAnimator3);
         objectAnimators.add(objectAnimator4);
+        thread.start();
         ValidaJuego();
     }
 
@@ -218,6 +226,7 @@ public class BubblesMain extends Activity implements View.OnClickListener {
             if(puntuacion==0 && numjuegos==0){
                 puntuacion=1000;
             }else if (numjuegos == 10) {
+                handler.removeCallbacksAndMessages(null);
                 for(int i = 0; i < objectAnimators.size(); i++){
                     objectAnimators.get(i).cancel();
                 }
@@ -232,11 +241,11 @@ public class BubblesMain extends Activity implements View.OnClickListener {
                 reiniciar.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                         Intent intent = getIntent();
-                         intent.putExtra("llave",0);
-                         intent.putExtra("puntuacion", 1000);
-                         finish();
-                         startActivity(intent);
+                        Intent intent = getIntent();
+                        intent.putExtra("llave",0);
+                        intent.putExtra("puntuacion", 1000);
+                        finish();
+                        startActivity(intent);
                     }
                 });
             }
@@ -297,9 +306,27 @@ public class BubblesMain extends Activity implements View.OnClickListener {
         }
     }
 
+    public void checkHeight(){
+        Looper.prepare();
+
+        while(validateHeight) {
+            if (objectAnimator1.getAnimatedFraction() == 1.0) {//decide when the bubble has touched the screen top
+                break;
+            }
+        }
+        if(validateHeight) {
+            Intent intent = getIntent();
+            finish();
+            startActivity(intent);
+            Looper.loop();
+        }
+    }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
+
+        handler.removeCallbacksAndMessages(null);
         waterSound.stop();
         validateHeight=false;
     }
@@ -307,6 +334,7 @@ public class BubblesMain extends Activity implements View.OnClickListener {
     @Override
     protected void onPause() {
         super.onPause();
+        handler.removeCallbacksAndMessages(null);
         waterSound.stop();
         validateHeight=false;
     }
