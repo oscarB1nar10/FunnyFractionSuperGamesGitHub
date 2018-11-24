@@ -5,15 +5,11 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import com.funnyfractions.game.R;
 
 import java.util.ArrayList;
@@ -21,7 +17,6 @@ import java.util.ArrayList;
 import tyrantgit.explosionfield.ExplosionField;
 
 public class BubblesMain extends Activity implements View.OnClickListener {
-    Handler handler = new Handler();
     ArrayList<ObjectAnimator> objectAnimators = new <ObjectAnimator> ArrayList();
     MediaPlayer sonido,waterSound;
     ExplosionField explosionField;
@@ -66,7 +61,6 @@ public class BubblesMain extends Activity implements View.OnClickListener {
                 for (int i = 0; i < objectAnimators.size(); i++ ){
                     objectAnimators.get(i).cancel();
                 }
-                handler.removeCallbacksAndMessages(null);
                 final View layout = MostrarDialogo();
                 Button reiniciar = (Button) layout.findViewById(R.id.restart);
                 TextView puntu = (TextView) layout.findViewById(R.id.txtpuntuaciones);
@@ -184,34 +178,6 @@ public class BubblesMain extends Activity implements View.OnClickListener {
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         heightDp=(Math.round(displayMetrics.heightPixels)-(Math.round(displayMetrics.heightPixels)/5));
 
-        Toast.makeText(this,"the current height is: "+heightDp,Toast.LENGTH_LONG).show();
-        System.out.println("value");
-        System.out.println("the current height is: "+displayMetrics.heightPixels);
-
-        thread=new Thread(new Runnable() {
-
-            @Override
-            public void run() {
-                checkHeight();
-            }
-        });
-
-       /* handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                Intent intent = getIntent();
-                intent.putExtra("llave", (numjuegos+1));
-                    if(vidas==2){
-                        intent.putExtra("puntuacion", (puntuacion-75));
-                    }else if(vidas==1){
-                        intent.putExtra("puntuacion", (puntuacion-50));
-                    }else{
-                        intent.putExtra("puntuacion", (puntuacion-100));
-                    }
-                finish();
-                startActivity(intent);
-            }
-        }, 10000);*/
         objectAnimator1 = ObjectAnimator.ofFloat(opcion1,"translationY",0f, -heightDp);
         objectAnimator1.setDuration(13000);
         objectAnimator1.start();
@@ -228,7 +194,6 @@ public class BubblesMain extends Activity implements View.OnClickListener {
         objectAnimators.add(objectAnimator2);
         objectAnimators.add(objectAnimator3);
         objectAnimators.add(objectAnimator4);
-        thread.start();
         ValidaJuego();
     }
 
@@ -240,7 +205,6 @@ public class BubblesMain extends Activity implements View.OnClickListener {
             if(puntuacion==0 && numjuegos==0){
                 puntuacion=1000;
             }else if (numjuegos == 10) {
-                handler.removeCallbacksAndMessages(null);
                 for(int i = 0; i < objectAnimators.size(); i++){
                     objectAnimators.get(i).cancel();
                 }
@@ -272,9 +236,6 @@ public class BubblesMain extends Activity implements View.OnClickListener {
         dialog = new Dialog(this, 0);
         dialog.setContentView(layout);
         dialog.show();
-        //dialog.cancel();
-        //Intent intent=new Intent(this,GameOver.class);
-        //startActivity(intent);
         return layout;
     }
 
@@ -323,30 +284,9 @@ public class BubblesMain extends Activity implements View.OnClickListener {
         }
     }
 
-    public void checkHeight(){
-        Looper.prepare();
-
-        while(validateHeight) {
-            Toast.makeText(this,"current animated fraction: "+objectAnimator1.getAnimatedFraction(),Toast.LENGTH_LONG).show();
-            if (objectAnimator1.getAnimatedFraction() == 1.0) {//decide when the bubble has touched the screen top
-                System.out.println("I got to the top");
-                Toast.makeText(this,"I got to the top",Toast.LENGTH_LONG).show();
-                break;
-            }
-        }
-        if(validateHeight) {
-            Intent intent = getIntent();
-            finish();
-            startActivity(intent);
-            Looper.loop();
-        }
-    }
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
-
-        handler.removeCallbacksAndMessages(null);
         waterSound.stop();
         validateHeight=false;
     }
@@ -354,10 +294,8 @@ public class BubblesMain extends Activity implements View.OnClickListener {
     @Override
     protected void onPause() {
         super.onPause();
-        handler.removeCallbacksAndMessages(null);
         waterSound.stop();
         validateHeight=false;
-        //Toast.makeText(this,"the current (y) coordinate from objectAnimator1 is: "+objectAnimator1.getAnimatedValue())
     }
 
     @Override
