@@ -62,7 +62,7 @@ public class BubblesMain extends Activity implements View.OnClickListener {
                 for (int i = 0; i < objectAnimators.size(); i++ ){
                     objectAnimators.get(i).cancel();
                 }
-                 MostrarDialogo();
+                showMenu();
             }
         });
     }
@@ -319,6 +319,8 @@ public class BubblesMain extends Activity implements View.OnClickListener {
 
         AlertDialog.Builder menu = new AlertDialog.Builder(BubblesMain.this);
         menu.setView(view);
+        menu.create();
+        menu.show();
     }
 
     @Override
