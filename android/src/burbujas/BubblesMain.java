@@ -1,6 +1,7 @@
 package burbujas;
 import android.animation.ObjectAnimator;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Intent;
 import android.media.MediaPlayer;
@@ -8,6 +9,7 @@ import android.os.Bundle;
 import android.os.Looper;
 import android.util.DisplayMetrics;
 import android.view.Display;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -60,21 +62,7 @@ public class BubblesMain extends Activity implements View.OnClickListener {
                 for (int i = 0; i < objectAnimators.size(); i++ ){
                     objectAnimators.get(i).cancel();
                 }
-                final View layout = MostrarDialogo();
-                Button reiniciar = layout.findViewById(R.id.restart);
-                TextView puntu =  layout.findViewById(R.id.txtpuntuaciones);
-                reiniciar.setText("REANUDAR");
-                puntu.setText("");
-                reiniciar.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        for (int i = 0; i < objectAnimators.size(); i++ ){
-                            objectAnimators.get(i).start();
-                            dialog.cancel();
-                        }
-                    }
-                });
-
+                 MostrarDialogo();
             }
         });
     }
@@ -307,6 +295,30 @@ public class BubblesMain extends Activity implements View.OnClickListener {
             startActivity(intent);
             Looper.loop();
         }
+    }
+
+    public void showMenu(){
+        LayoutInflater layoutInflater = getLayoutInflater();
+        View view = layoutInflater.inflate(R.layout.game_over,null);
+
+        Button btn_restar = view.findViewById(R.id.btn_restar);
+        Button btn_home = view.findViewById(R.id.btn_home);
+        Button btn_help = view.findViewById(R.id.btn_help);
+
+
+        btn_restar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                for (int i = 0; i < objectAnimators.size(); i++ ){
+                    objectAnimators.get(i).start();
+                    dialog.cancel();
+                }
+            }
+        });
+
+
+        AlertDialog.Builder menu = new AlertDialog.Builder(BubblesMain.this);
+        menu.setView(view);
     }
 
     @Override

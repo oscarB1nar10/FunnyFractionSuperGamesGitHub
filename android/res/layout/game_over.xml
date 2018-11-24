@@ -43,7 +43,7 @@
             android:textSize="25dp" />
 
         <Button
-            android:id="@+id/restart"
+            android:id="@+id/btn_restart"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/botonamarillo"
@@ -54,7 +54,7 @@
             tools:layout_editor_absoluteY="145dp" />
 
         <Button
-            android:id="@+id/home"
+            android:id="@+id/btn_home"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
@@ -66,7 +66,7 @@
             tools:layout_editor_absoluteY="264dp" />
 
         <Button
-            android:id="@+id/ayuda"
+            android:id="@+id/btn_help"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
