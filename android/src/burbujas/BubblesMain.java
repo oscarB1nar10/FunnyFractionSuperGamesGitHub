@@ -3,14 +3,17 @@ import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Point;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.DisplayMetrics;
+import android.view.Display;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,6 +31,7 @@ public class BubblesMain extends Activity implements View.OnClickListener {
     ObjectAnimator objectAnimator1, objectAnimator2, objectAnimator3, objectAnimator4;
     Button opcion1, opcion2, opcion3, opcion4;
     ImageView imgoperacion, cor1, cor2, cor3, pausa;
+    LinearLayout main_ll;
     int alea, vidas;
     int numjuegos = 0, puntuacion,heightDp;
     Thread thread;
@@ -59,6 +63,7 @@ public class BubblesMain extends Activity implements View.OnClickListener {
         waterSound.setLooping(true);
         waterSound.setVolume(0,0.2f);
         waterSound.start();
+        main_ll = findViewById(R.id.main_linearLayout);
         IniciarJuego();
         pausa.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -180,9 +185,17 @@ public class BubblesMain extends Activity implements View.OnClickListener {
         opcion4.setText(Preguntas.get(alea).opc4);//
 
 
+
+        Display display = getWindowManager().getDefaultDisplay();
+        Point size = new Point();
+        //display.getSize(size);
+
         DisplayMetrics displayMetrics=new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-        heightDp=(Math.round(displayMetrics.heightPixels)-(Math.round(displayMetrics.heightPixels)/5));
+        display.getMetrics(displayMetrics);
+
+        int hg = main_ll.getMeasuredHeight();
+        heightDp = (displayMetrics.heightPixels - hg);
 
         Toast.makeText(this,"the current height is: "+heightDp,Toast.LENGTH_LONG).show();
         System.out.println("value");
@@ -213,16 +226,16 @@ public class BubblesMain extends Activity implements View.OnClickListener {
             }
         }, 10000);*/
         objectAnimator1 = ObjectAnimator.ofFloat(opcion1,"translationY",0f, -heightDp);
-        objectAnimator1.setDuration(13000);
+        objectAnimator1.setDuration(11000);
         objectAnimator1.start();
         objectAnimator2 = ObjectAnimator.ofFloat(opcion2, "translationY", 0f,-heightDp);
-        objectAnimator2.setDuration(13000);
+        objectAnimator2.setDuration(11000);
         objectAnimator2.start();
         objectAnimator3 = ObjectAnimator.ofFloat(opcion3, "translationY", 0f, -heightDp);
-        objectAnimator3.setDuration(13000);
+        objectAnimator3.setDuration(11000);
         objectAnimator3.start();
         objectAnimator4 = ObjectAnimator.ofFloat(opcion4, "translationY", 0f, -heightDp);
-        objectAnimator4.setDuration(13000);
+        objectAnimator4.setDuration(11000);
         objectAnimator4.start();
         objectAnimators.add(objectAnimator1);
         objectAnimators.add(objectAnimator2);
