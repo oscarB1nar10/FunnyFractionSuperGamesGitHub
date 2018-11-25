@@ -65,8 +65,8 @@ public class MainActivity extends Game implements InputProcessor {
 
 		raindrops = new Array<Rectangle>();
 		toques = 1;
-		//Gdx.input.setCatchBackKey(true);
-		//Gdx.input.setInputProcessor(this);
+		Gdx.input.setCatchBackKey(true);
+		Gdx.input.setInputProcessor(this);
 		spawnRaindrop();
 	}
 
@@ -220,13 +220,10 @@ public class MainActivity extends Game implements InputProcessor {
 
 	@Override
 	public void render() {
-		Gdx.gl.glClearColor(0, 0, 0.2f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 		camera.update();
-
 		batch.setProjectionMatrix(camera.combined);
-
 		batch.begin();
 		//here we put the background game
 		batch.draw(dropsFalling,0,0);
@@ -234,7 +231,7 @@ public class MainActivity extends Game implements InputProcessor {
 		for(Rectangle raindrop: raindrops) {
 			batch.draw(dropImage.get(random), raindrop.x, raindrop.y);
 		}
-        batch.draw(pause, 0, 480-pause.getHeight());
+		batch.draw(pause,0,416,64,64);
 		batch.end();
 
 		if(Gdx.input.isTouched()) {
