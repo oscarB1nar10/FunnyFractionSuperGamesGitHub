@@ -20,7 +20,7 @@ import java.util.Iterator;
 
 public class MainActivity extends Game implements InputProcessor {
 	ArrayList<Texture> dropImage;
-	Texture bucketImage, pause;
+	Texture bucketImage, pause, dropsFalling;
 	Sound dropSound;
 	Music rainMusic;
 	SpriteBatch batch;
@@ -43,7 +43,9 @@ public class MainActivity extends Game implements InputProcessor {
 		LlenarOperaciones();
 
 		bucketImage = new Texture(Gdx.files.internal("buho.png"));
-		pause = new Texture(Gdx.files.internal("droplet.png"));
+		pause = new Texture(Gdx.files.internal("pause_button.png"));
+		dropsFalling = new Texture(Gdx.files.internal("dropsFalling.png"));
+
 
 		dropSound = Gdx.audio.newSound(Gdx.files.internal("sounds/drop.wav"));
 		rainMusic = Gdx.audio.newMusic(Gdx.files.internal("sounds/rain.mp3"));
@@ -226,11 +228,13 @@ public class MainActivity extends Game implements InputProcessor {
 		batch.setProjectionMatrix(camera.combined);
 
 		batch.begin();
-		batch.draw(pause, 0, 480-pause.getHeight());
+		//here we put the background game
+		batch.draw(dropsFalling,0,0);
 		batch.draw(bucketImage, bucket.x, bucket.y);
 		for(Rectangle raindrop: raindrops) {
 			batch.draw(dropImage.get(random), raindrop.x, raindrop.y);
 		}
+        batch.draw(pause, 0, 480-pause.getHeight());
 		batch.end();
 
 		if(Gdx.input.isTouched()) {
