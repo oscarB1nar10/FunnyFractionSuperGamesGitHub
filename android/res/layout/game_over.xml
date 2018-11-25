@@ -26,13 +26,15 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/txtpuntuaciones"
+            android:id="@+id/txtpuntuacionb"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Puntuacion : "
             android:textStyle="bold|italic"
             android:textColor="@color/colorpuntaje"
-            android:textSize="35dp" />
+            android:textSize="35dp"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center"/>
 
         <TextView
             android:id="@+id/txtscore"
