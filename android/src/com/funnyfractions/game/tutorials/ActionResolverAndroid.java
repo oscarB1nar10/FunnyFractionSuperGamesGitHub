@@ -20,38 +20,25 @@ import androidlogic.practice.Practica;
 public class ActionResolverAndroid implements ActionResolver {
 
 
-
     Context context;
     SharedPreferences sharedP;
 
     public ActionResolverAndroid(Context androidLauncher2) {
         context = androidLauncher2;
-        sharedP = androidLauncher2.getSharedPreferences("SHARED_PREFERENCES",Context.MODE_PRIVATE);
+        sharedP = androidLauncher2.getSharedPreferences("SHARED_PREFERENCES", Context.MODE_PRIVATE);
 
     }
 
     @Override
     public void showToast(CharSequence toastMessage, int toastDuration) {
-        Toast.makeText(context,toastMessage,toastDuration).show();
-    }
-
-    @Override
-    public void showAlertBox(String alertBoxTitle, String alertBoxMessage, String alertBoxButtonText) {
-
-    }
-
-    @Override
-    public void openUri(String uri) {
-
+        Toast.makeText(context, toastMessage, toastDuration).show();
     }
 
     @Override
     public void goToAndroid() {
         SharedPreferences.Editor editor2 = sharedP.edit();
-        SharedPreferences prefs = context.getSharedPreferences("SHARED_PREFERENCES", Context.MODE_PRIVATE);
-
-        if(prefs.getInt("currentLevel",-1) >0){
-            int value = prefs.getInt("currentLevel",-1);
+        if(sharedP.getInt("currentLevel",-1) >0){
+            int value = sharedP.getInt("currentLevel",-1);
             value++;
             editor2.putInt("currentLevel", value);
             editor2.apply();
@@ -60,8 +47,6 @@ public class ActionResolverAndroid implements ActionResolver {
             editor.putInt("currentLevel", 1);
             editor.commit();
         }
-
-
         Intent intent = new Intent(context, AndroidLauncher2.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         context.startActivity(intent);
@@ -82,27 +67,18 @@ public class ActionResolverAndroid implements ActionResolver {
         int lastScore = sharedP.getInt("score",0);
         editor.putInt("score",(lastScore+score));
         editor.apply();
-
     }
 
     @Override
     public void pauseArcheryGame() {
         Intent intent = new Intent(context, MenuArcheryActivity.class);
-        //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        //intent.putExtra("usuario", "MiUsuario");
         context.startActivity(intent);
     }
 
     @Override
     public void menu() {
-         createMenu();
-
-    }
-
-    public void createMenu (){
 
         final Activity activity = (Activity) context;
-
         /*
             Here we show a menu to control the game run.
          */
@@ -112,9 +88,9 @@ public class ActionResolverAndroid implements ActionResolver {
                 SharedPreferences prefs = context.getSharedPreferences("SHARED_PREFERENCES", Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor2 = sharedP.edit();
                 final AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                 boolean soundV = true;
+                boolean soundV = true;
                 // Get the layout inflater
-                 LayoutInflater inflater = activity.getLayoutInflater();
+                LayoutInflater inflater = activity.getLayoutInflater();
                 View view = inflater.inflate(R.layout.pause_menu_archery_game, null);
 
                 ImageButton restar = view.findViewById(R.id.btn_restar);
@@ -162,9 +138,6 @@ public class ActionResolverAndroid implements ActionResolver {
                 }else{
                     stars.setVisibility(View.INVISIBLE);
                 }
-
-
-
 
                 restar.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -222,13 +195,78 @@ public class ActionResolverAndroid implements ActionResolver {
                         context.startActivity(intent);
                     }
                 });
-
-
             }
         });
-
-
     }
 
+    @Override
+    public void     menuGotas() {
+        final Activity activity = (Activity) context;
+        /*
+            Here we show a menu to control the game run.
+         */
+        activity.runOnUiThread(new Runnable() {
+            public void run() {
 
+                final AlertDialog.Builder builder = new AlertDialog.Builder(context).setCancelable(false);
+                boolean soundV;
+                // Get the layout inflater
+                LayoutInflater inflater = activity.getLayoutInflater();
+                View view = inflater.inflate(R.layout.menu_drop_game, null);
+
+                ImageView play = view.findViewById(R.id.btn_play_drops);
+                ImageView home = view.findViewById(R.id.btn_home_drops);
+                final ImageView sound = view.findViewById(R.id.btn_sound_drops);
+
+                if(sharedP.getBoolean("sound_drop",true) == true){
+                    sound.setImageResource(R.drawable.sonido);
+                }else{
+                    sound.setImageResource(R.drawable.mute);
+                }
+
+
+                // Inflate and set the layout for the dialog
+                // Pass null as the parent view because its going in the dialog layout
+                builder.setView(view);
+                // Add action buttons
+                builder.create();
+                final AlertDialog alertDialog = builder.show();
+                play.setOnClickListener(new View.OnClickListener() {
+                    SharedPreferences.Editor editor = sharedP.edit();
+                    @Override
+                    public void onClick(View v) {
+                        alertDialog.dismiss();
+                        editor.putBoolean("pause",false);
+                        editor.commit();
+
+                    }
+                });
+
+                home.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(context,Practica.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        activity.startActivity(intent);
+                    }
+                });
+
+                sound.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        SharedPreferences.Editor editor = sharedP.edit();
+                        if(sharedP.getBoolean("sound_drop", true)){
+                            editor.putBoolean("sound_drop", false);
+                            sound.setImageResource(R.drawable.mute);
+                        }
+                        else {
+                            editor.putBoolean("sound_drop", true);
+                            sound.setImageResource(R.drawable.sonido);
+                        }
+                        editor.commit();
+                    }
+                });
+            }
+        });
+    }
 }

@@ -3,6 +3,7 @@ package game;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
@@ -14,6 +15,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
+import com.funnyfractions.game.archery_game.ActionResolver;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -30,15 +32,23 @@ public class MainActivity extends Game implements InputProcessor {
 	long lastDropTime, toques;
 	int random;
 	String operacion;
+	ActionResolver  actionResolver;
+	private Preferences pref;
 
-	public MainActivity(String operacion) {
+	public MainActivity(String operacion, ActionResolver actionResolver) {
+		this.actionResolver = actionResolver;
 		this.operacion = operacion;
+
 	}
 
 	@Override
 	public void create() {
 		random = 0;
 		dropImage = new ArrayList<Texture>();
+		pref = Gdx.app.getPreferences("SHARED_PREFERENCES");
+		pref.putBoolean("pause",false);
+		pref.flush();
+
 
 		LlenarOperaciones();
 
@@ -225,6 +235,12 @@ public class MainActivity extends Game implements InputProcessor {
 		camera.update();
 		batch.setProjectionMatrix(camera.combined);
 		batch.begin();
+
+		if(!pref.getBoolean("sound_drop",true)){
+			rainMusic.pause();
+		}else  if(!rainMusic.isPlaying()){
+			rainMusic.play();
+		}
 		//here we put the background game
 		batch.draw(dropsFalling,0,0);
 		batch.draw(bucketImage, bucket.x, bucket.y);
@@ -251,7 +267,7 @@ public class MainActivity extends Game implements InputProcessor {
 		}
 
 		Iterator<Rectangle> iter = raindrops.iterator();
-		while(iter.hasNext()) {
+		while(iter.hasNext() && !pref.getBoolean("pause",false)) {
 			Rectangle raindrop = iter.next();
 			raindrop.y -= 200 * Gdx.graphics.getDeltaTime();
 			if(raindrop.y + 64 < 0) iter.remove();
@@ -264,7 +280,7 @@ public class MainActivity extends Game implements InputProcessor {
 
 	@Override
 	public void dispose() {
-		for(int i = 0; i <= dropImage.size(); i++){
+		for(int i = 0; i < dropImage.size(); i++){
 			dropImage.get(i).dispose();
 		}
 		bucketImage.dispose();
@@ -302,9 +318,12 @@ public class MainActivity extends Game implements InputProcessor {
 
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-		System.out.println("screenX vale "+screenX+" y screenY vale "+screenY);
-		if((screenX == 0 || screenX < 100) && (screenY == 0 || screenY < 100)){
-		    
+		int btnBounds = (64 * Gdx.graphics.getWidth()) / 1280;
+		if ((screenX == 0 || screenX < btnBounds) && (screenY == 0 || screenY < btnBounds)) {
+			Preferences pref = Gdx.app.getPreferences("SHARED_PREFERENCES");
+			pref.putBoolean("pause",true);
+			pref.flush();
+			actionResolver.menuGotas();
 		}
 		return false;
 	}

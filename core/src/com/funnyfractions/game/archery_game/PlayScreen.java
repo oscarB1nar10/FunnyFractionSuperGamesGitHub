@@ -672,9 +672,6 @@ public class PlayScreen  extends InputProcessorsV2 implements Screen , Applicati
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        System.out.println("arc position: ( " + xValue + ", " + yValue + ")");
-        System.out.println("you touch at: ( X = " + screenX + " , Y = " + screenY);
-        System.out.println("the screen size: width= " + Gdx.graphics.getWidth() + " , " + Gdx.graphics.getHeight());
         int btnBounds = (128 * Gdx.graphics.getWidth()) / 1280;
         if ((screenX == 0 || screenX < btnBounds) && (screenY == 0 || screenY < btnBounds)) {
             Preferences pref = Gdx.app.getPreferences("SHARED_PREFERENCES");
@@ -833,14 +830,6 @@ public class PlayScreen  extends InputProcessorsV2 implements Screen , Applicati
         pauseButton = new Texture(Gdx.files.internal("pause_button.png"));
 
     }
-
-
-
-
-
-
-
-
 }
 
 
