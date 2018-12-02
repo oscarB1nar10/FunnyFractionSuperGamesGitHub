@@ -28,34 +28,30 @@ public class Menu extends Activity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.menu);
-        random = (int)(Math.random()*12);
+        random = (int)(Math.random()*10);
         //Se llena la lista con los valores de las operaciones para despues ser conparadas con el de el Hashmap
-        imagenes.add("3_4+5_4");
-        imagenes.add("7_3+2_3");
-        imagenes.add("1_12+2_12");
-        imagenes.add("4_8+5_8");
-        imagenes.add("8_7+9_7");
-        imagenes.add("3_3+2_3");
-        imagenes.add("12_5+3_5");
-        imagenes.add("5_6+5_6");
-        imagenes.add("10_9+13_9");
-        imagenes.add("2_6+6_6");
-        imagenes.add("11_3+17_3");
-        imagenes.add("14_10+3_10");
+        imagenes.add("1_2%4_4");
+        imagenes.add("7_5%5_2");
+        imagenes.add("7_9%15_3");
+        imagenes.add("8_9%4_5");
+        imagenes.add("9_2%3_8");
+        imagenes.add("9_4%12_6");
+        imagenes.add("15_5%8_7");
+        imagenes.add("2_3%11_4");
+        imagenes.add("3_6%7_4");
+        imagenes.add("6_5%9_8");
 
         //Se llena el Hashmap
-        lista.put("3_4+5_4",R.drawable.ope1);
-        lista.put("7_3+2_3",R.drawable.ope5);
-        lista.put("1_12+2_12",R.drawable.ope6);
-        lista.put("4_8+5_8",R.drawable.ope7);
-        lista.put("8_7+9_7",R.drawable.ope8);
-        lista.put("3_3+2_3",R.drawable.ope9);
-        lista.put("12_5+3_5",R.drawable.ope10);
-        lista.put("5_6+5_6",R.drawable.ope11);
-        lista.put("10_9+13_9",R.drawable.ope12);
-        lista.put("2_6+6_6",R.drawable.ope2);
-        lista.put("11_3+17_3",R.drawable.ope3);
-        lista.put("14_10+3_10",R.drawable.ope4);
+        lista.put("1_2%4_4",R.drawable.ope1);
+        lista.put("7_5%5_2",R.drawable.ope5);
+        lista.put("7_9%15_3",R.drawable.ope6);
+        lista.put("8_9%4_5",R.drawable.ope7);
+        lista.put("9_2%3_8",R.drawable.ope8);
+        lista.put("9_4%12_6",R.drawable.ope9);
+        lista.put("15_5%8_7",R.drawable.ope10);
+        lista.put("2_3%11_4",R.drawable.ope2);
+        lista.put("3_6%7_4",R.drawable.ope3);
+        lista.put("6_5%9_8",R.drawable.ope4);
         skip = findViewById(R.id.btnskip);
         operacion = findViewById(R.id.imgoperacion);
         aux = imagenes.get(random);
