@@ -159,7 +159,7 @@
                 tools:layout_editor_absoluteY="188dp" />
 
             <com.google.android.gms.common.SignInButton
-                android:id="@+id/sign_in_button"
+                android:id="@+id/sign_in_buttonw"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp" />
