@@ -5,15 +5,25 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
+import android.support.test.espresso.remote.EspressoRemoteMessage;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.funnyfractions.game.R;
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.SignInButton;
+import com.google.android.gms.common.api.GoogleApiClient;
 
 import java.util.Locale;
 
@@ -21,15 +31,30 @@ import androidlogic.login.MainActivity;
 import androidlogic.practice.Practica;
 import androidlogic.tutorials.Tutorial;
 
-public class Home extends Activity {
+public class Home extends Activity implements GoogleApiClient.OnConnectionFailedListener {
     private TextView logeando;
     private ImageView config, log;
     private ImageButton US,ES;
     private Button tuto, prac, evalu;
+    private GoogleSignInClient mGoogleSignInClient;
+    private SignInButton signInButton;
+    public static final int RC_SIGN_IN = 101;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home);
+
+        // Configure sign-in to request the user's ID, email address, and basic
+        // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .build();
+
+        // Build a GoogleSignInClient with the options specified by gso.
+        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+
+
         config = (ImageView) findViewById(R.id.configurar);
         log = (ImageView) findViewById(R.id.logeo);
         logeando = (TextView) findViewById(R.id.txt_logeo);
@@ -42,6 +67,7 @@ public class Home extends Activity {
         tuto = (Button) findViewById(R.id.btntuto);
         prac = (Button) findViewById(R.id.btnprac);
         evalu = (Button) findViewById(R.id.btnevalu);
+        signInButton = findViewById(R.id.sign_in_button);
         log.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -72,6 +98,15 @@ public class Home extends Activity {
                 /*Intent intent = new Intent(getApplicationContext(), Evaluacion.class);
                 startActivity(intent);
                 overridePendingTransition(R.anim.zoom_back_in, R.anim.zoom_back_out);*/
+            }
+        });
+
+        signInButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getApplicationContext(), "sign whit google", Toast.LENGTH_LONG).show();
+                //Intent signInIntent = mGoogleSignInClient.getSignInIntent();
+                //startActivityForResult(signInIntent, RC_SIGN_IN);
             }
         });
         Bundle dato = getIntent().getExtras();
@@ -135,5 +170,10 @@ public class Home extends Activity {
         ES.setImageDrawable(null);
         config.setImageDrawable(null);
         log.setImageDrawable(null);
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
     }
 }

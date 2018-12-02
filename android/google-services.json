@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "488323655191",
+    "firebase_url": "https://funnyfractions-c171e.firebaseio.com",
+    "project_id": "funnyfractions-c171e",
+    "storage_bucket": "funnyfractions-c171e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:488323655191:android:d6d81f33596d7ddf",
+        "android_client_info": {
+          "package_name": "com.funnyfractions.game"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "488323655191-fl3l6gn2nojo2eshn5eed7kc67rll6r9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.funnyfractions.game",
+            "certificate_hash": "81c15803f5341b3d58f9da3f60f7a62b73afe669"
+          }
+        },
+        {
+          "client_id": "488323655191-01csojsf7hi7446q1au4p2ptcuhnqb0u.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyANE_fGuKYQC2hQe_yjgphHwQSDZlzxUmc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "488323655191-01csojsf7hi7446q1au4p2ptcuhnqb0u.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
