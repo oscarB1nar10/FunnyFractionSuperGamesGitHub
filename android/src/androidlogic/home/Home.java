@@ -25,6 +25,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.common.api.Status;
 
 import java.util.Locale;
 
@@ -32,16 +34,28 @@ import androidlogic.login.MainActivity;
 import androidlogic.practice.Practica;
 import androidlogic.tutorials.Tutorial;
 
-public class Home extends Activity implements GoogleApiClient.OnConnectionFailedListener {
+public class Home extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
     private TextView logeando;
     private ImageView config, log;
     private ImageButton US,ES;
     private Button tuto, prac, evalu;
+    private GoogleApiClient googleApiClient;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home);
+
+        // Configure sign-in to request the user's ID, email address, and basic
+        // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .build();
+
+        googleApiClient  = new GoogleApiClient.Builder(this)
+                .enableAutoManage(this, this)
+                .addApi(Auth.GOOGLE_SIGN_IN_API)
+                .build();
 
         config = (ImageView) findViewById(R.id.configurar);
         log = (ImageView) findViewById(R.id.logeo);
@@ -58,6 +72,16 @@ public class Home extends Activity implements GoogleApiClient.OnConnectionFailed
         log.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Auth.GoogleSignInApi.signOut(googleApiClient).setResultCallback(new ResultCallback<Status>() {
+                    @Override
+                    public void onResult(@NonNull Status status) {
+                        if(status.isSuccess()){
+                            Intent intent = new Intent(Home.this, MainActivity.class);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            startActivity(intent);
+                        }
+                    }
+                });
                 onBackPressed();
             }
         });

@@ -69,7 +69,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     private RequestQueue requestQueue;
     private JsonObjectRequest jsonObjectRequest;
     private SharedPreferences sharedP;
-    private GoogleApiClient googleApiClient;
     private GoogleSignInClient mGoogleSignInClient;
     private SignInButton signInButton;
     public static final int RC_SIGN_IN = 101;
@@ -78,6 +77,9 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_layout);
+
+        signInButton = (SignInButton) findViewById(R.id.sign_in_buttonw);
+        checkExistingAccount();
 
         // Configure sign-in to request the user's ID, email address, and basic
         // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
@@ -89,6 +91,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         // Build a GoogleSignInClient with the options specified by gso.
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
+
         sharedP = getSharedPreferences("SHARED_PREFERENCES", Context.MODE_PRIVATE);
 
         SharedPreferences.Editor editor2 = sharedP.edit();
@@ -97,7 +100,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         editor2.apply();
 
         //------------------------------ImageButton----------------
-        signInButton = (SignInButton) findViewById(R.id.sign_in_buttonw);
         US=findViewById(R.id.english);
         US.setEnabled(true);
         ES=findViewById(R.id.espanol);
@@ -329,7 +331,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
             Intent intent = new Intent(MainActivity.this, Home.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
             intent.putExtra("usuario", account.getEmail());
-
             startActivity(intent);
 
         } catch (ApiException e) {
@@ -340,8 +341,18 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         }
     }
 
+    private void checkExistingAccount(){
+        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
+        if(account != null){
+            Intent intent = new Intent(MainActivity.this, Home.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            intent.putExtra("usuario", account.getEmail());
+            startActivity(intent);
+        }
+    }
+
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-
+        Toast.makeText(MainActivity.this, "Error al iniciar sesion", Toast.LENGTH_LONG).show();
     }
 }
