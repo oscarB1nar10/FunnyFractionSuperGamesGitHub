@@ -15,7 +15,8 @@ import java.util.ArrayList;
 public class EjecutableBateria extends AppCompatActivity implements View.OnClickListener{
     ArrayList<Pregunta> preguntas;
     TextView enunciado, pregunta,respuesta1,respuesta2,respuesta3,respuesta4;
-    ImageView operacion;
+    ArrayList<TextView> txtvList = new ArrayList<>();
+    ImageView operacion, selector;
     LottieAnimationView animacionBateria;
     int random = 0;
     final static int[] VFRAME= new int[]{6, 12, 18, 24, 30, 36, 40, 50, 54, 60, 68, 74};
@@ -25,35 +26,55 @@ public class EjecutableBateria extends AppCompatActivity implements View.OnClick
         setContentView(R.layout.activity_ejecutable_bateria);
         animacionBateria=findViewById(R.id.animacionBateria);
         animacionBateria.useHardwareAcceleration(true);
-        random = (int)(Math.random()*10);
         // animacionBateria.setRepeatCount(5);
         enunciado=findViewById(R.id.enunciado);
         operacion=findViewById(R.id.operacion);
+        selector = findViewById(R.id.selector);
         pregunta=findViewById(R.id.pregunta);
         preguntas= new ArrayList<>();
         //_----------------------------------
         respuesta1=findViewById(R.id.valor2);
+        txtvList.add(respuesta1);
         respuesta1.setOnClickListener(this);
         respuesta2=findViewById(R.id.valor3);
+        txtvList.add(respuesta2);
         respuesta2.setOnClickListener(this);
         respuesta3=findViewById(R.id.valor4);
+        txtvList.add(respuesta3);
         respuesta3.setOnClickListener(this);
         respuesta4=findViewById(R.id.valor5);
+        txtvList.add(respuesta4);
         respuesta4.setOnClickListener(this);
         //__-------------------------------
         anadirEnunciados();
         extraerPreguntas();
+        asignarValores();
     }
+
+    private void asignarValores() {
+        int randomN = (int) (Math.random()*8+1);
+        int randomA = (int)(Math.random()*4+1);
+
+        txtvList.get(0).setText(""+(randomN));
+        txtvList.get(1).setText(""+(randomN+1));
+        txtvList.get(2).setText(""+(randomN+2));
+        txtvList.get(3).setText(""+(randomN+3));
+
+        txtvList.get(randomA-1).setText(""+preguntas.get((random-1)).respuesta);
+
+    }
+
     public void extraerPreguntas(){
+        random =(int)(Math.random()*10+1);
         //generar valor aleatorio-> añadir valores a la vista
-        enunciado.setText(preguntas.get(random).enunciado);
-        operacion.setImageResource(preguntas.get(random).operacion);
-        pregunta.setText(preguntas.get(random).pregunta);
+        enunciado.setText(preguntas.get(random-1).enunciado);
+        operacion.setImageResource(preguntas.get(random-1).operacion);
+        pregunta.setText(preguntas.get(random-1).pregunta);
     }
 
     public void anadirEnunciados(){
         preguntas.add(new Pregunta("La bateria ha estado cargando durante un tiempo igual a la siguiente operacion", R.drawable.op2, "¿cuanto nivel de carga tiene la bateria?",2));
-        preguntas.add(new Pregunta("La bateria ha estado cargando durante un tiempo igual a la siguiente operacion", R.drawable.op1, "¿cuanto nivel de carga tiene la bateria?",2));
+        preguntas.add(new Pregunta("La bateria ha estado cargando durante un tiempo igual a la siguiente operacion", R.drawable.op1, "¿cuanto nivel de carga tiene la bateria?",1));
         preguntas.add(new Pregunta("La bateria ha estado cargando durante un tiempo igual a la siguiente operacion", R.drawable.op3, "¿cuanto nivel de carga tiene la bateria?",2));
         preguntas.add(new Pregunta("La bateria ha estado cargando durante un tiempo igual a la siguiente operacion", R.drawable.op4, "¿cuanto nivel de carga tiene la bateria?",2));
         preguntas.add(new Pregunta("La bateria ha estado cargando durante un tiempo igual a la siguiente operacion", R.drawable.op5, "¿cuanto nivel de carga tiene la bateria?",2));
@@ -71,40 +92,79 @@ public class EjecutableBateria extends AppCompatActivity implements View.OnClick
     }
     @Override
     public void onClick(View view) {
+
         //El atributo "respuesta" pEr a pregunta se obtiene a partir del valor aleatorio generado en la funcion "extraer preguntas"
         switch (view.getId()){
             case R.id.valor2:
-                if(Integer.parseInt((String) respuesta1.getText())==preguntas.get(0).respuesta){
-                    animacionBateria.setMaxFrame(3);
-                    animacionBateria.playAnimation();
-                }
-                break;
-            case R.id.valor3:
-                if(Integer.parseInt((String) respuesta2.getText())==preguntas.get(0).respuesta){
-                    animacionBateria.playAnimation();
-                }
-                break;
-            case R.id.valor4:
-                if(Integer.parseInt((String) respuesta3.getText())==preguntas.get(0).respuesta){
+                selector.setImageResource(R.drawable.s3);
+                if(Integer.parseInt((String) respuesta1.getText()) == preguntas.get((random-1)).respuesta){
                     animacionBateria.addAnimatorUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
                         @Override
                         public void onAnimationUpdate(ValueAnimator valueAnimator) {
                             if(animacionBateria.getProgress()==1.0f){
                                 //aca se debe definir el frame hasta el cual animar para la repeticion numero 5.
-                                animacionBateria.setMaxFrame(extraerFrameParaAnimar(preguntas.get(0).respuesta));
+                                animacionBateria.setMaxFrame(extraerFrameParaAnimar(preguntas.get((random-1)).respuesta));
                             }
 
                         }
                     });
                     animacionBateria.setSpeed(0.92f);
                     animacionBateria.playAnimation();
-                    animacionBateria.setRepeatCount(3);
+                    animacionBateria.setRepeatCount(1);
+                }
+                break;
+            case R.id.valor3:
+                selector.setImageResource(R.drawable.s4);
+                if(Integer.parseInt((String) respuesta2.getText()) == preguntas.get((random-1)).respuesta){
+                    animacionBateria.addAnimatorUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                        @Override
+                        public void onAnimationUpdate(ValueAnimator valueAnimator) {
+                            if(animacionBateria.getProgress()==1.0f){
+                                //aca se debe definir el frame hasta el cual animar para la repeticion numero 5.
+                                animacionBateria.setMaxFrame(extraerFrameParaAnimar(preguntas.get((random-1)).respuesta));
+                            }
+
+                        }
+                    });
+                    animacionBateria.setSpeed(0.92f);
+                    animacionBateria.playAnimation();
+                    animacionBateria.setRepeatCount(1);
+                }
+                break;
+            case R.id.valor4:
+                selector.setImageResource(R.drawable.s2);
+                if(Integer.parseInt((String) respuesta3.getText()) == preguntas.get((random-1)).respuesta){
+                    animacionBateria.addAnimatorUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                        @Override
+                        public void onAnimationUpdate(ValueAnimator valueAnimator) {
+                            if(animacionBateria.getProgress()==1.0f){
+                                //aca se debe definir el frame hasta el cual animar para la repeticion numero 5.
+                                animacionBateria.setMaxFrame(extraerFrameParaAnimar(preguntas.get((random-1)).respuesta));
+                            }
+
+                        }
+                    });
+                    animacionBateria.setSpeed(0.92f);
+                    animacionBateria.playAnimation();
+                    animacionBateria.setRepeatCount(1);
                 }
                 break;
             case R.id.valor5:
-                if(Integer.parseInt((String) respuesta4.getText())==preguntas.get(0).respuesta){
-                    animacionBateria.setMaxFrame(3);
+                selector.setImageResource(R.drawable.s1);
+                if(Integer.parseInt((String) respuesta4.getText()) == preguntas.get((random-1)).respuesta){
+                    animacionBateria.addAnimatorUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                        @Override
+                        public void onAnimationUpdate(ValueAnimator valueAnimator) {
+                            if(animacionBateria.getProgress()==1.0f){
+                                //aca se debe definir el frame hasta el cual animar para la repeticion numero 5.
+                                animacionBateria.setMaxFrame(extraerFrameParaAnimar(preguntas.get((random-1)).respuesta));
+                            }
+
+                        }
+                    });
+                    animacionBateria.setSpeed(0.92f);
                     animacionBateria.playAnimation();
+                    animacionBateria.setRepeatCount(1);
                 }
                 break;
         }
