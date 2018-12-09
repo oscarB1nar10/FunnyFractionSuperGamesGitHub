@@ -32,6 +32,7 @@ public class MainActivity extends Game implements InputProcessor {
 	private Array<Rectangles> raindrops;
 	private long lastDropTime, toques;
 	private int random;
+	private boolean nextDrop = false;
 	private String respuesta;
 	private ActionResolver  actionResolver;
 	private Preferences pref;
@@ -143,25 +144,34 @@ public class MainActivity extends Game implements InputProcessor {
 		if(bucket.x < 0) bucket.x = 0;
 		if(bucket.x > 800 - 64) bucket.x = 800 - 64;
 
-		if(TimeUtils.nanoTime() - lastDropTime > 2147483647 && toques < 10 && !pref.getBoolean("pause",false)){
+		if(nextDrop && toques < 10 && !pref.getBoolean("pause",false)){
 			spawnRaindrop();
 			toques++;
 			random = (int) (Math.random()*dropImage.size());
 		}
+		nextDrop = false;
 
 		Iterator<Rectangles> iter = raindrops.iterator();
 		while(iter.hasNext() && !pref.getBoolean("pause",false)) {
 			Rectangles raindrop = iter.next();
 			raindrop.y -= 200 * Gdx.graphics.getDeltaTime();
-			if(raindrop.y + 64 < 0) iter.remove();
-			if(raindrop.overlaps(bucket)) {
+			if(raindrop.y + 64 < 0) {
+				nextDrop = true;
+                iter.remove();
+
+            } else if(raindrop.overlaps(bucket)) {
 				if(raindrop.getDescription().equals(respuesta)){
 					System.out.println("Se ha tocado capturado la respuesta correcta!!");
 				}
 				dropSound.play();
+				nextDrop = true;
 				iter.remove();
 			}
 		}
+
+		if(toques == 10 && nextDrop){
+            actionResolver.menuGotas();
+        }
 
 	}
 
