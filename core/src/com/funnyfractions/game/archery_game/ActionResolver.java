@@ -9,6 +9,4 @@ public interface ActionResolver {
     void pauseArcheryGame();
     void menu ();
     void menuGotas();
-
-
 }

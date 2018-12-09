@@ -22,18 +22,18 @@ import java.util.Iterator;
 
 public class MainActivity extends Game implements InputProcessor {
 
-	ArrayList<Drops> dropImage;
-	Texture bucketImage, pause, dropsFalling;
-	Sound dropSound;
-	Music rainMusic;
-	SpriteBatch batch;
-	OrthographicCamera camera;
-	Rectangle bucket;
-	Array<Rectangles> raindrops;
-	long lastDropTime, toques;
-	int random;
-	String respuesta;
-	ActionResolver  actionResolver;
+	private ArrayList<Drops> dropImage;
+	private Texture bucketImage, pause, dropsFalling;
+	private Sound dropSound;
+	private Music rainMusic;
+	private SpriteBatch batch;
+	private OrthographicCamera camera;
+	private Rectangle bucket;
+	private Array<Rectangles> raindrops;
+	private long lastDropTime, toques;
+	private int random;
+	private String respuesta;
+	private ActionResolver  actionResolver;
 	private Preferences pref;
 
 	public MainActivity(String respuesta, ActionResolver actionResolver) {

@@ -14,12 +14,10 @@ import java.util.ArrayList;
 
 public class EjecutableBateria extends AppCompatActivity implements View.OnClickListener{
     ArrayList<Pregunta> preguntas;
-    TextView enunciado;
+    TextView enunciado, pregunta,respuesta1,respuesta2,respuesta3,respuesta4;
     ImageView operacion;
-    TextView pregunta;
-    TextView respuesta1,respuesta2,respuesta3,respuesta4;
     LottieAnimationView animacionBateria;
-    int repeticiones=0;
+    int random = 0;
     final static int[] VFRAME= new int[]{6, 12, 18, 24, 30, 36, 40, 50, 54, 60, 68, 74};
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +25,8 @@ public class EjecutableBateria extends AppCompatActivity implements View.OnClick
         setContentView(R.layout.activity_ejecutable_bateria);
         animacionBateria=findViewById(R.id.animacionBateria);
         animacionBateria.useHardwareAcceleration(true);
-       // animacionBateria.setRepeatCount(5);
+        random = (int)(Math.random()*10);
+        // animacionBateria.setRepeatCount(5);
         enunciado=findViewById(R.id.enunciado);
         operacion=findViewById(R.id.operacion);
         pregunta=findViewById(R.id.pregunta);
@@ -42,79 +41,85 @@ public class EjecutableBateria extends AppCompatActivity implements View.OnClick
         respuesta4=findViewById(R.id.valor5);
         respuesta4.setOnClickListener(this);
         //__-------------------------------
-        añadirEnunciados();
+        anadirEnunciados();
         extraerPreguntas();
     }
     public void extraerPreguntas(){
         //generar valor aleatorio-> añadir valores a la vista
-        enunciado.setText(preguntas.get(0).enunciado);
-        operacion.setImageResource(preguntas.get(0).operacion);
-        pregunta.setText(preguntas.get(0).pregunta);
-
+        enunciado.setText(preguntas.get(random).enunciado);
+        operacion.setImageResource(preguntas.get(random).operacion);
+        pregunta.setText(preguntas.get(random).pregunta);
     }
 
-    public void añadirEnunciados(){
-        preguntas.add(new Pregunta("La bateria ha estado cargando durante un tiempo igual a la siguiente operacion", R.drawable.op2, "¿cuanto nivel de carga tiene la bateria?",2,"4/2"));
+    public void anadirEnunciados(){
+        preguntas.add(new Pregunta("La bateria ha estado cargando durante un tiempo igual a la siguiente operacion", R.drawable.op2, "¿cuanto nivel de carga tiene la bateria?",2));
+        preguntas.add(new Pregunta("La bateria ha estado cargando durante un tiempo igual a la siguiente operacion", R.drawable.op1, "¿cuanto nivel de carga tiene la bateria?",2));
+        preguntas.add(new Pregunta("La bateria ha estado cargando durante un tiempo igual a la siguiente operacion", R.drawable.op3, "¿cuanto nivel de carga tiene la bateria?",2));
+        preguntas.add(new Pregunta("La bateria ha estado cargando durante un tiempo igual a la siguiente operacion", R.drawable.op4, "¿cuanto nivel de carga tiene la bateria?",2));
+        preguntas.add(new Pregunta("La bateria ha estado cargando durante un tiempo igual a la siguiente operacion", R.drawable.op5, "¿cuanto nivel de carga tiene la bateria?",2));
+        preguntas.add(new Pregunta("La bateria ha estado cargando durante un tiempo igual a la siguiente operacion", R.drawable.op6, "¿cuanto nivel de carga tiene la bateria?",2));
+        preguntas.add(new Pregunta("La bateria ha estado cargando durante un tiempo igual a la siguiente operacion", R.drawable.op7, "¿cuanto nivel de carga tiene la bateria?",2));
+        preguntas.add(new Pregunta("La bateria ha estado cargando durante un tiempo igual a la siguiente operacion", R.drawable.op8, "¿cuanto nivel de carga tiene la bateria?",2));
+        preguntas.add(new Pregunta("La bateria ha estado cargando durante un tiempo igual a la siguiente operacion", R.drawable.op9, "¿cuanto nivel de carga tiene la bateria?",2));
+        preguntas.add(new Pregunta("La bateria ha estado cargando durante un tiempo igual a la siguiente operacion", R.drawable.op10, "¿cuanto nivel de carga tiene la bateria?",2));
+
 
     }
 
     public int extraerFrameParaAnimar(int respuesta){
-      return VFRAME[(respuesta-1)];
+        return VFRAME[(respuesta-1)];
     }
-
     @Override
     public void onClick(View view) {
         //El atributo "respuesta" pEr a pregunta se obtiene a partir del valor aleatorio generado en la funcion "extraer preguntas"
         switch (view.getId()){
             case R.id.valor2:
-                    if(Integer.parseInt((String) respuesta1.getText())==preguntas.get(0).respuesta){
-                        animacionBateria.setMaxFrame(3);
-                        animacionBateria.playAnimation();
-                    }
+                if(Integer.parseInt((String) respuesta1.getText())==preguntas.get(0).respuesta){
+                    animacionBateria.setMaxFrame(3);
+                    animacionBateria.playAnimation();
+                }
                 break;
             case R.id.valor3:
-                    if(Integer.parseInt((String) respuesta2.getText())==preguntas.get(0).respuesta){
-                        animacionBateria.playAnimation();
-                    }
+                if(Integer.parseInt((String) respuesta2.getText())==preguntas.get(0).respuesta){
+                    animacionBateria.playAnimation();
+                }
                 break;
             case R.id.valor4:
-                    if(Integer.parseInt((String) respuesta3.getText())==preguntas.get(0).respuesta){
-                        animacionBateria.addAnimatorUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-                            @Override
-                            public void onAnimationUpdate(ValueAnimator valueAnimator) {
-                               if(animacionBateria.getProgress()==1.0f){
-                                   repeticiones++;
-                                   if(repeticiones==3){
-                                       //aca se debe definir el frame hasta el cual animar para la repeticion numero 5.
-                                       animacionBateria.setMaxFrame(extraerFrameParaAnimar(preguntas.get(0).respuesta));
-                                   }
-                               }
+                if(Integer.parseInt((String) respuesta3.getText())==preguntas.get(0).respuesta){
+                    animacionBateria.addAnimatorUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                        @Override
+                        public void onAnimationUpdate(ValueAnimator valueAnimator) {
+                            if(animacionBateria.getProgress()==1.0f){
+                                //aca se debe definir el frame hasta el cual animar para la repeticion numero 5.
+                                animacionBateria.setMaxFrame(extraerFrameParaAnimar(preguntas.get(0).respuesta));
                             }
-                        });
-                        animacionBateria.setSpeed(0.92f);
-                        animacionBateria.playAnimation();
-                        animacionBateria.setRepeatCount(3);
-                    }
+
+                        }
+                    });
+                    animacionBateria.setSpeed(0.92f);
+                    animacionBateria.playAnimation();
+                    animacionBateria.setRepeatCount(3);
+                }
                 break;
             case R.id.valor5:
-                    if(Integer.parseInt((String) respuesta4.getText())==preguntas.get(0).respuesta){
-                        animacionBateria.setMaxFrame(3);
-                        animacionBateria.playAnimation();
-                    }
+                if(Integer.parseInt((String) respuesta4.getText())==preguntas.get(0).respuesta){
+                    animacionBateria.setMaxFrame(3);
+                    animacionBateria.playAnimation();
+                }
                 break;
         }
     }
 
     public class Pregunta {
-        public String enunciado, pregunta, textrespuesta;
-        public int operacion, respuesta;
 
-        public Pregunta(String enunciado, int operacion, String pregunta, int respuesta, String textrespuesta){
-            this.enunciado = enunciado;
-            this.operacion = operacion;
-            this.pregunta = pregunta;
-            this.respuesta = respuesta;
-            this.textrespuesta = textrespuesta;
+        public String enunciado, pregunta;
+        int operacion, respuesta;
+
+        Pregunta(String enunciado, int operacion, String pregunta, int respuesta){
+            this.enunciado=enunciado;
+            this.operacion=operacion;
+            this.pregunta=pregunta;
+            this.respuesta=respuesta;
         }
     }
 }

@@ -15,6 +15,7 @@ import com.funnyfractions.game.R;
 import com.funnyfractions.game.archery_game.ActionResolver;
 
 import androidlogic.games.archery_game.MenuArcheryActivity;
+import androidlogic.home.Home;
 import androidlogic.practice.Practica;
 
 public class ActionResolverAndroid implements ActionResolver {
@@ -200,7 +201,7 @@ public class ActionResolverAndroid implements ActionResolver {
     }
 
     @Override
-    public void     menuGotas() {
+    public void menuGotas() {
         final Activity activity = (Activity) context;
         /*
             Here we show a menu to control the game run.
