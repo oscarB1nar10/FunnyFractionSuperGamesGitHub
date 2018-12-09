@@ -18,10 +18,10 @@ public class Menu extends Activity {
     Button skip;
     ImageView operacion;
     Handler handler = new Handler();
-    HashMap<String, Integer> lista = new HashMap<>();
-    ArrayList<String> imagenes = new ArrayList<>();
+    HashMap<Integer, String> lista = new HashMap<>();
+    ArrayList<Integer> imagenes = new ArrayList<>();
     int random = 0;
-    String aux = "";
+    int aux = 0;
 
 
     @Override
@@ -30,37 +30,37 @@ public class Menu extends Activity {
         setContentView(R.layout.menu);
         random = (int)(Math.random()*10);
         //Se llena la lista con los valores de las operaciones para despues ser conparadas con el de el Hashmap
-        imagenes.add("1_2%4_4");
-        imagenes.add("7_5%5_2");
-        imagenes.add("7_9%15_3");
-        imagenes.add("8_9%4_5");
-        imagenes.add("9_2%3_8");
-        imagenes.add("9_4%12_6");
-        imagenes.add("15_5%8_7");
-        imagenes.add("2_3%11_4");
-        imagenes.add("3_6%7_4");
-        imagenes.add("6_5%9_8");
+        imagenes.add(R.drawable.ope1);
+        imagenes.add(R.drawable.ope5);
+        imagenes.add(R.drawable.ope6);
+        imagenes.add(R.drawable.ope7);
+        imagenes.add(R.drawable.ope8);
+        imagenes.add(R.drawable.ope9);
+        imagenes.add(R.drawable.ope10);
+        imagenes.add(R.drawable.ope2);
+        imagenes.add(R.drawable.ope3);
+        imagenes.add(R.drawable.ope4);
 
         //Se llena el Hashmap
-        lista.put("1_2%4_4",R.drawable.ope1);
-        lista.put("7_5%5_2",R.drawable.ope5);
-        lista.put("7_9%15_3",R.drawable.ope6);
-        lista.put("8_9%4_5",R.drawable.ope7);
-        lista.put("9_2%3_8",R.drawable.ope8);
-        lista.put("9_4%12_6",R.drawable.ope9);
-        lista.put("15_5%8_7",R.drawable.ope10);
-        lista.put("2_3%11_4",R.drawable.ope2);
-        lista.put("3_6%7_4",R.drawable.ope3);
-        lista.put("6_5%9_8",R.drawable.ope4);
+        lista.put(R.drawable.ope1, "4_8");
+        lista.put(R.drawable.ope5, "14_25");
+        lista.put(R.drawable.ope6, "21_135");
+        lista.put(R.drawable.ope7, "40_36");
+        lista.put(R.drawable.ope8, "72_6");
+        lista.put(R.drawable.ope9, "54_48");
+        lista.put(R.drawable.ope10, "105_40");
+        lista.put(R.drawable.ope2, "8_33");
+        lista.put(R.drawable.ope3, "12_42" );
+        lista.put(R.drawable.ope4, "48_45");
         skip = findViewById(R.id.btnskip);
         operacion = findViewById(R.id.imgoperacion);
         aux = imagenes.get(random);
-        operacion.setImageResource(lista.get(aux));
+        operacion.setImageResource(aux);
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
                 Intent intent = new Intent(getApplicationContext(), AndroidLauncher.class);
-                intent.putExtra("operacion", aux);
+                intent.putExtra("operacion", ""+lista.get(aux));
                 startActivity(intent);
             }
         },6000);
@@ -69,7 +69,7 @@ public class Menu extends Activity {
             public void onClick(View v) {
                 handler.removeCallbacksAndMessages(null);
                 Intent intent = new Intent(getApplicationContext(), AndroidLauncher.class);
-                intent.putExtra("operacion", aux);
+                intent.putExtra("operacion", ""+lista.get(aux));
                 startActivity(intent);
             }
         });

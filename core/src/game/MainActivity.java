@@ -21,30 +21,31 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 public class MainActivity extends Game implements InputProcessor {
-	ArrayList<Texture> dropImage;
+
+	ArrayList<Drops> dropImage;
 	Texture bucketImage, pause, dropsFalling;
 	Sound dropSound;
 	Music rainMusic;
 	SpriteBatch batch;
 	OrthographicCamera camera;
 	Rectangle bucket;
-	Array<Rectangle> raindrops;
+	Array<Rectangles> raindrops;
 	long lastDropTime, toques;
 	int random;
-	String operacion;
+	String respuesta;
 	ActionResolver  actionResolver;
 	private Preferences pref;
 
-	public MainActivity(String operacion, ActionResolver actionResolver) {
+	public MainActivity(String respuesta, ActionResolver actionResolver) {
 		this.actionResolver = actionResolver;
-		this.operacion = operacion;
+		this.respuesta = respuesta;
 
 	}
 
 	@Override
 	public void create() {
 		random = 0;
-		dropImage = new ArrayList<Texture>();
+		dropImage = new ArrayList<Drops>();
 		pref = Gdx.app.getPreferences("SHARED_PREFERENCES");
 		pref.putBoolean("pause",false);
 		pref.flush();
@@ -73,7 +74,7 @@ public class MainActivity extends Game implements InputProcessor {
 		bucket.width = 64;
 		bucket.height = 64;
 
-		raindrops = new Array<Rectangle>();
+		raindrops = new Array<Rectangles>();
 		toques = 1;
 		Gdx.input.setCatchBackKey(true);
 		Gdx.input.setInputProcessor(this);
@@ -81,22 +82,22 @@ public class MainActivity extends Game implements InputProcessor {
 	}
 
 	public void LlenarOperaciones(){
-		if(operacion != "") {
-			dropImage.add(new Texture(Gdx.files.internal("respuestas/4_8.png")));
-			dropImage.add(new Texture(Gdx.files.internal("respuestas/8_33.png")));
-			dropImage.add(new Texture(Gdx.files.internal("respuestas/12_42.png")));
-			dropImage.add(new Texture(Gdx.files.internal("respuestas/14_25.png")));
-			dropImage.add(new Texture(Gdx.files.internal("respuestas/21_135.png")));
-			dropImage.add(new Texture(Gdx.files.internal("respuestas/40_36.png")));
-			dropImage.add(new Texture(Gdx.files.internal("respuestas/48_45.png")));
-			dropImage.add(new Texture(Gdx.files.internal("respuestas/54_48.png")));
-			dropImage.add(new Texture(Gdx.files.internal("respuestas/72_6.png")));
-			dropImage.add(new Texture(Gdx.files.internal("respuestas/105_40.png")));
+		if(respuesta != "") {
+			dropImage.add(new Drops("respuestas/4_8.png","4_8"));
+			dropImage.add(new Drops("respuestas/8_33.png","8_33"));
+			dropImage.add(new Drops("respuestas/12_42.png","12_42"));
+			dropImage.add(new Drops("respuestas/14_25.png","14_25"));
+			dropImage.add(new Drops("respuestas/21_135.png","21_135"));
+			dropImage.add(new Drops("respuestas/40_36.png","40_36"));
+			dropImage.add(new Drops("respuestas/48_45.png","48_45"));
+			dropImage.add(new Drops("respuestas/54_48.png","54_48"));
+			dropImage.add(new Drops("respuestas/72_6.png","72_6"));
+			dropImage.add(new Drops("respuestas/105_40.png","105_40"));
 		}
 	}
 
 	private void spawnRaindrop() {
-		Rectangle raindrop = new Rectangle();
+		Rectangles raindrop = new Rectangles();
 		raindrop.x = MathUtils.random(0, 800-64);
 		raindrop.y = 480;
 		raindrop.width = 64;
@@ -121,8 +122,13 @@ public class MainActivity extends Game implements InputProcessor {
 		//here we put the background game
 		batch.draw(dropsFalling,0,0);
 		batch.draw(bucketImage, bucket.x, bucket.y);
-		for(Rectangle raindrop: raindrops) {
+		/*for(Rectangle raindrop: raindrops) {
 			batch.draw(dropImage.get(random), raindrop.x, raindrop.y);
+
+		}*/
+		for(int i = 0; i<raindrops.size; i++){
+			batch.draw(dropImage.get(random), raindrops.get(i).x, raindrops.get(i).y);
+			raindrops.get(i).setDescription(dropImage.get(random).getDescription());
 		}
 		batch.draw(pause,0,416,64,64);
 		batch.end();
@@ -143,12 +149,15 @@ public class MainActivity extends Game implements InputProcessor {
 			random = (int) (Math.random()*dropImage.size());
 		}
 
-		Iterator<Rectangle> iter = raindrops.iterator();
+		Iterator<Rectangles> iter = raindrops.iterator();
 		while(iter.hasNext() && !pref.getBoolean("pause",false)) {
-			Rectangle raindrop = iter.next();
+			Rectangles raindrop = iter.next();
 			raindrop.y -= 200 * Gdx.graphics.getDeltaTime();
 			if(raindrop.y + 64 < 0) iter.remove();
 			if(raindrop.overlaps(bucket)) {
+				if(raindrop.getDescription().equals(respuesta)){
+					System.out.println("Se ha tocado capturado la respuesta correcta!!");
+				}
 				dropSound.play();
 				iter.remove();
 			}
