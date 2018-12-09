@@ -31,7 +31,7 @@ public class EjecutableBateria extends AppCompatActivity implements View.OnClick
         enunciado=findViewById(R.id.enunciado);
         operacion=findViewById(R.id.operacion);
         pregunta=findViewById(R.id.pregunta);
-        preguntas= new ArrayList<Pregunta>();
+        preguntas= new ArrayList<>();
         //_----------------------------------
         respuesta1=findViewById(R.id.valor2);
         respuesta1.setOnClickListener(this);
@@ -54,7 +54,7 @@ public class EjecutableBateria extends AppCompatActivity implements View.OnClick
     }
 
     public void añadirEnunciados(){
-        preguntas.add(new Pregunta("La bateria ha estado cargando durante un tiempo igual a la siguiente operacion", R.drawable.op2, "¿cuanto nivel de carga tiene la bateria?",2));
+        preguntas.add(new Pregunta("La bateria ha estado cargando durante un tiempo igual a la siguiente operacion", R.drawable.op2, "¿cuanto nivel de carga tiene la bateria?",2,"4/2"));
 
     }
 
@@ -70,20 +70,15 @@ public class EjecutableBateria extends AppCompatActivity implements View.OnClick
                     if(Integer.parseInt((String) respuesta1.getText())==preguntas.get(0).respuesta){
                         animacionBateria.setMaxFrame(3);
                         animacionBateria.playAnimation();
-                        //Toast.makeText(this, "condicional1",Toast.LENGTH_LONG).show();
                     }
                 break;
             case R.id.valor3:
                     if(Integer.parseInt((String) respuesta2.getText())==preguntas.get(0).respuesta){
                         animacionBateria.playAnimation();
-                        //
                     }
-
                 break;
-
             case R.id.valor4:
                     if(Integer.parseInt((String) respuesta3.getText())==preguntas.get(0).respuesta){
-
                         animacionBateria.addAnimatorUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
                             @Override
                             public void onAnimationUpdate(ValueAnimator valueAnimator) {
@@ -92,45 +87,34 @@ public class EjecutableBateria extends AppCompatActivity implements View.OnClick
                                    if(repeticiones==3){
                                        //aca se debe definir el frame hasta el cual animar para la repeticion numero 5.
                                        animacionBateria.setMaxFrame(extraerFrameParaAnimar(preguntas.get(0).respuesta));
-
                                    }
                                }
-
                             }
                         });
                         animacionBateria.setSpeed(0.92f);
                         animacionBateria.playAnimation();
                         animacionBateria.setRepeatCount(3);
                     }
-
                 break;
-
             case R.id.valor5:
                     if(Integer.parseInt((String) respuesta4.getText())==preguntas.get(0).respuesta){
                         animacionBateria.setMaxFrame(3);
                         animacionBateria.playAnimation();
-                        //Toast.makeText(this, "condicional1",Toast.LENGTH_LONG).show();
                     }
-
                 break;
         }
     }
 
     public class Pregunta {
+        public String enunciado, pregunta, textrespuesta;
+        public int operacion, respuesta;
 
-        public String enunciado;
-        public int operacion;
-        public String pregunta;
-        public int respuesta;
-
-        public Pregunta(String enunciado, int operacion, String pregunta, int respuesta){
-            this.enunciado=enunciado;
-            this.operacion=operacion;
-            this.pregunta=pregunta;
-            this.respuesta=respuesta;
-
+        public Pregunta(String enunciado, int operacion, String pregunta, int respuesta, String textrespuesta){
+            this.enunciado = enunciado;
+            this.operacion = operacion;
+            this.pregunta = pregunta;
+            this.respuesta = respuesta;
+            this.textrespuesta = textrespuesta;
         }
-
-
     }
 }

@@ -137,7 +137,7 @@ public class MainActivity extends Game implements InputProcessor {
 		if(bucket.x < 0) bucket.x = 0;
 		if(bucket.x > 800 - 64) bucket.x = 800 - 64;
 
-		if(TimeUtils.nanoTime() - lastDropTime > 2147483647 && toques < 10){
+		if(TimeUtils.nanoTime() - lastDropTime > 2147483647 && toques < 10 && !pref.getBoolean("pause",false)){
 			spawnRaindrop();
 			toques++;
 			random = (int) (Math.random()*dropImage.size());
@@ -153,6 +153,7 @@ public class MainActivity extends Game implements InputProcessor {
 				iter.remove();
 			}
 		}
+
 	}
 
 	@Override
