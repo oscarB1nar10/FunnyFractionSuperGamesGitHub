@@ -75,14 +75,23 @@ public class EjecutableBateria extends AppCompatActivity implements View.OnClick
     public void anadirEnunciados(){
         preguntas.add(new Pregunta("La bateria ha estado cargando durante un tiempo igual a la siguiente operacion", R.drawable.op2, "¿cuanto nivel de carga tiene la bateria?",2));
         preguntas.add(new Pregunta("La bateria ha estado cargando durante un tiempo igual a la siguiente operacion", R.drawable.op1, "¿cuanto nivel de carga tiene la bateria?",1));
-        preguntas.add(new Pregunta("La bateria ha estado cargando durante un tiempo igual a la siguiente operacion", R.drawable.op3, "¿cuanto nivel de carga tiene la bateria?",2));
+        preguntas.add(new Pregunta("La bateria ha estado cargando durante un tiempo igual a la siguiente operacion", R.drawable.op3, "¿cuanto nivel de carga tiene la bateria?",3));
         preguntas.add(new Pregunta("La bateria ha estado cargando durante un tiempo igual a la siguiente operacion", R.drawable.op4, "¿cuanto nivel de carga tiene la bateria?",2));
-        preguntas.add(new Pregunta("La bateria ha estado cargando durante un tiempo igual a la siguiente operacion", R.drawable.op5, "¿cuanto nivel de carga tiene la bateria?",2));
-        preguntas.add(new Pregunta("La bateria ha estado cargando durante un tiempo igual a la siguiente operacion", R.drawable.op6, "¿cuanto nivel de carga tiene la bateria?",2));
-        preguntas.add(new Pregunta("La bateria ha estado cargando durante un tiempo igual a la siguiente operacion", R.drawable.op7, "¿cuanto nivel de carga tiene la bateria?",2));
-        preguntas.add(new Pregunta("La bateria ha estado cargando durante un tiempo igual a la siguiente operacion", R.drawable.op8, "¿cuanto nivel de carga tiene la bateria?",2));
-        preguntas.add(new Pregunta("La bateria ha estado cargando durante un tiempo igual a la siguiente operacion", R.drawable.op9, "¿cuanto nivel de carga tiene la bateria?",2));
-        preguntas.add(new Pregunta("La bateria ha estado cargando durante un tiempo igual a la siguiente operacion", R.drawable.op10, "¿cuanto nivel de carga tiene la bateria?",2));
+        preguntas.add(new Pregunta("La bateria ha estado cargando durante un tiempo igual a la siguiente operacion", R.drawable.op5, "¿cuanto nivel de carga tiene la bateria?",4));
+        preguntas.add(new Pregunta("La bateria ha estado cargando durante un tiempo igual a la siguiente operacion", R.drawable.op6, "¿cuanto nivel de carga tiene la bateria?",5));
+        preguntas.add(new Pregunta("La bateria ha estado cargando durante un tiempo igual a la siguiente operacion", R.drawable.op7, "¿cuanto nivel de carga tiene la bateria?",6));
+        preguntas.add(new Pregunta("La bateria ha estado cargando durante un tiempo igual a la siguiente operacion", R.drawable.op8, "¿cuanto nivel de carga tiene la bateria?",7));
+        preguntas.add(new Pregunta("La bateria ha estado cargando durante un tiempo igual a la siguiente operacion", R.drawable.op9, "¿cuanto nivel de carga tiene la bateria?",8));
+        preguntas.add(new Pregunta("La bateria ha estado cargando durante un tiempo igual a la siguiente operacion", R.drawable.op10, "¿cuanto nivel de carga tiene la bateria?",9));
+        preguntas.add(new Pregunta("La bateria ha estado cargando durante un tiempo igual a la siguiente operacion", R.drawable.op11, "¿cuanto nivel de carga tiene la bateria?",1));
+        preguntas.add(new Pregunta("La bateria ha estado cargando durante un tiempo igual a la siguiente operacion", R.drawable.op12, "¿cuanto nivel de carga tiene la bateria?",2));
+        preguntas.add(new Pregunta("La bateria ha estado cargando durante un tiempo igual a la siguiente operacion", R.drawable.op13, "¿cuanto nivel de carga tiene la bateria?",3));
+        preguntas.add(new Pregunta("La bateria ha estado cargando durante un tiempo igual a la siguiente operacion", R.drawable.op14, "¿cuanto nivel de carga tiene la bateria?",4));
+        preguntas.add(new Pregunta("La bateria ha estado cargando durante un tiempo igual a la siguiente operacion", R.drawable.op15, "¿cuanto nivel de carga tiene la bateria?",5));
+        preguntas.add(new Pregunta("La bateria ha estado cargando durante un tiempo igual a la siguiente operacion", R.drawable.op16, "¿cuanto nivel de carga tiene la bateria?",6));
+        preguntas.add(new Pregunta("La bateria ha estado cargando durante un tiempo igual a la siguiente operacion", R.drawable.op17, "¿cuanto nivel de carga tiene la bateria?",7));
+        preguntas.add(new Pregunta("La bateria ha estado cargando durante un tiempo igual a la siguiente operacion", R.drawable.op18, "¿cuanto nivel de carga tiene la bateria?",8));
+        preguntas.add(new Pregunta("La bateria ha estado cargando durante un tiempo igual a la siguiente operacion", R.drawable.op19, "¿cuanto nivel de carga tiene la bateria?",9));
 
 
     }
