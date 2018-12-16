@@ -159,12 +159,11 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
 
             @Override
             public void onResponse(JSONObject response) {
-                JSONArray arrayAso=null;
+                JSONArray arrayAso;
 
                 try {
-                    System.out.println("get information");
-                    arrayAso=response.getJSONArray("usuario");
-                    JSONObject jsonObject=arrayAso.getJSONObject(0);
+                    arrayAso = response.getJSONArray("usuario");
+                    JSONObject jsonObject = arrayAso.getJSONObject(0);
                     editarMarcosEditText(jsonObject.optString("acceso"));
                 } catch (JSONException e) {
                     Toast.makeText(getBaseContext(), "Error de tipo..."+e.getMessage(), Toast.LENGTH_LONG).show();
