@@ -45,6 +45,9 @@
 
     <!--google kye -->
 
+    <string name="navigation_drawer_open">open</string>
+    <string name="navigation_drawer_close">close</string>
+
 
 
     <!--pauseActivity-->

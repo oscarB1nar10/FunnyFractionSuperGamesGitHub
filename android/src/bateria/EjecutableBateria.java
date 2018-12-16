@@ -65,7 +65,7 @@ public class EjecutableBateria extends AppCompatActivity implements View.OnClick
     }
 
     public void extraerPreguntas(){
-        random =(int)(Math.random()*10+1);
+        random =(int)(Math.random()*19+1);
         //generar valor aleatorio-> añadir valores a la vista
         enunciado.setText(preguntas.get(random-1).enunciado);
         operacion.setImageResource(preguntas.get(random-1).operacion);
@@ -92,8 +92,6 @@ public class EjecutableBateria extends AppCompatActivity implements View.OnClick
         preguntas.add(new Pregunta("La bateria ha estado cargando durante un tiempo igual a la siguiente operacion", R.drawable.op17, "¿cuanto nivel de carga tiene la bateria?",7));
         preguntas.add(new Pregunta("La bateria ha estado cargando durante un tiempo igual a la siguiente operacion", R.drawable.op18, "¿cuanto nivel de carga tiene la bateria?",8));
         preguntas.add(new Pregunta("La bateria ha estado cargando durante un tiempo igual a la siguiente operacion", R.drawable.op19, "¿cuanto nivel de carga tiene la bateria?",9));
-
-
     }
 
     public int extraerFrameParaAnimar(int respuesta){

@@ -38,7 +38,8 @@
 
         </activity>
         <activity android:name="androidlogic.home.Home"
-            android:screenOrientation="sensorLandscape">
+            android:screenOrientation="sensorLandscape"
+            android:theme="@style/loginTheme">
 
         </activity>
         <activity android:name="androidlogic.tutorials.Tutorial"

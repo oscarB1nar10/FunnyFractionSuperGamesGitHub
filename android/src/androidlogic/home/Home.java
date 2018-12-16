@@ -7,7 +7,12 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
+import android.support.design.widget.NavigationView;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -27,7 +32,9 @@ import androidlogic.login.MainActivity;
 import androidlogic.practice.Practica;
 import androidlogic.tutorials.Tutorial;
 
-public class Home extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
+public class Home extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener,
+                                                        NavigationView.OnNavigationItemSelectedListener {
+
     private TextView logeando;
     private ImageView config, log;
     private ImageButton US,ES;
@@ -37,7 +44,7 @@ public class Home extends AppCompatActivity implements GoogleApiClient.OnConnect
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.home);
+        setContentView(R.layout.home2_layout);
 
         // Configure sign-in to request the user's ID, email address, and basic
         // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
@@ -49,6 +56,20 @@ public class Home extends AppCompatActivity implements GoogleApiClient.OnConnect
                 .enableAutoManage(this, this)
                 .addApi(Auth.GOOGLE_SIGN_IN_API)
                 .build();
+
+        // setup DrawerLayout
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_main);
+        setSupportActionBar(toolbar);
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                                            this, drawer, toolbar, R.string.navigation_drawer_open,
+                                             R.string.navigation_drawer_close);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
 
         config = (ImageView) findViewById(R.id.configurar);
         log = (ImageView) findViewById(R.id.logeo);
@@ -170,5 +191,10 @@ public class Home extends AppCompatActivity implements GoogleApiClient.OnConnect
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        return false;
     }
 }
