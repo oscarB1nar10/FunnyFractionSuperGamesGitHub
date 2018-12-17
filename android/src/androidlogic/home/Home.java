@@ -28,7 +28,7 @@ import com.google.android.gms.common.api.Status;
 
 import java.util.Locale;
 
-import androidlogic.evaluacion.Evaluacion;
+import androidlogic.evaluacion.EvaluacionActivity;
 import androidlogic.login.MainActivity;
 import androidlogic.practice.Practica;
 import androidlogic.tutorials.Tutorial;
@@ -121,7 +121,7 @@ public class Home extends AppCompatActivity implements GoogleApiClient.OnConnect
         evalu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), Evaluacion.class);
+                Intent intent = new Intent(getApplicationContext(), EvaluacionActivity.class);
                 startActivity(intent);
                 overridePendingTransition(R.anim.zoom_back_in, R.anim.zoom_back_out);
             }

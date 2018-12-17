@@ -70,7 +70,7 @@
             android:screenOrientation="sensorLandscape">
 
         </activity>
-        <activity android:name="androidlogic.evaluacion.Evaluacion"
+        <activity android:name="androidlogic.evaluacion.EvaluacionActivity"
             android:screenOrientation="sensorLandscape">
 
         </activity>
