@@ -20,7 +20,7 @@ public class EvaluationInteractorImpl implements EvaluationInteractor {
     private Evaluation evaluation;
 
     @Override
-    public void getQuestions(CallbackRetrofitListener<EvaluationResponse> callbackRetrofitListener) {
+    public void getQuestions(final CallbackRetrofitListener<EvaluationResponse> callbackRetrofitListener) {
 
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
@@ -42,7 +42,13 @@ public class EvaluationInteractorImpl implements EvaluationInteractor {
         call.enqueue(new Callback<EvaluationResponse>() {
             @Override
             public void onResponse(Call<EvaluationResponse> call, Response<EvaluationResponse> response) {
-
+                if(response.body() != null){
+                    EvaluationResponse evaluationResponse = new EvaluationResponse();
+                    evaluationResponse = response.body();
+                    callbackRetrofitListener.onResponse(evaluationResponse);
+                }else{
+                    callbackRetrofitListener.onFailure(new Throwable("an error has occurred"));
+                }
             }
 
             @Override

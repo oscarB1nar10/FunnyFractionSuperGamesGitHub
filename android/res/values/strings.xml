@@ -53,4 +53,7 @@
     <!--pauseActivity-->
     <string name="pause">PAUSE</string>
 
+    <!--Evaluation-->
+    <string name="question">¿Cual es la respuesta?</string>
+
 </resources>
