@@ -25,7 +25,6 @@ public class EvaluationProvider  {
             @Override
             public void onResponse(EvaluationResponse resultado) {
                 evaluationView.questionList(resultado.getData().getPreguntas());
-
             }
 
             @Override

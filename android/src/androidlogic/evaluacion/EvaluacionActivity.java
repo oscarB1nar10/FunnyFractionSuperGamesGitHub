@@ -27,8 +27,6 @@ public class EvaluacionActivity extends AppCompatActivity implements EvaluationV
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.evaluacion);
-        //layout = findViewById(R.id.layoutEvaluacion);
-        //Picasso.get().load("https://funnyfractios000.000webhostapp.com/images/millonariofondo.png").into(layout);
         init();
         initView();
         consumeServices();
@@ -56,17 +54,19 @@ public class EvaluacionActivity extends AppCompatActivity implements EvaluationV
 
     @Override
     public void questionList(List<Questions> questionsList) {
-        int randomQ = (int) (Math.random() * questionsList.size() + 1);
         this.questionsList = questionsList;
+        questionThrow(this.questionsList);
+    }
 
+    public void questionThrow(List<Questions> lista){
         //Here we assign a question whit the respective answer options
-
-        Picasso.get().load(questionsList.get((randomQ-1)).getPregunta()).into(question);
-        answera.setText(questionsList.get((randomQ-1)).getOpcion1());
-        answerb.setText(questionsList.get((randomQ-1)).getOpcion2());
-        answerc.setText(questionsList.get((randomQ-1)).getOpcion3());
-        answerd.setText(questionsList.get((randomQ-1)).getOpcion4());
-
+        int randomQ = (int) (Math.random() * lista.size() + 1);
+        Picasso.get().load(lista.get((randomQ-1)).getPregunta()).into(question);
+        answera.setText(lista.get((randomQ-1)).getOpcion1());
+        answerb.setText(lista.get((randomQ-1)).getOpcion2());
+        answerc.setText(lista.get((randomQ-1)).getOpcion3());
+        answerd.setText(lista.get((randomQ-1)).getOpcion4());
+        lista.remove(lista.get(randomQ-1));
 
     }
 }
