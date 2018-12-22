@@ -13,11 +13,10 @@ public class EvaluationResponse {
     private Boolean code;
     @SerializedName("data")
     @Expose
-    private List<EvaluationC> data;
+    private QuestionBase data;
 
-    public EvaluationResponse() {
+    public EvaluationResponse(){ }
 
-    }
 
     public Boolean getCode() {
         return code;
@@ -27,11 +26,11 @@ public class EvaluationResponse {
         this.code = code;
     }
 
-    public List<EvaluationC> getData() {
+    public QuestionBase getData() {
         return data;
     }
 
-    public void setData(List<EvaluationC> data) {
+    public void setData(QuestionBase data) {
         this.data = data;
     }
 }

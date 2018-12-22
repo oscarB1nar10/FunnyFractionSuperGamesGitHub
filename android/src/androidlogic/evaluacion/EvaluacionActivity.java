@@ -18,9 +18,8 @@ public class EvaluacionActivity extends AppCompatActivity implements EvaluationV
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.evaluacion);
-        layout = findViewById(R.id.layoutEvaluacion);
-        Picasso.get().load("https://funnyfractios000.000webhostapp.com/images/millonariofondo.png").into(layout);
-
+        //layout = findViewById(R.id.layoutEvaluacion);
+        //Picasso.get().load("https://funnyfractios000.000webhostapp.com/images/millonariofondo.png").into(layout);
         init();
         consumeServices();
     }
