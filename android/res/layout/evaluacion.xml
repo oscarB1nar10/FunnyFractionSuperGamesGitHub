@@ -6,12 +6,43 @@
     android:orientation="vertical"
     android:background="@drawable/millionaire_background">
 
+
+    <LinearLayout
+        android:id="@+id/linearLayout_images"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_horizontal"
+        android:visibility="gone">
     <ImageView
         android:id="@+id/imageview_question"
         android:layout_width="300dp"
         android:layout_height="150dp"
-        android:layout_gravity="center_horizontal"
-        android:visibility="gone"/>
+        android:layout_marginLeft="100dp"/>
+
+        <ImageButton
+            android:id="@+id/btn_fifty_fifty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/fifty_fiftymillionary_game"
+            android:background="#00ffffff"
+            android:layout_marginLeft="10dp"/>
+        <ImageButton
+            android:id="@+id/btn_call"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/call_mellionary"
+            android:background="#00ffffff"
+            android:layout_marginLeft="10dp"/>
+        <ImageButton
+            android:id="@+id/btn_public"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/public_mellionary"
+            android:background="#00ffffff"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"/>
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/linearlayout_options"

@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -26,8 +27,9 @@ public class EvaluacionActivity extends AppCompatActivity implements EvaluationV
     private EvaluationProvider evaluationProvider;
     private ImageView question;
     private Button btn_play_evaluation;
+    private ImageButton btn_fifty_fifty;
     private TextView  answera, answerb, answerc, answerd;
-    private LinearLayout linearLayout_options;
+    private LinearLayout linearLayout_options, linearLayout_images;
     //variables
     private List<Questions> questionsList;
     int randomQ = 0;
@@ -54,12 +56,15 @@ public class EvaluacionActivity extends AppCompatActivity implements EvaluationV
         answerd = findViewById(R.id.textview_answer4);
         btn_play_evaluation = findViewById(R.id.btn_play_evaluation);
         linearLayout_options = findViewById(R.id.linearlayout_options);
+        linearLayout_images = findViewById(R.id.linearLayout_images);
+        btn_fifty_fifty = findViewById(R.id.btn_fifty_fifty);
 
         answera.setOnClickListener(this);
         answerb.setOnClickListener(this);
         answerc.setOnClickListener(this);
         answerd.setOnClickListener(this);
         btn_play_evaluation.setOnClickListener(this);
+
     }
 
 
@@ -77,6 +82,12 @@ public class EvaluacionActivity extends AppCompatActivity implements EvaluationV
     public void questionThrow(List<Questions> lista){
         //Here we assign a question whit the respective answer options
         randomQ = (int) (Math.random() * lista.size() + 1);
+
+        answera.setBackgroundResource(R.drawable.textview_how_want_to_be_mellionary);
+        answerb.setBackgroundResource(R.drawable.textview_how_want_to_be_mellionary2);
+        answerc.setBackgroundResource(R.drawable.textview_how_want_to_be_mellionary3);
+        answerd.setBackgroundResource(R.drawable.textview_how_want_to_be_mellionary4);
+
         Picasso.get().load(lista.get((randomQ-1)).getPregunta()).into(question);
         answera.setText(lista.get((randomQ-1)).getOpcion1());
         answerb.setText(lista.get((randomQ-1)).getOpcion2());
@@ -84,18 +95,9 @@ public class EvaluacionActivity extends AppCompatActivity implements EvaluationV
         answerd.setText(lista.get((randomQ-1)).getOpcion4());
 
 
+
     }
 
-    public boolean evaluateSelection(String answer){
-        if(answer.equals(questionsList.get(randomQ-1).getRespuesta())){
-            Toast.makeText(this,"Respuesta correcta", Toast.LENGTH_LONG).show();
-            return true;
-        }else{
-            correctAnswer(questionsList.get(randomQ-1).getRespuesta());
-            Toast.makeText(this,"Respuesta incorrecta", Toast.LENGTH_LONG).show();
-            return  false;
-        }
-    }
 
     public void correctAnswer(String answer) {
         if (answer.equals(answera.getText().toString())) {
@@ -137,18 +139,22 @@ public class EvaluacionActivity extends AppCompatActivity implements EvaluationV
                     textView.setBackgroundResource(R.drawable.answeracorrect);
                 }else if(value == 2 && textView == answera){
                     textView.setBackgroundResource(R.drawable.answeraerror);
+                    correctAnswer(questionsList.get(randomQ-1).getRespuesta());
                 }else if(value == 1 && textView == answerb){
                     textView.setBackgroundResource(R.drawable.answerbcorrect);
                 }else if(value == 2 && textView == answerb){
                     textView.setBackgroundResource(R.drawable.answerberror);
+                    correctAnswer(questionsList.get(randomQ-1).getRespuesta());
                 }else if(value == 1 && textView == answerc){
                     textView.setBackgroundResource(R.drawable.answerccorrect);
                 }else if(value == 2 && textView == answerc){
                     textView.setBackgroundResource(R.drawable.answercerror);
+                    correctAnswer(questionsList.get(randomQ-1).getRespuesta());
                 }else if(value == 1 && textView == answerd){
                     textView.setBackgroundResource(R.drawable.answerdcorrect);
                 }else{
                     textView.setBackgroundResource(R.drawable.answerderror);
+                    correctAnswer(questionsList.get(randomQ-1).getRespuesta());
                 }
                 newQuestion();
 
@@ -161,7 +167,7 @@ public class EvaluacionActivity extends AppCompatActivity implements EvaluationV
         switch (v.getId()){
             case R.id.textview_answer1:
                 answera.setBackgroundResource(R.drawable.answeraselect);
-                if(answera.getText().toString().equals(questionsList.get(randomQ-1))){
+                if(answera.getText().toString().equals(questionsList.get(randomQ-1).getRespuesta())){
                     changeColorAnswerSelected(answera, 1 );
                 }else{
                     changeColorAnswerSelected(answera, 2 );
@@ -170,7 +176,7 @@ public class EvaluacionActivity extends AppCompatActivity implements EvaluationV
                 break;
             case R.id.textview_answer2:
                 answerb.setBackgroundResource(R.drawable.answerbselecte);
-                if(answerb.getText().toString().equals(questionsList.get(randomQ-1))){
+                if(answerb.getText().toString().equals(questionsList.get(randomQ-1).getRespuesta())){
                     changeColorAnswerSelected(answerb, 1 );
                 }else{
                     changeColorAnswerSelected(answerb, 2 );
@@ -178,7 +184,7 @@ public class EvaluacionActivity extends AppCompatActivity implements EvaluationV
                 break;
             case R.id.textview_answer3:
                 answerc.setBackgroundResource(R.drawable.answercselect);
-                if(answerc.getText().toString().equals(questionsList.get(randomQ-1))){
+                if(answerc.getText().toString().equals(questionsList.get(randomQ-1).getRespuesta())){
                     changeColorAnswerSelected(answerc, 1 );
                 }else{
                     changeColorAnswerSelected(answerc, 2 );
@@ -186,7 +192,7 @@ public class EvaluacionActivity extends AppCompatActivity implements EvaluationV
                 break;
             case R.id.textview_answer4:
                 answerd.setBackgroundResource(R.drawable.answerdselect);
-                if(answerd.getText().toString().equals(questionsList.get(randomQ-1))){
+                if(answerd.getText().toString().equals(questionsList.get(randomQ-1).getRespuesta())){
                     changeColorAnswerSelected(answerd, 1 );
                 }else{
                     changeColorAnswerSelected(answerd, 2 );
@@ -194,8 +200,8 @@ public class EvaluacionActivity extends AppCompatActivity implements EvaluationV
                 break;
 
             case R.id.btn_play_evaluation:
-                question.setVisibility(View.VISIBLE);
                 linearLayout_options.setVisibility(View.VISIBLE);
+                linearLayout_images.setVisibility(View.VISIBLE);
                 break;
         }
     }
