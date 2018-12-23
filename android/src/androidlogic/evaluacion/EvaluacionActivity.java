@@ -1,10 +1,13 @@
 package androidlogic.evaluacion;
 
+import android.content.DialogInterface;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -16,6 +19,7 @@ import android.widget.Toast;
 import com.funnyfractions.game.R;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import androidlogic.evaluacion.interfaces.EvaluationInteractor;
@@ -29,12 +33,14 @@ public class EvaluacionActivity extends AppCompatActivity implements EvaluationV
     private MediaPlayer musicafondo, selectsound, correctsound, errorsound, introsound;
     private ImageView question;
     private Button btn_play_evaluation;
-    private ImageButton btn_fifty_fifty;
+    private ImageButton btn_fifty_fifty, btn_call;
     private TextView  answera, answerb, answerc, answerd;
     private LinearLayout linearLayout_options, linearLayout_images;
     //variables
     private List<Questions> questionsList;
     int randomQ = 0;
+    private ArrayList<TextView> answerOptions;
+    private int answersToDelete;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,6 +67,7 @@ public class EvaluacionActivity extends AppCompatActivity implements EvaluationV
         linearLayout_options = findViewById(R.id.linearlayout_options);
         linearLayout_images = findViewById(R.id.linearLayout_images);
         btn_fifty_fifty = findViewById(R.id.btn_fifty_fifty);
+        btn_call = findViewById(R.id.btn_call);
         //region sonidos
         musicafondo = MediaPlayer.create(this, R.raw.musicafondo);
         introsound = MediaPlayer.create(this, R.raw.intro);
@@ -69,12 +76,19 @@ public class EvaluacionActivity extends AppCompatActivity implements EvaluationV
         errorsound = MediaPlayer.create(this, R.raw.preguntaincorrecta);
         //endregion
 
+        answerOptions = new ArrayList<>();
+        answerOptions.add(answera);
+        answerOptions.add(answerb);
+        answerOptions.add(answerc);
+        answerOptions.add(answerd);
+
         answera.setOnClickListener(this);
         answerb.setOnClickListener(this);
         answerc.setOnClickListener(this);
         answerd.setOnClickListener(this);
         btn_play_evaluation.setOnClickListener(this);
-
+        btn_fifty_fifty.setOnClickListener(this);
+        btn_call.setOnClickListener(this);
     }
 
 
@@ -128,6 +142,51 @@ public class EvaluacionActivity extends AppCompatActivity implements EvaluationV
             }
         }, 2000);
     }
+
+    private void fiftyFifty(){
+        int random = (int) (Math.random() * answerOptions.size() + 1);
+
+
+        while(answersToDelete != 2){
+            if(!answerOptions.get((random-1)).getText().toString().equals(questionsList.get(randomQ-1).getRespuesta())
+                    && !answerOptions.get((random-1)).getText().toString().equals("")){
+                answerOptions.get((random-1)).setText("");
+                answersToDelete ++ ;
+                random = (int) (Math.random() * answerOptions.size() + 1);
+            }else{
+                random = (int) (Math.random() * answerOptions.size() + 1);
+            }
+        }
+
+    }
+
+    private void  callToEintein(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        //get the layout inflater
+        LayoutInflater inflater = this.getLayoutInflater();
+        View view = inflater.inflate(R.layout.call_mellinonary,null);
+        TextView textView_advice = view.findViewById(R.id.textview_advice);
+        textView_advice.setText("Parece que la respuesta es: "+questionsList.get(randomQ-1).getRespuesta());
+
+        // Inflate and set the layout for the dialog
+        // Pass null as the parent view because its going in the dialog layout
+        builder.setView(inflater.inflate(R.layout.call_mellinonary, null))
+                // Add action buttons
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                       dialog.dismiss();
+                    }
+                })
+                .setNegativeButton("Na, no te creo", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.dismiss();
+                    }
+                });
+        builder.create();
+        builder.show();
+    }
+
 
     /**
      * where value is the truth value of answer selected
@@ -224,6 +283,14 @@ public class EvaluacionActivity extends AppCompatActivity implements EvaluationV
                 musicafondo.start();
                 linearLayout_options.setVisibility(View.VISIBLE);
                 linearLayout_images.setVisibility(View.VISIBLE);
+                break;
+
+            case R.id.btn_fifty_fifty:
+                fiftyFifty();
+                break;
+
+            case R.id.btn_call:
+                callToEintein();
                 break;
         }
     }
