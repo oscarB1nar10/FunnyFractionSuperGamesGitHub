@@ -10,13 +10,16 @@
         android:id="@+id/imageview_question"
         android:layout_width="300dp"
         android:layout_height="150dp"
-        android:layout_gravity="center_horizontal"/>
+        android:layout_gravity="center_horizontal"
+        android:visibility="gone"/>
 
     <LinearLayout
+        android:id="@+id/linearlayout_options"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:weightSum="2">
+        android:weightSum="2"
+        android:visibility="gone">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -106,6 +109,10 @@
         </LinearLayout>
     </LinearLayout>
 
+    <include layout="@layout/evaluation_menu"></include>
+
 
 
 </LinearLayout>
+
+

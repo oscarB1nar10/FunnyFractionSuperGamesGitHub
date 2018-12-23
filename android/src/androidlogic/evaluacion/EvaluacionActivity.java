@@ -5,7 +5,9 @@ import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,7 +25,9 @@ public class EvaluacionActivity extends AppCompatActivity implements EvaluationV
     //widgest
     private EvaluationProvider evaluationProvider;
     private ImageView question;
+    private Button btn_play_evaluation;
     private TextView  answera, answerb, answerc, answerd;
+    private LinearLayout linearLayout_options;
     //variables
     private List<Questions> questionsList;
     int randomQ = 0;
@@ -48,11 +52,14 @@ public class EvaluacionActivity extends AppCompatActivity implements EvaluationV
         answerb = findViewById(R.id.textview_answer2);
         answerc = findViewById(R.id.textview_answer3);
         answerd = findViewById(R.id.textview_answer4);
+        btn_play_evaluation = findViewById(R.id.btn_play_evaluation);
+        linearLayout_options = findViewById(R.id.linearlayout_options);
 
         answera.setOnClickListener(this);
         answerb.setOnClickListener(this);
         answerc.setOnClickListener(this);
         answerd.setOnClickListener(this);
+        btn_play_evaluation.setOnClickListener(this);
     }
 
 
@@ -112,6 +119,40 @@ public class EvaluacionActivity extends AppCompatActivity implements EvaluationV
                 questionsList.remove((randomQ-1));
                 questionThrow(questionsList);
             }
+        }, 2000);
+    }
+
+    /**
+     * where value is the truth value of answer selected
+     * 1: correct
+     * 2: incorrect
+     */
+
+    public  void changeColorAnswerSelected(final TextView textView, final int value){
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if(value == 1 && textView == answera){
+                    textView.setBackgroundResource(R.drawable.answeracorrect);
+                }else if(value == 2 && textView == answera){
+                    textView.setBackgroundResource(R.drawable.answeraerror);
+                }else if(value == 1 && textView == answerb){
+                    textView.setBackgroundResource(R.drawable.answerbcorrect);
+                }else if(value == 2 && textView == answerb){
+                    textView.setBackgroundResource(R.drawable.answerberror);
+                }else if(value == 1 && textView == answerc){
+                    textView.setBackgroundResource(R.drawable.answerccorrect);
+                }else if(value == 2 && textView == answerc){
+                    textView.setBackgroundResource(R.drawable.answercerror);
+                }else if(value == 1 && textView == answerd){
+                    textView.setBackgroundResource(R.drawable.answerdcorrect);
+                }else{
+                    textView.setBackgroundResource(R.drawable.answerderror);
+                }
+                newQuestion();
+
+            }
         }, 3000);
     }
 
@@ -119,40 +160,42 @@ public class EvaluacionActivity extends AppCompatActivity implements EvaluationV
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.textview_answer1:
-                if(evaluateSelection(answera.getText().toString())){
-                    answera.setBackgroundResource(R.drawable.answeracorrect);
-                    newQuestion();
+                answera.setBackgroundResource(R.drawable.answeraselect);
+                if(answera.getText().toString().equals(questionsList.get(randomQ-1))){
+                    changeColorAnswerSelected(answera, 1 );
                 }else{
-                    answera.setBackgroundResource(R.drawable.answeraerror);
-                    newQuestion();
+                    changeColorAnswerSelected(answera, 2 );
                 }
+
                 break;
             case R.id.textview_answer2:
-                if(evaluateSelection(answerb.getText().toString())){
-                    answerb.setBackgroundResource(R.drawable.answerbcorrect);
-                    newQuestion();
+                answerb.setBackgroundResource(R.drawable.answerbselecte);
+                if(answerb.getText().toString().equals(questionsList.get(randomQ-1))){
+                    changeColorAnswerSelected(answerb, 1 );
                 }else{
-                    answerb.setBackgroundResource(R.drawable.answerberror);
-                    newQuestion();
+                    changeColorAnswerSelected(answerb, 2 );
                 }
                 break;
             case R.id.textview_answer3:
-                if(evaluateSelection(answerc.getText().toString())){
-                    answerc.setBackgroundResource(R.drawable.answerccorrect);
-                    newQuestion();
+                answerc.setBackgroundResource(R.drawable.answercselect);
+                if(answerc.getText().toString().equals(questionsList.get(randomQ-1))){
+                    changeColorAnswerSelected(answerc, 1 );
                 }else{
-                    answerc.setBackgroundResource(R.drawable.answercerror);
-                    newQuestion();
+                    changeColorAnswerSelected(answerc, 2 );
                 }
                 break;
             case R.id.textview_answer4:
-                if(evaluateSelection(answerd.getText().toString())){
-                    answerd.setBackgroundResource(R.drawable.answerdcorrect);
-                    newQuestion();
+                answerd.setBackgroundResource(R.drawable.answerdselect);
+                if(answerd.getText().toString().equals(questionsList.get(randomQ-1))){
+                    changeColorAnswerSelected(answerd, 1 );
                 }else{
-                    answerd.setBackgroundResource(R.drawable.answerderror);
-                    newQuestion();
+                    changeColorAnswerSelected(answerd, 2 );
                 }
+                break;
+
+            case R.id.btn_play_evaluation:
+                question.setVisibility(View.VISIBLE);
+                linearLayout_options.setVisibility(View.VISIBLE);
                 break;
         }
     }
