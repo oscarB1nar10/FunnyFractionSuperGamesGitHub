@@ -1,5 +1,6 @@
 package androidlogic.evaluacion;
 
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -25,6 +26,7 @@ public class EvaluacionActivity extends AppCompatActivity implements EvaluationV
 
     //widgest
     private EvaluationProvider evaluationProvider;
+    private MediaPlayer musicafondo, selectsound, correctsound, errorsound, introsound;
     private ImageView question;
     private Button btn_play_evaluation;
     private ImageButton btn_fifty_fifty;
@@ -39,6 +41,7 @@ public class EvaluacionActivity extends AppCompatActivity implements EvaluationV
         setContentView(R.layout.evaluacion);
         init();
         initView();
+        introsound.start();
         consumeServices();
     }
 
@@ -58,6 +61,13 @@ public class EvaluacionActivity extends AppCompatActivity implements EvaluationV
         linearLayout_options = findViewById(R.id.linearlayout_options);
         linearLayout_images = findViewById(R.id.linearLayout_images);
         btn_fifty_fifty = findViewById(R.id.btn_fifty_fifty);
+        //region sonidos
+        musicafondo = MediaPlayer.create(this, R.raw.musicafondo);
+        introsound = MediaPlayer.create(this, R.raw.intro);
+        selectsound = MediaPlayer.create(this, R.raw.preguntaselecionada);
+        correctsound = MediaPlayer.create(this, R.raw.preguntacorrecta);
+        errorsound = MediaPlayer.create(this, R.raw.preguntaincorrecta);
+        //endregion
 
         answera.setOnClickListener(this);
         answerb.setOnClickListener(this);
@@ -93,9 +103,6 @@ public class EvaluacionActivity extends AppCompatActivity implements EvaluationV
         answerb.setText(lista.get((randomQ-1)).getOpcion2());
         answerc.setText(lista.get((randomQ-1)).getOpcion3());
         answerd.setText(lista.get((randomQ-1)).getOpcion4());
-
-
-
     }
 
 
@@ -108,9 +115,7 @@ public class EvaluacionActivity extends AppCompatActivity implements EvaluationV
             answerc.setBackgroundResource(R.drawable.answerccorrect);
         } else {
             answerd.setBackgroundResource(R.drawable.answerdcorrect);
-
         }
-
     }
 
     public void newQuestion(){
@@ -136,23 +141,31 @@ public class EvaluacionActivity extends AppCompatActivity implements EvaluationV
             @Override
             public void run() {
                 if(value == 1 && textView == answera){
+                    correctsound.start();
                     textView.setBackgroundResource(R.drawable.answeracorrect);
                 }else if(value == 2 && textView == answera){
+                    errorsound.start();
                     textView.setBackgroundResource(R.drawable.answeraerror);
                     correctAnswer(questionsList.get(randomQ-1).getRespuesta());
                 }else if(value == 1 && textView == answerb){
+                    correctsound.start();
                     textView.setBackgroundResource(R.drawable.answerbcorrect);
                 }else if(value == 2 && textView == answerb){
+                    errorsound.start();
                     textView.setBackgroundResource(R.drawable.answerberror);
                     correctAnswer(questionsList.get(randomQ-1).getRespuesta());
                 }else if(value == 1 && textView == answerc){
+                    correctsound.start();
                     textView.setBackgroundResource(R.drawable.answerccorrect);
                 }else if(value == 2 && textView == answerc){
+                    errorsound.start();
                     textView.setBackgroundResource(R.drawable.answercerror);
                     correctAnswer(questionsList.get(randomQ-1).getRespuesta());
                 }else if(value == 1 && textView == answerd){
+                    correctsound.start();
                     textView.setBackgroundResource(R.drawable.answerdcorrect);
                 }else{
+                    errorsound.start();
                     textView.setBackgroundResource(R.drawable.answerderror);
                     correctAnswer(questionsList.get(randomQ-1).getRespuesta());
                 }
@@ -167,15 +180,18 @@ public class EvaluacionActivity extends AppCompatActivity implements EvaluationV
         switch (v.getId()){
             case R.id.textview_answer1:
                 answera.setBackgroundResource(R.drawable.answeraselect);
+                musicafondo.stop();
+                selectsound.start();
                 if(answera.getText().toString().equals(questionsList.get(randomQ-1).getRespuesta())){
                     changeColorAnswerSelected(answera, 1 );
                 }else{
                     changeColorAnswerSelected(answera, 2 );
                 }
-
                 break;
             case R.id.textview_answer2:
                 answerb.setBackgroundResource(R.drawable.answerbselecte);
+                musicafondo.stop();
+                selectsound.start();
                 if(answerb.getText().toString().equals(questionsList.get(randomQ-1).getRespuesta())){
                     changeColorAnswerSelected(answerb, 1 );
                 }else{
@@ -184,6 +200,8 @@ public class EvaluacionActivity extends AppCompatActivity implements EvaluationV
                 break;
             case R.id.textview_answer3:
                 answerc.setBackgroundResource(R.drawable.answercselect);
+                musicafondo.stop();
+                selectsound.start();
                 if(answerc.getText().toString().equals(questionsList.get(randomQ-1).getRespuesta())){
                     changeColorAnswerSelected(answerc, 1 );
                 }else{
@@ -192,6 +210,8 @@ public class EvaluacionActivity extends AppCompatActivity implements EvaluationV
                 break;
             case R.id.textview_answer4:
                 answerd.setBackgroundResource(R.drawable.answerdselect);
+                musicafondo.stop();
+                selectsound.start();
                 if(answerd.getText().toString().equals(questionsList.get(randomQ-1).getRespuesta())){
                     changeColorAnswerSelected(answerd, 1 );
                 }else{
@@ -200,6 +220,8 @@ public class EvaluacionActivity extends AppCompatActivity implements EvaluationV
                 break;
 
             case R.id.btn_play_evaluation:
+                introsound.stop();
+                musicafondo.start();
                 linearLayout_options.setVisibility(View.VISIBLE);
                 linearLayout_images.setVisibility(View.VISIBLE);
                 break;
