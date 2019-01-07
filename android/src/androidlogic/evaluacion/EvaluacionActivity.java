@@ -43,7 +43,7 @@ public class EvaluacionActivity extends AppCompatActivity implements EvaluationV
     private LinearLayout linearLayout_options, linearLayout_images;
     //variables
     private List<Questions> questionsList;
-    int randomQ = 0;
+    int randomQ = 0, numbreQuestion = 1;
     private ArrayList<TextView> answerOptions;
     private int answersToDelete;
     @Override
@@ -144,8 +144,14 @@ public class EvaluacionActivity extends AppCompatActivity implements EvaluationV
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                questionsList.remove((randomQ-1));
-                questionThrow(questionsList);
+                if(numbreQuestion != 3) {
+                    correctAnswerAlert();
+                    questionsList.remove((randomQ - 1));
+                    questionThrow(questionsList);
+                    enableAnswerButton();
+                }else{
+                    wonGame();
+                }
             }
         }, 2000);
     }
@@ -244,6 +250,7 @@ public class EvaluacionActivity extends AppCompatActivity implements EvaluationV
                 }else{
                     changeColorAnswerSelected(answera, 2 );
                 }
+                disableAnswerButton();
                 break;
             case R.id.textview_answer2:
                 answerb.setBackgroundResource(R.drawable.answerbselecte);
@@ -254,6 +261,7 @@ public class EvaluacionActivity extends AppCompatActivity implements EvaluationV
                 }else{
                     changeColorAnswerSelected(answerb, 2 );
                 }
+                disableAnswerButton();
                 break;
             case R.id.textview_answer3:
                 answerc.setBackgroundResource(R.drawable.answercselect);
@@ -264,6 +272,7 @@ public class EvaluacionActivity extends AppCompatActivity implements EvaluationV
                 }else{
                     changeColorAnswerSelected(answerc, 2 );
                 }
+                disableAnswerButton();
                 break;
             case R.id.textview_answer4:
                 answerd.setBackgroundResource(R.drawable.answerdselect);
@@ -274,6 +283,7 @@ public class EvaluacionActivity extends AppCompatActivity implements EvaluationV
                 }else{
                     changeColorAnswerSelected(answerd, 2 );
                 }
+                disableAnswerButton();
                 break;
 
             case R.id.btn_play_evaluation:
@@ -297,6 +307,42 @@ public class EvaluacionActivity extends AppCompatActivity implements EvaluationV
         }
     }
 
+    private void correctAnswerAlert(){
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        View view = getLayoutInflater().inflate(R.layout.correct_answer_mellionary,null);
+        TextView txtContinue = view.findViewById(R.id.txt_continue);
+        TextView txtTakeMoney = view.findViewById(R.id.txt_take_money);
+        TextView txtMoney = view.findViewById(R.id.txt_money);
+
+        builder.setView(view);
+        final AlertDialog dialog = builder.create();
+        dialog.setCancelable(false);
+
+        txtMoney.setText("$"+ (500*numbreQuestion));
+
+        txtContinue.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(EvaluacionActivity.this, "i choose continue", Toast.LENGTH_SHORT).show();
+                numbreQuestion++;
+                dialog.dismiss();
+                //save data DB Realm
+            }
+        });
+        txtTakeMoney.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(EvaluacionActivity.this, "i choose to take my money", Toast.LENGTH_SHORT).show();
+                //save data DB Realm
+            }
+        });
+
+        dialog.show();
+
+
+    }
+
     private void exitGame() {
         musicafondo.stop();
         selectsound.stop();
@@ -310,8 +356,45 @@ public class EvaluacionActivity extends AppCompatActivity implements EvaluationV
         startActivity(intent);
     }
 
+    private void disableAnswerButton(){
+        for(TextView  textView : answerOptions){
+            textView.setEnabled(false);
+
+        }
+    }
+    private void enableAnswerButton(){
+        for(TextView  textView : answerOptions){
+            textView.setEnabled(true);
+
+        }
+    }
+
     @Override
     public void onBackPressed() {
+
+    }
+
+    private void wonGame(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        View view = getLayoutInflater().inflate(R.layout.won_billionary_game,null);
+        TextView txt_playAgain = view.findViewById(R.id.txt_play_again);
+        TextView txt_exit = view.findViewById(R.id.txt_exit);
+        builder.setView(view);
+        final AlertDialog dialog = builder.create();
+        dialog.setCancelable(false);
+        txt_playAgain.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(EvaluacionActivity.this, "I am ready to play again", Toast.LENGTH_SHORT).show();
+            }
+        });
+        txt_exit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(EvaluacionActivity.this, "I am ready to leave the game", Toast.LENGTH_SHORT).show();
+            }
+        });
+        dialog.show();
 
     }
 }
