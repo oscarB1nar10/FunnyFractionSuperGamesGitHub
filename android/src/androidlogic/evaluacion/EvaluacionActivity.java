@@ -17,6 +17,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,7 +39,7 @@ public class EvaluacionActivity extends AppCompatActivity implements EvaluationV
     private MediaPlayer musicafondo, selectsound, correctsound, errorsound, introsound;
     private ImageView question;
     private Button btn_play_evaluation;
-    private ImageButton btn_fifty_fifty, btn_call, btn_salir;
+    private ImageButton btn_fifty_fifty, btn_call, btn_public , btn_salir;
     private TextView  answera, answerb, answerc, answerd;
     private LinearLayout linearLayout_options, linearLayout_images;
     //variables
@@ -73,6 +74,7 @@ public class EvaluacionActivity extends AppCompatActivity implements EvaluationV
         linearLayout_images = findViewById(R.id.linearLayout_images);
         btn_fifty_fifty = findViewById(R.id.btn_fifty_fifty);
         btn_call = findViewById(R.id.btn_call);
+        btn_public = findViewById(R.id.btn_public);
         btn_salir = findViewById(R.id.btn_exit);
         //region sonidos
         musicafondo = MediaPlayer.create(this, R.raw.musicafondo);
@@ -96,6 +98,7 @@ public class EvaluacionActivity extends AppCompatActivity implements EvaluationV
         btn_fifty_fifty.setOnClickListener(this);
         btn_call.setOnClickListener(this);
         btn_salir.setOnClickListener(this);
+        btn_public.setOnClickListener(this);
     }
 
 
@@ -156,43 +159,8 @@ public class EvaluacionActivity extends AppCompatActivity implements EvaluationV
         }, 2000);
     }
 
-    private void fiftyFifty(){
-        int random = (int) (Math.random() * answerOptions.size() + 1);
 
-
-        while(answersToDelete != 2){
-            if(!answerOptions.get((random-1)).getText().toString().equals(questionsList.get(randomQ-1).getRespuesta())
-                    && !answerOptions.get((random-1)).getText().toString().equals("")){
-                answerOptions.get((random-1)).setText("");
-                answersToDelete ++ ;
-                random = (int) (Math.random() * answerOptions.size() + 1);
-            }else{
-                random = (int) (Math.random() * answerOptions.size() + 1);
-            }
-        }
-
-    }
-
-    private void  callToEintein(){
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        View view = getLayoutInflater().inflate(R.layout.call_mellinonary,null);
-        TextView respuesta = view.findViewById(R.id.textview_respuesta);
-        Button cerrar = view.findViewById(R.id.dismiss);
-        builder.setView(view);
-        final AlertDialog dialog = builder.create();
-        dialog.setCancelable(false);
-        dialog.show();
-        cerrar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
-        respuesta.setText("Parece que la respuesta es: "+questionsList.get(randomQ-1).getRespuesta());
-    }
-
-
-    /**
+       /**
      * where value is the truth value of answer selected
      * 1: correct
      * 2: incorrect
@@ -312,6 +280,10 @@ public class EvaluacionActivity extends AppCompatActivity implements EvaluationV
             case R.id.btn_exit:
                 exitGame();
                 break;
+
+            case R.id.btn_public:
+                helpPublic();
+                break;
         }
     }
 
@@ -351,6 +323,83 @@ public class EvaluacionActivity extends AppCompatActivity implements EvaluationV
 
     }
 
+    private void  callToEintein(){
+        btn_call.setImageResource(R.drawable.call_mellionary_selected);
+        btn_call.setEnabled(false);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        View view = getLayoutInflater().inflate(R.layout.call_mellinonary,null);
+        TextView respuesta = view.findViewById(R.id.textview_respuesta);
+        Button cerrar = view.findViewById(R.id.dismiss);
+        builder.setView(view);
+        final AlertDialog dialog = builder.create();
+        dialog.setCancelable(false);
+        dialog.show();
+        cerrar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        respuesta.setText("Parece que la respuesta es: "+questionsList.get(randomQ-1).getRespuesta());
+    }
+
+    private void helpPublic() {
+        int max, random;
+        btn_public.setImageResource(R.drawable.public_mellionary_selected);
+        btn_public.setEnabled(false);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        View view = getLayoutInflater().inflate(R.layout.public_mellionary,null);
+        ImageView pregunta = view.findViewById(R.id.preguntapublico);
+        ProgressBar posiblea = view.findViewById(R.id.aposible);
+        ProgressBar posibleb = view.findViewById(R.id.bposible);
+        ProgressBar posiblec = view.findViewById(R.id.cposible);
+        ProgressBar posibled = view.findViewById(R.id.dposible);
+        Button cerrar = view.findViewById(R.id.dismisspublic);
+        builder.setView(view);
+        final AlertDialog dialog = builder.create();
+        dialog.setCancelable(false);
+        dialog.show();
+        cerrar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        Picasso.get().load(this.questionsList.get((randomQ-1)).getPregunta()).into(pregunta);
+        random = (int) Math.floor(Math.random()*(100-51)+50);
+        posiblea.setProgress(random);
+        max = 100-random;
+        random = (int) (Math.random() * max + 1);
+        posibleb.setProgress(random);
+        max = max - random;
+        random = (int) (Math.random() * max + 1);
+        posiblec.setProgress(random);
+        max = max - random;
+        posibled.setProgress(max);
+    }
+
+    private void fiftyFifty(){
+
+        btn_fifty_fifty.setImageResource(R.drawable.fifty_fiftymillionary_game_selected);
+        btn_fifty_fifty.setEnabled(false);
+        int random = (int) (Math.random() * answerOptions.size() + 1);
+
+
+        while(answersToDelete != 2){
+            if(!answerOptions.get((random-1)).getText().toString().equals(questionsList.get(randomQ-1).getRespuesta())
+                    && !answerOptions.get((random-1)).getText().toString().equals("")){
+                answerOptions.get((random-1)).setText("");
+                answersToDelete ++ ;
+                random = (int) (Math.random() * answerOptions.size() + 1);
+            }else{
+                random = (int) (Math.random() * answerOptions.size() + 1);
+            }
+        }
+
+    }
+
     private void exitGame() {
         musicafondo.stop();
         selectsound.stop();
@@ -370,6 +419,7 @@ public class EvaluacionActivity extends AppCompatActivity implements EvaluationV
 
         }
     }
+
     private void enableAnswerButton(){
         for(TextView  textView : answerOptions){
             textView.setEnabled(true);
