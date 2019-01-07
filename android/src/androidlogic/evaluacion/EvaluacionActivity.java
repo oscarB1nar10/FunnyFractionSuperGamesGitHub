@@ -1,6 +1,9 @@
 package androidlogic.evaluacion;
 
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
@@ -10,6 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -24,6 +28,7 @@ import java.util.List;
 
 import androidlogic.evaluacion.interfaces.EvaluationInteractor;
 import androidlogic.evaluacion.interfaces.EvaluationView;
+import androidlogic.home.Home;
 import androidlogic.retrofitClasses.Questions;
 
 public class EvaluacionActivity extends AppCompatActivity implements EvaluationView, View.OnClickListener {
@@ -33,7 +38,7 @@ public class EvaluacionActivity extends AppCompatActivity implements EvaluationV
     private MediaPlayer musicafondo, selectsound, correctsound, errorsound, introsound;
     private ImageView question;
     private Button btn_play_evaluation;
-    private ImageButton btn_fifty_fifty, btn_call;
+    private ImageButton btn_fifty_fifty, btn_call, btn_salir;
     private TextView  answera, answerb, answerc, answerd;
     private LinearLayout linearLayout_options, linearLayout_images;
     //variables
@@ -68,6 +73,7 @@ public class EvaluacionActivity extends AppCompatActivity implements EvaluationV
         linearLayout_images = findViewById(R.id.linearLayout_images);
         btn_fifty_fifty = findViewById(R.id.btn_fifty_fifty);
         btn_call = findViewById(R.id.btn_call);
+        btn_salir = findViewById(R.id.btn_exit);
         //region sonidos
         musicafondo = MediaPlayer.create(this, R.raw.musicafondo);
         introsound = MediaPlayer.create(this, R.raw.intro);
@@ -89,6 +95,7 @@ public class EvaluacionActivity extends AppCompatActivity implements EvaluationV
         btn_play_evaluation.setOnClickListener(this);
         btn_fifty_fifty.setOnClickListener(this);
         btn_call.setOnClickListener(this);
+        btn_salir.setOnClickListener(this);
     }
 
 
@@ -162,29 +169,20 @@ public class EvaluacionActivity extends AppCompatActivity implements EvaluationV
 
     private void  callToEintein(){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        //get the layout inflater
-        LayoutInflater inflater = this.getLayoutInflater();
-        View view = inflater.inflate(R.layout.call_mellinonary,null);
-        TextView textView_advice = view.findViewById(R.id.textview_advice);
-        textView_advice.setText("Parece que la respuesta es: "+questionsList.get(randomQ-1).getRespuesta());
-
-        // Inflate and set the layout for the dialog
-        // Pass null as the parent view because its going in the dialog layout
-        builder.setView(inflater.inflate(R.layout.call_mellinonary, null))
-                // Add action buttons
-                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int id) {
-                       dialog.dismiss();
-                    }
-                })
-                .setNegativeButton("Na, no te creo", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        dialog.dismiss();
-                    }
-                });
-        builder.create();
-        builder.show();
+        View view = getLayoutInflater().inflate(R.layout.call_mellinonary,null);
+        TextView respuesta = view.findViewById(R.id.textview_respuesta);
+        Button cerrar = view.findViewById(R.id.dismiss);
+        builder.setView(view);
+        final AlertDialog dialog = builder.create();
+        dialog.setCancelable(false);
+        dialog.show();
+        cerrar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        respuesta.setText("Parece que la respuesta es: "+questionsList.get(randomQ-1).getRespuesta());
     }
 
 
@@ -292,6 +290,28 @@ public class EvaluacionActivity extends AppCompatActivity implements EvaluationV
             case R.id.btn_call:
                 callToEintein();
                 break;
+
+            case R.id.btn_exit:
+                exitGame();
+                break;
         }
+    }
+
+    private void exitGame() {
+        musicafondo.stop();
+        selectsound.stop();
+        correctsound.stop();
+        errorsound.stop();
+        SharedPreferences sharedP;
+        Intent intent = new Intent(getApplicationContext(), Home.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        sharedP = getSharedPreferences("SHARED_PREFERENCES", Context.MODE_PRIVATE);
+        intent.putExtra("usuario", sharedP.getString("usuariologueado", "usuario"));
+        startActivity(intent);
+    }
+
+    @Override
+    public void onBackPressed() {
+
     }
 }

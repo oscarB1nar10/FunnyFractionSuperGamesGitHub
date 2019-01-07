@@ -4,25 +4,37 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
+    android:background="@drawable/how_want_be_a_mellionary_menu_background"
     android:padding="10dp">
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/circleimageview_einstein"
         android:layout_width="200dp"
         android:layout_height="200dp"
+        android:layout_gravity="center_horizontal"
         android:src="@drawable/albert_einstein"
-        app:civ_border_width="2dp"
         app:civ_border_color="#FF000000"
-        android:layout_gravity="center_horizontal"/>
+        app:civ_border_width="2dp" />
 
     <TextView
-        android:id="@+id/textview_advice"
+        android:id="@+id/textview_respuesta"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="dsdsd"
+        android:text=""
         android:textSize="24sp"
-        android:textColor="#000000"
+        android:textColor="#ffffff"
         android:gravity="center_horizontal"
         android:layout_marginTop="10dp"/>
+
+    <Button
+        android:id="@+id/dismiss"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="1"
+        android:background="@drawable/how_want_be_a_mellionary_button"
+        android:text="Cerrar"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp" />
 
 </LinearLayout>

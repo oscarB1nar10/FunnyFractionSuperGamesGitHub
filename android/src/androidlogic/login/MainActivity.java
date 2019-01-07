@@ -69,6 +69,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     private RequestQueue requestQueue;
     private JsonObjectRequest jsonObjectRequest;
     private SharedPreferences sharedP;
+    private SharedPreferences.Editor editor2;
     private GoogleSignInClient mGoogleSignInClient;
     private SignInButton signInButton;
     public static final int RC_SIGN_IN = 101;
@@ -94,7 +95,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
 
         sharedP = getSharedPreferences("SHARED_PREFERENCES", Context.MODE_PRIVATE);
 
-        SharedPreferences.Editor editor2 = sharedP.edit();
+        editor2 = sharedP.edit();
         editor2.putInt("currentLevel", 0);
         editor2.putInt("score",0);
         editor2.apply();
@@ -204,6 +205,10 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         }else{
             Intent intent=new Intent(this,Home.class);
             intent.putExtra("usuario", user.getText().toString());
+            sharedP = getSharedPreferences("SHARED_PREFERENCES", Context.MODE_PRIVATE);
+            editor2 = sharedP.edit();
+            editor2.putString("usuariologueado", user.getText().toString());
+            editor2.apply();
             startActivity(intent);
         }
     }
@@ -330,6 +335,10 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
             Intent intent = new Intent(MainActivity.this, Home.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
             intent.putExtra("usuario", account.getEmail());
+            sharedP = getSharedPreferences("SHARED_PREFERENCES", Context.MODE_PRIVATE);
+            editor2 = sharedP.edit();
+            editor2.putString("usuariologueado", account.getEmail());
+            editor2.apply();
             startActivity(intent);
 
         } catch (ApiException e) {
@@ -346,6 +355,10 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
             Intent intent = new Intent(MainActivity.this, Home.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
             intent.putExtra("usuario", account.getEmail());
+            sharedP = getSharedPreferences("SHARED_PREFERENCES", Context.MODE_PRIVATE);
+            editor2 = sharedP.edit();
+            editor2.putString("usuariologueado", account.getEmail());
+            editor2.apply();
             startActivity(intent);
         }
     }
