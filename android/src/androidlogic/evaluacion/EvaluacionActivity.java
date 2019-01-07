@@ -206,33 +206,41 @@ public class EvaluacionActivity extends AppCompatActivity implements EvaluationV
                 if(value == 1 && textView == answera){
                     correctsound.start();
                     textView.setBackgroundResource(R.drawable.answeracorrect);
+                    newQuestion();
                 }else if(value == 2 && textView == answera){
                     errorsound.start();
                     textView.setBackgroundResource(R.drawable.answeraerror);
                     correctAnswer(questionsList.get(randomQ-1).getRespuesta());
+                    loseGame();
                 }else if(value == 1 && textView == answerb){
                     correctsound.start();
                     textView.setBackgroundResource(R.drawable.answerbcorrect);
+                    newQuestion();
                 }else if(value == 2 && textView == answerb){
                     errorsound.start();
                     textView.setBackgroundResource(R.drawable.answerberror);
                     correctAnswer(questionsList.get(randomQ-1).getRespuesta());
+                    loseGame();
                 }else if(value == 1 && textView == answerc){
                     correctsound.start();
                     textView.setBackgroundResource(R.drawable.answerccorrect);
+                    newQuestion();
                 }else if(value == 2 && textView == answerc){
                     errorsound.start();
                     textView.setBackgroundResource(R.drawable.answercerror);
                     correctAnswer(questionsList.get(randomQ-1).getRespuesta());
+                    loseGame();
                 }else if(value == 1 && textView == answerd){
                     correctsound.start();
                     textView.setBackgroundResource(R.drawable.answerdcorrect);
+                    newQuestion();
                 }else{
                     errorsound.start();
                     textView.setBackgroundResource(R.drawable.answerderror);
                     correctAnswer(questionsList.get(randomQ-1).getRespuesta());
+                    loseGame();
                 }
-                newQuestion();
+
 
             }
         }, 3000);
@@ -379,6 +387,7 @@ public class EvaluacionActivity extends AppCompatActivity implements EvaluationV
         View view = getLayoutInflater().inflate(R.layout.won_billionary_game,null);
         TextView txt_playAgain = view.findViewById(R.id.txt_play_again);
         TextView txt_exit = view.findViewById(R.id.txt_exit);
+        TextView txt_money = view.findViewById(R.id.txt_money);
         builder.setView(view);
         final AlertDialog dialog = builder.create();
         dialog.setCancelable(false);
@@ -394,7 +403,39 @@ public class EvaluacionActivity extends AppCompatActivity implements EvaluationV
                 Toast.makeText(EvaluacionActivity.this, "I am ready to leave the game", Toast.LENGTH_SHORT).show();
             }
         });
+        txt_money.setText("$ "+(500*numbreQuestion));
         dialog.show();
 
+    }
+
+    private void loseGame(){
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        View view = getLayoutInflater().inflate(R.layout.won_billionary_game,null);
+        TextView txt_playAgain = view.findViewById(R.id.txt_play_again);
+        TextView txt_exit = view.findViewById(R.id.txt_exit);
+        TextView txt_money = view.findViewById(R.id.txt_money);
+        ImageView imageView = view.findViewById(R.id.imageview_trophy);
+
+        builder.setView(view);
+        final AlertDialog dialog = builder.create();
+        dialog.setCancelable(false);
+
+        imageView.setImageResource(R.drawable.panda_mellionary);
+
+        txt_playAgain.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(EvaluacionActivity.this, "I am ready to play again", Toast.LENGTH_SHORT).show();
+            }
+        });
+        txt_exit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(EvaluacionActivity.this, "I am ready to leave the game", Toast.LENGTH_SHORT).show();
+            }
+        });
+        txt_money.setText("$ "+(0*numbreQuestion));
+        dialog.show();
     }
 }

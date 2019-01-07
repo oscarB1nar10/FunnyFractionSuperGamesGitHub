@@ -1,85 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/fondo4"
     android:backgroundTintMode="screen"
-    tools:layout_editor_absoluteY="73dp">
+    tools:layout_editor_absoluteY="73dp"
+    android:orientation="vertical">
 
-    <ImageView
-        android:id="@+id/configurar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:onClick="banderasVisibles"
-        android:src="@drawable/settings"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <RelativeLayout
+        android:id="@+id/relativeLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/txt_logeo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="6dp"
-        android:layout_marginLeft="499dp"
-        android:layout_marginRight="6dp"
-        android:layout_marginStart="499dp"
-        android:textColor="#65E538"
-        app:layout_constraintBottom_toBottomOf="@+id/logeo"
-        app:layout_constraintEnd_toStartOf="@+id/logeo"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/logeo" />
+        <ImageView
+            android:id="@+id/configurar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="banderasVisibles"
+            android:src="@drawable/settings" />
 
-    <ImageView
-        android:id="@+id/logeo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="4dp"
-        android:layout_marginRight="4dp"
-        android:layout_marginTop="16dp"
-        android:src="@drawable/login"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/txt_logeo"
-        app:layout_constraintTop_toTopOf="parent" />
+        <ImageView
+            android:id="@+id/logeo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignRight="@id/configurar"
+            android:layout_alignParentTop="true"
+            android:layout_marginRight="-560dp"
+            android:src="@drawable/login" />
 
-    <Button
-        android:id="@+id/btntuto"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="26dp"
-        android:background="@drawable/botones_home"
-        android:text="@string/btnTutoriales"
-        app:layout_constraintBottom_toTopOf="@+id/btnprac"
-        app:layout_constraintStart_toStartOf="@+id/btnprac"
-        tools:ignore="MissingConstraints" />
+    </RelativeLayout>
 
-    <Button
-        android:id="@+id/btnprac"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="24dp"
-        android:background="@drawable/botones_home"
-        android:text="@string/btnPracticas"
-        app:layout_constraintBottom_toTopOf="@+id/btnevalu"
-        app:layout_constraintStart_toStartOf="@+id/btnevalu"
-        tools:ignore="MissingConstraints" />
-
-    <Button
-        android:id="@+id/btnevalu"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="60dp"
-        android:layout_marginEnd="96dp"
-        android:layout_marginRight="96dp"
-        android:background="@drawable/botones_home"
-        android:text="@string/btnEvaluacion"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        tools:ignore="MissingConstraints" />
 
     <ImageButton
         android:id="@+id/englishH"
@@ -89,8 +41,6 @@
         android:onClick="idioma"
         android:src="@drawable/english"
         android:visibility="invisible"
-        app:layout_constraintStart_toStartOf="@+id/espanolH"
-        app:layout_constraintTop_toBottomOf="@+id/espanolH"
         tools:ignore="MissingConstraints" />
 
     <ImageButton
@@ -101,7 +51,55 @@
         android:onClick="idioma"
         android:src="@drawable/spanish"
         android:visibility="invisible"
-        app:layout_constraintStart_toStartOf="@+id/configurar"
-        app:layout_constraintTop_toBottomOf="@+id/configurar"
         tools:ignore="MissingConstraints" />
-</android.support.constraint.ConstraintLayout>
+
+
+
+    <TextView
+        android:id="@+id/txt_logeo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#65E538"
+        android:layout_gravity="center_horizontal"
+        />
+
+
+
+    <Button
+        android:id="@+id/btntuto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="26dp"
+        android:background="@drawable/botones_home"
+        android:text="@string/btnTutoriales"
+        app:layout_constraintBottom_toTopOf="@+id/btnprac"
+        app:layout_constraintStart_toStartOf="@+id/btnprac"
+        tools:ignore="MissingConstraints"
+        android:layout_marginRight="10dp"
+        android:layout_gravity="end"/>
+
+    <Button
+        android:id="@+id/btnprac"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        android:background="@drawable/botones_home"
+        android:text="@string/btnPracticas"
+        app:layout_constraintBottom_toTopOf="@+id/btnevalu"
+        app:layout_constraintStart_toStartOf="@+id/btnevalu"
+        tools:ignore="MissingConstraints"
+        android:layout_marginRight="10dp"
+        android:layout_gravity="end"/>
+
+    <Button
+        android:id="@+id/btnevalu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/botones_home"
+        android:text="@string/btnEvaluacion"
+        tools:ignore="MissingConstraints"
+        android:layout_marginRight="10dp"
+        android:layout_gravity="end"/>
+
+
+</LinearLayout>
