@@ -38,15 +38,16 @@ public class EvaluacionActivity extends AppCompatActivity implements EvaluationV
     private EvaluationProvider evaluationProvider;
     private MediaPlayer musicafondo, selectsound, correctsound, errorsound, introsound;
     private ImageView question;
-    private Button btn_play_evaluation;
+    private Button btn_play_evaluation, btn_instrucc_evaluation, btn_settings_evaluation;
     private ImageButton btn_fifty_fifty, btn_call, btn_public , btn_salir;
     private TextView  answera, answerb, answerc, answerd;
     private LinearLayout linearLayout_options, linearLayout_images;
     //variables
     private List<Questions> questionsList;
-    int randomQ = 0, numbreQuestion = 1;
+    int randomQ = 0, numberQuestion = 1;
     private ArrayList<TextView> answerOptions;
     private int answersToDelete;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,7 +63,6 @@ public class EvaluacionActivity extends AppCompatActivity implements EvaluationV
         evaluationProvider = new EvaluationProvider(EvaluacionActivity.this, evaluationInteractor);
     }
 
-
     private void initView() {
         question =  findViewById(R.id.imageview_question);
         answera = findViewById(R.id.textview_answer1);
@@ -70,6 +70,8 @@ public class EvaluacionActivity extends AppCompatActivity implements EvaluationV
         answerc = findViewById(R.id.textview_answer3);
         answerd = findViewById(R.id.textview_answer4);
         btn_play_evaluation = findViewById(R.id.btn_play_evaluation);
+        btn_instrucc_evaluation = findViewById(R.id.btn_instrucciones_evaluation);
+        btn_settings_evaluation = findViewById(R.id.btn_settings_evaluation);
         linearLayout_options = findViewById(R.id.linearlayout_options);
         linearLayout_images = findViewById(R.id.linearLayout_images);
         btn_fifty_fifty = findViewById(R.id.btn_fifty_fifty);
@@ -78,6 +80,7 @@ public class EvaluacionActivity extends AppCompatActivity implements EvaluationV
         btn_salir = findViewById(R.id.btn_exit);
         //region sonidos
         musicafondo = MediaPlayer.create(this, R.raw.musicafondo);
+        musicafondo.setLooping(true);
         introsound = MediaPlayer.create(this, R.raw.intro);
         selectsound = MediaPlayer.create(this, R.raw.preguntaselecionada);
         correctsound = MediaPlayer.create(this, R.raw.preguntacorrecta);
@@ -95,17 +98,17 @@ public class EvaluacionActivity extends AppCompatActivity implements EvaluationV
         answerc.setOnClickListener(this);
         answerd.setOnClickListener(this);
         btn_play_evaluation.setOnClickListener(this);
+        btn_instrucc_evaluation.setOnClickListener(this);
+        btn_settings_evaluation.setOnClickListener(this);
         btn_fifty_fifty.setOnClickListener(this);
         btn_call.setOnClickListener(this);
         btn_salir.setOnClickListener(this);
         btn_public.setOnClickListener(this);
     }
 
-
     private void consumeServices(){
         evaluationProvider.getEvaluationQ();
     }
-
 
     @Override
     public void questionList(List<Questions> questionsList) {
@@ -129,7 +132,6 @@ public class EvaluacionActivity extends AppCompatActivity implements EvaluationV
         answerd.setText(lista.get((randomQ-1)).getOpcion4());
     }
 
-
     public void correctAnswer(String answer) {
         if (answer.equals(answera.getText().toString())) {
             answera.setBackgroundResource(R.drawable.answeracorrect);
@@ -147,7 +149,7 @@ public class EvaluacionActivity extends AppCompatActivity implements EvaluationV
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                if(numbreQuestion != 3) {
+                if(numberQuestion != 10) {
                     correctAnswerAlert();
                     questionsList.remove((randomQ - 1));
                     questionThrow(questionsList);
@@ -158,7 +160,6 @@ public class EvaluacionActivity extends AppCompatActivity implements EvaluationV
             }
         }, 2000);
     }
-
 
        /**
      * where value is the truth value of answer selected
@@ -208,8 +209,6 @@ public class EvaluacionActivity extends AppCompatActivity implements EvaluationV
                     correctAnswer(questionsList.get(randomQ-1).getRespuesta());
                     loseGame();
                 }
-
-
             }
         }, 3000);
     }
@@ -219,7 +218,7 @@ public class EvaluacionActivity extends AppCompatActivity implements EvaluationV
         switch (v.getId()){
             case R.id.textview_answer1:
                 answera.setBackgroundResource(R.drawable.answeraselect);
-                musicafondo.stop();
+                musicafondo.pause();
                 selectsound.start();
                 if(answera.getText().toString().equals(questionsList.get(randomQ-1).getRespuesta())){
                     changeColorAnswerSelected(answera, 1 );
@@ -230,7 +229,7 @@ public class EvaluacionActivity extends AppCompatActivity implements EvaluationV
                 break;
             case R.id.textview_answer2:
                 answerb.setBackgroundResource(R.drawable.answerbselecte);
-                musicafondo.stop();
+                musicafondo.pause();
                 selectsound.start();
                 if(answerb.getText().toString().equals(questionsList.get(randomQ-1).getRespuesta())){
                     changeColorAnswerSelected(answerb, 1 );
@@ -241,7 +240,7 @@ public class EvaluacionActivity extends AppCompatActivity implements EvaluationV
                 break;
             case R.id.textview_answer3:
                 answerc.setBackgroundResource(R.drawable.answercselect);
-                musicafondo.stop();
+                musicafondo.pause();
                 selectsound.start();
                 if(answerc.getText().toString().equals(questionsList.get(randomQ-1).getRespuesta())){
                     changeColorAnswerSelected(answerc, 1 );
@@ -252,7 +251,7 @@ public class EvaluacionActivity extends AppCompatActivity implements EvaluationV
                 break;
             case R.id.textview_answer4:
                 answerd.setBackgroundResource(R.drawable.answerdselect);
-                musicafondo.stop();
+                musicafondo.pause();
                 selectsound.start();
                 if(answerd.getText().toString().equals(questionsList.get(randomQ-1).getRespuesta())){
                     changeColorAnswerSelected(answerd, 1 );
@@ -267,6 +266,14 @@ public class EvaluacionActivity extends AppCompatActivity implements EvaluationV
                 musicafondo.start();
                 linearLayout_options.setVisibility(View.VISIBLE);
                 linearLayout_images.setVisibility(View.VISIBLE);
+                break;
+
+            case R.id.btn_instrucciones_evaluation:
+                Toast.makeText(this, "Pendiente", Toast.LENGTH_LONG).show();
+                break;
+
+            case R.id.btn_settings_evaluation:
+
                 break;
 
             case R.id.btn_fifty_fifty:
@@ -299,13 +306,13 @@ public class EvaluacionActivity extends AppCompatActivity implements EvaluationV
         final AlertDialog dialog = builder.create();
         dialog.setCancelable(false);
 
-        txtMoney.setText("$"+ (500*numbreQuestion));
+        txtMoney.setText("$"+ (500*numberQuestion));
 
         txtContinue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(EvaluacionActivity.this, "i choose continue", Toast.LENGTH_SHORT).show();
-                numbreQuestion++;
+                musicafondo.start();
+                numberQuestion++;
                 dialog.dismiss();
                 //save data DB Realm
             }
@@ -313,14 +320,11 @@ public class EvaluacionActivity extends AppCompatActivity implements EvaluationV
         txtTakeMoney.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(EvaluacionActivity.this, "i choose to take my money", Toast.LENGTH_SHORT).show();
                 //save data DB Realm
             }
         });
 
         dialog.show();
-
-
     }
 
     private void  callToEintein(){
@@ -369,15 +373,47 @@ public class EvaluacionActivity extends AppCompatActivity implements EvaluationV
         });
         Picasso.get().load(this.questionsList.get((randomQ-1)).getPregunta()).into(pregunta);
         random = (int) Math.floor(Math.random()*(100-51)+50);
-        posiblea.setProgress(random);
-        max = 100-random;
-        random = (int) (Math.random() * max + 1);
-        posibleb.setProgress(random);
-        max = max - random;
-        random = (int) (Math.random() * max + 1);
-        posiblec.setProgress(random);
-        max = max - random;
-        posibled.setProgress(max);
+        if (questionsList.get(randomQ-1).getRespuesta().equals(answera.getText().toString())) {
+            posiblea.setProgress(random);
+            max = 100-random;
+            random = (int) (Math.random() * max + 1);
+            posibleb.setProgress(random);
+            max = max - random;
+            random = (int) (Math.random() * max + 1);
+            posiblec.setProgress(random);
+            max = max - random;
+            posibled.setProgress(max);
+        } else if (questionsList.get(randomQ-1).getRespuesta().equals(answerb.getText().toString())) {
+            posibleb.setProgress(random);
+            max = 100-random;
+            random = (int) (Math.random() * max + 1);
+            posiblea.setProgress(random);
+            max = max - random;
+            random = (int) (Math.random() * max + 1);
+            posiblec.setProgress(random);
+            max = max - random;
+            posibled.setProgress(max);
+        } else if (questionsList.get(randomQ-1).getRespuesta().equals(answerc.getText().toString())) {
+            posiblec.setProgress(random);
+            max = 100-random;
+            random = (int) (Math.random() * max + 1);
+            posibleb.setProgress(random);
+            max = max - random;
+            random = (int) (Math.random() * max + 1);
+            posiblea.setProgress(random);
+            max = max - random;
+            posibled.setProgress(max);
+        } else {
+            posibled.setProgress(random);
+            max = 100-random;
+            random = (int) (Math.random() * max + 1);
+            posibleb.setProgress(random);
+            max = max - random;
+            random = (int) (Math.random() * max + 1);
+            posiblea.setProgress(random);
+            max = max - random;
+            posiblec.setProgress(max);
+        }
     }
 
     private void fiftyFifty(){
@@ -416,7 +452,6 @@ public class EvaluacionActivity extends AppCompatActivity implements EvaluationV
     private void disableAnswerButton(){
         for(TextView  textView : answerOptions){
             textView.setEnabled(false);
-
         }
     }
 
@@ -450,12 +485,13 @@ public class EvaluacionActivity extends AppCompatActivity implements EvaluationV
         txt_exit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(EvaluacionActivity.this, "I am ready to leave the game", Toast.LENGTH_SHORT).show();
+                linearLayout_images.setVisibility(View.INVISIBLE);
+                linearLayout_options.setVisibility(View.INVISIBLE);
+                dialog.dismiss();
             }
         });
-        txt_money.setText("$ "+(500*numbreQuestion));
+        txt_money.setText("$ "+(500*numberQuestion));
         dialog.show();
-
     }
 
     private void loseGame(){
@@ -482,10 +518,12 @@ public class EvaluacionActivity extends AppCompatActivity implements EvaluationV
         txt_exit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(EvaluacionActivity.this, "I am ready to leave the game", Toast.LENGTH_SHORT).show();
+                linearLayout_images.setVisibility(View.GONE);
+                linearLayout_options.setVisibility(View.GONE);
+                dialog.dismiss();
             }
         });
-        txt_money.setText("$ "+(0*numbreQuestion));
+        txt_money.setText("$ "+(0*numberQuestion));
         dialog.show();
     }
 }
