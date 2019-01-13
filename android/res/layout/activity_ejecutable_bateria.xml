@@ -5,9 +5,27 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:weightSum="3"
-    android:orientation="horizontal"
+    android:orientation="vertical"
     android:background="@drawable/f11"
     tools:context=".EjecutableBateria">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/imb_pause"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/pausa"
+            android:background="@color/invisible"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
 
     <LinearLayout
         android:layout_width="0dp"
@@ -33,27 +51,52 @@
 
     </LinearLayout>
 
-    <android.support.constraint.ConstraintLayout
+    <LinearLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:gravity="center_vertical">
+        android:orientation="vertical"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="3">
+
+            <ImageView
+                android:id="@+id/heart1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:src="@drawable/corazon"
+                android:layout_weight="1"/>
+            <ImageView
+                android:id="@+id/heart2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:src="@drawable/corazon"
+                android:layout_weight="1"/>
+            <ImageView
+                android:id="@+id/heart3"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:src="@drawable/corazon"
+                android:layout_weight="1"/>
+
+        </LinearLayout>
 
         <com.airbnb.lottie.LottieAnimationView
+            android:layout_gravity="center_horizontal |center_vertical"
             android:id="@+id/animacionBateria"
-            android:layout_width="496dp"
-            android:layout_height="296dp"
+            android:layout_width="500dp"
+            android:layout_height="200dp"
             android:scaleType="fitCenter"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.466"
+
             app:lottie_autoPlay="false"
             app:lottie_fileName="comp1.json"
             app:lottie_loop="false" />
 
-    </android.support.constraint.ConstraintLayout>
+    </LinearLayout>
+
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="0dp"
@@ -146,4 +189,5 @@
 
 
     </android.support.constraint.ConstraintLayout>
+    </LinearLayout>
 </LinearLayout>
