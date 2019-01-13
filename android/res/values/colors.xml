@@ -14,5 +14,6 @@
     <color name="fondo">#83f4fc</color>
     <color name="blanco">#ffffff</color>
     <color name="colorpuntaje">#fc0101</color>
+    <color name="invisible">#00000000</color>
     <color name="color_Texto_burbuja">#181717</color>
 </resources>
