@@ -2,7 +2,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:padding="10dp"
     android:background="#210566"
@@ -25,34 +24,31 @@
         <TextView
             android:id="@+id/txt_money"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_height="wrap_content"
             android:gravity="center"
             android:text="$4544343"
             android:textColor="#ff0"
-            android:textSize="34dp" />
+            android:textSize="34sp" />
 
         <TextView
             android:id="@+id/txt_play_again"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_height="wrap_content"
             android:background="@drawable/how_want_be_a_mellionary_button"
             android:gravity="center"
             android:text="Play again"
             android:textColor="#FFFFFF"
-            android:textSize="34dp" />
+            android:textSize="32sp" />
 
         <TextView
             android:id="@+id/txt_exit"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_height="wrap_content"
             android:background="@drawable/how_want_be_a_mellionary_button"
             android:gravity="center"
             android:text="Exit"
             android:textColor="#FFFFFF"
-            android:textSize="34dp" />
+            android:textSize="32sp" />
     </LinearLayout>
 
 </LinearLayout>

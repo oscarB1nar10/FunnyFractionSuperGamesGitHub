@@ -8,18 +8,20 @@ import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.funnyfractions.game.R;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Menu extends Activity {
-    Button skip;
+public class Menu extends Activity implements View.OnClickListener {
+    Button skip, play;
     ImageView operacion;
     Handler handler = new Handler();
     HashMap<Integer, String> lista = new HashMap<>();
     ArrayList<Integer> imagenes = new ArrayList<>();
+    private LinearLayout layout_division;
     int random = 0;
     int aux = 0;
 
@@ -29,6 +31,8 @@ public class Menu extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.menu);
         random = (int)(Math.random()*10);
+
+        //region imagenes
         //Se llena la lista con los valores de las operaciones para despues ser conparadas con el de el Hashmap
         imagenes.add(R.drawable.ope1);
         imagenes.add(R.drawable.ope5);
@@ -40,7 +44,9 @@ public class Menu extends Activity {
         imagenes.add(R.drawable.ope2);
         imagenes.add(R.drawable.ope3);
         imagenes.add(R.drawable.ope4);
+        //endregion
 
+        //region hashmap
         //Se llena el Hashmap
         lista.put(R.drawable.ope1, "4_8");
         lista.put(R.drawable.ope5, "14_25");
@@ -52,27 +58,18 @@ public class Menu extends Activity {
         lista.put(R.drawable.ope2, "8_33");
         lista.put(R.drawable.ope3, "12_42" );
         lista.put(R.drawable.ope4, "48_45");
+        //endregion
+
         skip = findViewById(R.id.btnskip);
+        play = findViewById(R.id.btn_jugar);
         operacion = findViewById(R.id.imgoperacion);
+        layout_division = findViewById(R.id.linearLayout_division);
+
         aux = imagenes.get(random);
         operacion.setImageResource(aux);
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                Intent intent = new Intent(getApplicationContext(), AndroidLauncher.class);
-                intent.putExtra("operacion", ""+lista.get(aux));
-                startActivity(intent);
-            }
-        },6000);
-        skip.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                handler.removeCallbacksAndMessages(null);
-                Intent intent = new Intent(getApplicationContext(), AndroidLauncher.class);
-                intent.putExtra("operacion", ""+lista.get(aux));
-                startActivity(intent);
-            }
-        });
+        play.setOnClickListener(this);
+        skip.setOnClickListener(this);
+
     }
 
     @Override
@@ -84,13 +81,28 @@ public class Menu extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.btn_jugar:
+                layout_division.setVisibility(View.VISIBLE);
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        Intent intent = new Intent(getApplicationContext(), AndroidLauncher.class);
+                        intent.putExtra("operacion", ""+lista.get(aux));
+                        startActivity(intent);
+                    }
+                },6000);
+                break;
+            case R.id.btnskip:
+                handler.removeCallbacksAndMessages(null);
                 Intent intent = new Intent(getApplicationContext(), AndroidLauncher.class);
-                intent.putExtra("operacion", aux);
+                intent.putExtra("operacion", ""+lista.get(aux));
                 startActivity(intent);
-            }
-        },6000);
+                break;
+        }
     }
 }

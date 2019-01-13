@@ -262,6 +262,9 @@ public class EvaluacionActivity extends AppCompatActivity implements EvaluationV
                 break;
 
             case R.id.btn_play_evaluation:
+                numberQuestion = 1;
+                questionThrow(questionsList);
+                enableAnswerButton();
                 introsound.stop();
                 musicafondo.start();
                 linearLayout_options.setVisibility(View.VISIBLE);
@@ -273,7 +276,7 @@ public class EvaluacionActivity extends AppCompatActivity implements EvaluationV
                 break;
 
             case R.id.btn_settings_evaluation:
-
+                Toast.makeText(this, "Pendiente", Toast.LENGTH_LONG).show();
                 break;
 
             case R.id.btn_fifty_fifty:
@@ -327,7 +330,7 @@ public class EvaluacionActivity extends AppCompatActivity implements EvaluationV
         dialog.show();
     }
 
-    private void  callToEintein(){
+    private void callToEintein(){
         btn_call.setImageResource(R.drawable.call_mellionary_selected);
         btn_call.setEnabled(false);
 
@@ -433,7 +436,6 @@ public class EvaluacionActivity extends AppCompatActivity implements EvaluationV
                 random = (int) (Math.random() * answerOptions.size() + 1);
             }
         }
-
     }
 
     private void exitGame() {
@@ -458,13 +460,30 @@ public class EvaluacionActivity extends AppCompatActivity implements EvaluationV
     private void enableAnswerButton(){
         for(TextView  textView : answerOptions){
             textView.setEnabled(true);
-
         }
     }
 
     @Override
     public void onBackPressed() {
 
+    }
+
+    @Override
+    protected void onPause() {
+        musicafondo.pause();
+        introsound.pause();
+        super.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        if(linearLayout_options.getVisibility() == View.VISIBLE){
+            musicafondo.start();
+        }
+        else{
+            introsound.start();
+        }
+        super.onResume();
     }
 
     private void wonGame(){
@@ -485,8 +504,8 @@ public class EvaluacionActivity extends AppCompatActivity implements EvaluationV
         txt_exit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                linearLayout_images.setVisibility(View.INVISIBLE);
-                linearLayout_options.setVisibility(View.INVISIBLE);
+                linearLayout_images.setVisibility(View.GONE);
+                linearLayout_options.setVisibility(View.GONE);
                 dialog.dismiss();
             }
         });
@@ -523,7 +542,7 @@ public class EvaluacionActivity extends AppCompatActivity implements EvaluationV
                 dialog.dismiss();
             }
         });
-        txt_money.setText("$ "+(0*numberQuestion));
+        txt_money.setText("$ "+((500*numberQuestion)-500));
         dialog.show();
     }
 }
