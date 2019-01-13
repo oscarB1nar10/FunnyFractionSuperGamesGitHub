@@ -20,6 +20,7 @@
         android:background="#210566">
 
         <Button
+            android:id="@+id/btn_instrucciones_evaluation"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -38,6 +39,7 @@
             android:layout_gravity="center_vertical"
             android:background="@drawable/how_want_be_a_mellionary_button"/>
         <Button
+            android:id="@+id/btn_settings_evaluation"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
