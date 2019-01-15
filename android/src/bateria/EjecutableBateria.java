@@ -5,6 +5,7 @@ import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -35,6 +36,7 @@ public class EjecutableBateria extends AppCompatActivity implements View.OnClick
     ImageView operacion, selector;
     ImageButton imb_pause;
     LottieAnimationView animacionBateria;
+    MediaPlayer ring, heartExplosion;
     //vars
     int random = 0;
     final static int[] VFRAME = new int[]{6, 12, 18, 24, 30, 36, 40, 50, 54, 60, 68, 74};
@@ -46,6 +48,7 @@ public class EjecutableBateria extends AppCompatActivity implements View.OnClick
         setContentView(R.layout.activity_ejecutable_bateria);
         animacionBateria = findViewById(R.id.animacionBateria);
         animacionBateria.useHardwareAcceleration(true);
+        startBattery();
         hearts2 = new ArrayList<>();
 
         hearts = new ArrayList<>();
@@ -63,6 +66,11 @@ public class EjecutableBateria extends AppCompatActivity implements View.OnClick
 
         imb_pause = findViewById(R.id.imb_pause);
         imb_pause.setOnClickListener(this);
+
+        ring = MediaPlayer.create(EjecutableBateria.this,R.raw.spatial_sound);
+        heartExplosion = MediaPlayer.create(EjecutableBateria.this, R.raw.bubble);
+        heartExplosion.setVolume(1f,0.5f);
+        ring.setLooping(true);
 
         explosionField = ExplosionField.attach2Window(this);
 
@@ -150,42 +158,11 @@ public class EjecutableBateria extends AppCompatActivity implements View.OnClick
                 if (respuesta1.getText().equals(preguntas.get((random - 1)).answerToCompare)) {
                     disableTextView();
                     animacionBateria.setMaxFrame(extraerFrameParaAnimar(preguntas.get((random - 1)).respuesta));
-                    animacionBateria.addAnimatorUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-                        @Override
-                        public void onAnimationUpdate(ValueAnimator valueAnimator) {
-                            if (animacionBateria.getProgress() == 1.0f) {
-                                //aca se debe definir el frame hasta el cual animar para la repeticion numero 5.
-                               // animacionBateria.setMaxFrame(extraerFrameParaAnimar(preguntas.get((random - 1)).respuesta));
-                            }
-
-                        }
-                    });
-                    animacionBateria.setSpeed(0.92f);
                     animacionBateria.playAnimation();
-                    animacionBateria.setRepeatCount(1);
-                    animacionBateria.addAnimatorListener(new Animator.AnimatorListener() {
-                        @Override
-                        public void onAnimationStart(Animator animation) {
 
-                        }
-
-                        @Override
-                        public void onAnimationEnd(Animator animation) {
-                            nextQuestion();
-                        }
-
-                        @Override
-                        public void onAnimationCancel(Animator animation) {
-
-                        }
-
-                        @Override
-                        public void onAnimationRepeat(Animator animation) {
-
-                        }
-                    });
                 } else {
                     explosionField.explode((View) hearts2.get(hearts2.size() - 1).getTarget());
+                    heartExplosion.start();
                     hearts2.remove(hearts2.size() - 1);
                     attemps++;
                     decreaseScore();
@@ -196,42 +173,12 @@ public class EjecutableBateria extends AppCompatActivity implements View.OnClick
                 if (respuesta2.getText().equals(preguntas.get((random - 1)).answerToCompare)) {
                     disableTextView();
                     animacionBateria.setMaxFrame(extraerFrameParaAnimar(preguntas.get((random - 1)).respuesta));
-                    animacionBateria.addAnimatorUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-                        @Override
-                        public void onAnimationUpdate(ValueAnimator valueAnimator) {
-                            if (animacionBateria.getProgress() == 1.0f) {
-                                //aca se debe definir el frame hasta el cual animar para la repeticion numero 5.
-                                //animacionBateria.setMaxFrame(extraerFrameParaAnimar(preguntas.get((random - 1)).respuesta));
-                            }
-
-                        }
-                    });
-                    animacionBateria.setSpeed(0.92f);
                     animacionBateria.playAnimation();
-                    animacionBateria.setRepeatCount(1);
-                    animacionBateria.addAnimatorListener(new Animator.AnimatorListener() {
-                        @Override
-                        public void onAnimationStart(Animator animation) {
 
-                        }
 
-                        @Override
-                        public void onAnimationEnd(Animator animation) {
-                            nextQuestion();
-                        }
-
-                        @Override
-                        public void onAnimationCancel(Animator animation) {
-
-                        }
-
-                        @Override
-                        public void onAnimationRepeat(Animator animation) {
-
-                        }
-                    });
                 } else {
                     explosionField.explode((View) hearts2.get(hearts2.size() - 1).getTarget());
+                    heartExplosion.start();
                     hearts2.remove(hearts2.size() - 1);
                     attemps++;
                     decreaseScore();
@@ -242,43 +189,12 @@ public class EjecutableBateria extends AppCompatActivity implements View.OnClick
                 if (respuesta3.getText().equals(preguntas.get((random - 1)).answerToCompare)) {
                     disableTextView();
                     animacionBateria.setMaxFrame(extraerFrameParaAnimar(preguntas.get((random - 1)).respuesta));
-                    animacionBateria.addAnimatorUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-                        @Override
-                        public void onAnimationUpdate(ValueAnimator valueAnimator) {
-                            if (animacionBateria.getProgress() == 1.0f) {
-                                //aca se debe definir el frame hasta el cual animar para la repeticion numero 5.
-                                //animacionBateria.setMaxFrame(extraerFrameParaAnimar(preguntas.get((random - 1)).respuesta));
-                            }
-
-                        }
-                    });
-                    animacionBateria.setSpeed(0.92f);
                     animacionBateria.playAnimation();
-                    animacionBateria.setRepeatCount(1);
 
-                    animacionBateria.addAnimatorListener(new Animator.AnimatorListener() {
-                        @Override
-                        public void onAnimationStart(Animator animation) {
 
-                        }
-
-                        @Override
-                        public void onAnimationEnd(Animator animation) {
-                            nextQuestion();
-                        }
-
-                        @Override
-                        public void onAnimationCancel(Animator animation) {
-
-                        }
-
-                        @Override
-                        public void onAnimationRepeat(Animator animation) {
-
-                        }
-                    });
                 } else {
                     explosionField.explode((View) hearts2.get(hearts2.size() - 1).getTarget());
+                    heartExplosion.start();
                     hearts2.remove(hearts2.size() - 1);
                     attemps++;
                     decreaseScore();
@@ -289,45 +205,11 @@ public class EjecutableBateria extends AppCompatActivity implements View.OnClick
                 if (respuesta4.getText().equals(preguntas.get((random - 1)).answerToCompare)) {
                     disableTextView();
                     animacionBateria.setMaxFrame(extraerFrameParaAnimar(preguntas.get((random - 1)).respuesta));
-                    animacionBateria.addAnimatorUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-                        @Override
-                        public void onAnimationUpdate(ValueAnimator valueAnimator) {
-                            if (animacionBateria.getProgress() == 1.0f) {
-                                //aca se debe definir el frame hasta el cual animar para la repeticion numero 5.
-                                //animacionBateria.setMaxFrame(extraerFrameParaAnimar(preguntas.get((random - 1)).respuesta));
-                            }
-
-                        }
-
-
-                    });
-                    animacionBateria.setSpeed(0.92f);
                     animacionBateria.playAnimation();
-                    animacionBateria.setRepeatCount(1);
 
-                    animacionBateria.addAnimatorListener(new Animator.AnimatorListener() {
-                        @Override
-                        public void onAnimationStart(Animator animation) {
-
-                        }
-
-                        @Override
-                        public void onAnimationEnd(Animator animation) {
-                            nextQuestion();
-                        }
-
-                        @Override
-                        public void onAnimationCancel(Animator animation) {
-
-                        }
-
-                        @Override
-                        public void onAnimationRepeat(Animator animation) {
-
-                        }
-                    });
                 } else {
                     explosionField.explode((View) hearts2.get(hearts2.size() - 1).getTarget());
+                    heartExplosion.start();
                     hearts2.remove(hearts2.size() - 1);
                     attemps++;
                     decreaseScore();
@@ -335,14 +217,51 @@ public class EjecutableBateria extends AppCompatActivity implements View.OnClick
                 break;
 
             case R.id.imb_pause:
-                LaunchMenu();
+                launchMenu();
 
                 break;
         }
 
     }
 
-    private void LaunchMenu() {
+    private  void startBattery(){
+        animacionBateria.setSpeed(0.92f);
+        animacionBateria.addAnimatorUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator valueAnimator) {
+                if (animacionBateria.getProgress() == 1.0f) {
+                    //aca se debe definir el frame hasta el cual animar para la repeticion numero 5.
+                    // animacionBateria.setMaxFrame(extraerFrameParaAnimar(preguntas.get((random - 1)).respuesta));
+                    nextQuestion();
+                }
+
+            }
+        });
+
+        animacionBateria.addAnimatorListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                nextQuestion();
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+
+            }
+        });
+    }
+
+    private void launchMenu() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         // Get the layout inflater
         LayoutInflater inflater = this.getLayoutInflater();
@@ -363,10 +282,15 @@ public class EjecutableBateria extends AppCompatActivity implements View.OnClick
         final AlertDialog alertDialog = builder.create();
         alertDialog.setCanceledOnTouchOutside(false);
 
+        cim_continue.setImageResource(R.drawable.devolver);
+
         cim_continue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 alertDialog.dismiss();
+                numberQuestion = 0;
+                score = 1000;
+                nextQuestion();
 
             }
         });
@@ -387,25 +311,32 @@ public class EjecutableBateria extends AppCompatActivity implements View.OnClick
 
 
     private void nextQuestion(){
-        selector.setImageResource(R.drawable.selector);
+        if(numberQuestion < 10) {
+            selector.setImageResource(R.drawable.selector);
+            hearts = null;
+            hearts = new ArrayList<>();
 
-        hearts.add((ImageView) findViewById(R.id.heart1));
-        hearts.add((ImageView) findViewById(R.id.heart2));
-        hearts.add((ImageView) findViewById(R.id.heart3));
+            hearts.add((ImageView) findViewById(R.id.heart1));
+            hearts.add((ImageView) findViewById(R.id.heart2));
+            hearts.add((ImageView) findViewById(R.id.heart3));
 
-        ObjectAnimator heart1 = ObjectAnimator.ofFloat(hearts.get(2),"translationY", 0, 0);
-        ObjectAnimator heart2 = ObjectAnimator.ofFloat(hearts.get(1),"translationY", 0, 0);
-        ObjectAnimator heart3 = ObjectAnimator.ofFloat(hearts.get(0),"translationY", 0, 0);
+            ObjectAnimator heart1 = ObjectAnimator.ofFloat(hearts.get(2), "translationY", 0, 0);
+            ObjectAnimator heart2 = ObjectAnimator.ofFloat(hearts.get(1), "translationY", 0, 0);
+            ObjectAnimator heart3 = ObjectAnimator.ofFloat(hearts.get(0), "translationY", 0, 0);
 
-        hearts2.add(heart1);
-        hearts2.add(heart2);
-        hearts2.add(heart3);
+            hearts2.add(heart1);
+            hearts2.add(heart2);
+            hearts2.add(heart3);
 
-        animacionBateria.setProgress(0);
-        attemps = 0;
-        enableTextView();
-        extraerPreguntas();
-        asignarValores();
+            animacionBateria.setProgress(0);
+            attemps = 0;
+            enableTextView();
+            extraerPreguntas();
+            asignarValores();
+        }else{
+            launchMenu();
+
+        }
     }
 
     private void disableTextView(){
@@ -432,6 +363,23 @@ public class EjecutableBateria extends AppCompatActivity implements View.OnClick
         }
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        ring.pause();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        ring.start();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        ring.stop();
+    }
 
     public class Pregunta {
 
