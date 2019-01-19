@@ -8,5 +8,5 @@ public interface ActionResolver {
     void saveScore(int score);
     void pauseArcheryGame();
     void menu ();
-    void menuGotas();
+    void menuGotas(CharSequence instancia, int puntaje);
 }

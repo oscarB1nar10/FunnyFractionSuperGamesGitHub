@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.funnyfractions.game.R;
@@ -201,7 +202,7 @@ public class ActionResolverAndroid implements ActionResolver {
     }
 
     @Override
-    public void menuGotas() {
+    public void menuGotas(final CharSequence instancia, final int puntaje) {
         final Activity activity = (Activity) context;
         /*
             Here we show a menu to control the game run.
@@ -217,6 +218,8 @@ public class ActionResolverAndroid implements ActionResolver {
 
                 ImageView play = view.findViewById(R.id.btn_play_drops);
                 ImageView home = view.findViewById(R.id.btn_home_drops);
+                TextView titulo = view.findViewById(R.id.titulo);
+                TextView puntuacion = view.findViewById(R.id.puntuacion);
                 final ImageView sound = view.findViewById(R.id.btn_sound_drops);
 
                 if(sharedP.getBoolean("sound_drop",true) == true){
@@ -225,13 +228,20 @@ public class ActionResolverAndroid implements ActionResolver {
                     sound.setImageResource(R.drawable.mute);
                 }
 
-
-                // Inflate and set the layout for the dialog
-                // Pass null as the parent view because its going in the dialog layout
                 builder.setView(view);
-                // Add action buttons
                 builder.create();
                 final AlertDialog alertDialog = builder.show();
+
+                if (instancia.equals("pausa")){
+                    titulo.setText("PAUSA");
+                    puntuacion.setText(" ");
+                }
+                else {
+                    titulo.setText("FIN DE JUEGO");
+                    puntuacion.setText("Puntuacion final: "+puntaje+"/ 100");
+                    play.setEnabled(false);
+                }
+
                 play.setOnClickListener(new View.OnClickListener() {
                     SharedPreferences.Editor editor = sharedP.edit();
                     @Override

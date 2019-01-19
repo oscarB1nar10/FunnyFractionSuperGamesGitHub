@@ -30,8 +30,8 @@ public class MainActivity extends Game implements InputProcessor {
 	private OrthographicCamera camera;
 	private Rectangle bucket;
 	private Array<Rectangles> raindrops;
-	private long lastDropTime, toques;
-	private int random;
+	private long toques;
+	private int random, puntaje;
 	private boolean nextDrop = false;
 	private String respuesta;
 	private ActionResolver  actionResolver;
@@ -45,7 +45,7 @@ public class MainActivity extends Game implements InputProcessor {
 
 	@Override
 	public void create() {
-		random = 0;
+		puntaje = 100;
 		dropImage = new ArrayList<Drops>();
 		pref = Gdx.app.getPreferences("SHARED_PREFERENCES");
 		pref.putBoolean("pause",false);
@@ -53,6 +53,8 @@ public class MainActivity extends Game implements InputProcessor {
 
 
 		LlenarOperaciones();
+
+		random = (int) (Math.random()*dropImage.size());
 
 		bucketImage = new Texture(Gdx.files.internal("buho.png"));
 		pause = new Texture(Gdx.files.internal("pause_button.png"));
@@ -104,7 +106,6 @@ public class MainActivity extends Game implements InputProcessor {
 		raindrop.width = 64;
 		raindrop.height = 64;
 		raindrops.add(raindrop);
-		lastDropTime = TimeUtils.nanoTime()+1000000000;
 	}
 
 	@Override
@@ -123,14 +124,12 @@ public class MainActivity extends Game implements InputProcessor {
 		//here we put the background game
 		batch.draw(dropsFalling,0,0);
 		batch.draw(bucketImage, bucket.x, bucket.y);
-		/*for(Rectangle raindrop: raindrops) {
-			batch.draw(dropImage.get(random), raindrop.x, raindrop.y);
 
-		}*/
 		for(int i = 0; i<raindrops.size; i++){
 			batch.draw(dropImage.get(random), raindrops.get(i).x, raindrops.get(i).y);
 			raindrops.get(i).setDescription(dropImage.get(random).getDescription());
 		}
+
 		batch.draw(pause,0,416,64,64);
 		batch.end();
 
@@ -154,23 +153,28 @@ public class MainActivity extends Game implements InputProcessor {
 		Iterator<Rectangles> iter = raindrops.iterator();
 		while(iter.hasNext() && !pref.getBoolean("pause",false)) {
 			Rectangles raindrop = iter.next();
-			raindrop.y -= 200 * Gdx.graphics.getDeltaTime();
+			raindrop.y -= 350 * Gdx.graphics.getDeltaTime();
 			if(raindrop.y + 64 < 0) {
-				nextDrop = true;
+			    if(raindrop.getDescription().equals(respuesta)){
+			        puntaje = puntaje - 10;
+                }
+                nextDrop = true;
                 iter.remove();
 
             } else if(raindrop.overlaps(bucket)) {
-				if(raindrop.getDescription().equals(respuesta)){
-					System.out.println("Se ha tocado capturado la respuesta correcta!!");
+				if(!raindrop.getDescription().equals(respuesta)){
+					puntaje = puntaje - 10;
 				}
-				dropSound.play();
+				if(pref.getBoolean("sound_drop",true)){
+					dropSound.play();
+				}
 				nextDrop = true;
 				iter.remove();
 			}
 		}
 
 		if(toques == 10 && nextDrop){
-            actionResolver.menuGotas();
+			actionResolver.menuGotas("Final", puntaje);
         }
 
 	}
@@ -220,7 +224,7 @@ public class MainActivity extends Game implements InputProcessor {
 			Preferences pref = Gdx.app.getPreferences("SHARED_PREFERENCES");
 			pref.putBoolean("pause",true);
 			pref.flush();
-			actionResolver.menuGotas();
+			actionResolver.menuGotas("pausa", puntaje);
 		}
 		return false;
 	}
