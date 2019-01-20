@@ -80,6 +80,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         setContentView(R.layout.main_layout);
 
         signInButton = (SignInButton) findViewById(R.id.sign_in_buttonw);
+        signInButton.setSize(SignInButton.SIZE_ICON_ONLY);
         checkExistingAccount();
 
         // Configure sign-in to request the user's ID, email address, and basic

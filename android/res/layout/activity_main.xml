@@ -8,7 +8,8 @@
     android:orientation="vertical"
     tools:layout_editor_absoluteY="81dp">
 
-    <android.support.constraint.ConstraintLayout
+
+        <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -70,14 +71,14 @@
 
     </android.support.constraint.ConstraintLayout>
 
-    <LinearLayout
+        <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="10dp"
         android:orientation="horizontal"
         android:background="@color/colorAccent">
     </LinearLayout>
 
-    <LinearLayout
+        <LinearLayout
         android:id="@+id/main_linearLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

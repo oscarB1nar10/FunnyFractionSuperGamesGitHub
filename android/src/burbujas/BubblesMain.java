@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.funnyfractions.game.R;
@@ -32,6 +33,7 @@ public class BubblesMain extends Activity implements View.OnClickListener {
     private long currentAnimation;
     Thread thread;
     boolean validateHeight = true;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,7 +60,6 @@ public class BubblesMain extends Activity implements View.OnClickListener {
         waterSound.setLooping(true);
         waterSound.setVolume(0,0.2f);
         waterSound.start();
-        IniciarJuego();
         pausa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -66,6 +67,7 @@ public class BubblesMain extends Activity implements View.OnClickListener {
                 showMenu();
             }
         });
+        IniciarJuego();
     }
 
     public ArrayList<Pregunta> ListaDePreguntas(){
@@ -278,7 +280,7 @@ public class BubblesMain extends Activity implements View.OnClickListener {
 
         final Button btn_restar = view.findViewById(R.id.btn_restart_b);
         Button btn_home = view.findViewById(R.id.btn_home_b);
-        Button btn_help = view.findViewById(R.id.btn_help_b);
+        Button btn_mute = view.findViewById(R.id.btn_mute_b);
         TextView puntaje = view.findViewById(R.id.txtpuntuacionb);
 
         final AlertDialog.Builder menu = new AlertDialog.Builder(BubblesMain.this).setCancelable(false);
@@ -297,7 +299,8 @@ public class BubblesMain extends Activity implements View.OnClickListener {
         btn_home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), Practica.class);
+                Intent intent = new Intent(getApplicationContext(), MenuMultiplicacion.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 finish();
                 startActivity(intent);
             }

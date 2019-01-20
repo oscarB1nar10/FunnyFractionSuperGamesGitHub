@@ -101,6 +101,10 @@
         <activity android:name="gotas.Menu"
             android:screenOrientation="sensorLandscape">
         </activity>
+
+        <activity android:name="burbujas.MenuMultiplicacion"
+            android:screenOrientation="portrait">
+        </activity>
             
     </application>
 

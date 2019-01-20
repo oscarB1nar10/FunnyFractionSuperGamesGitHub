@@ -42,7 +42,7 @@
             android:layout_height="wrap_content"
             android:textStyle="bold"
             android:textColor="@color/colorpuntaje"
-            android:textSize="25dp" />
+            android:textSize="25sp" />
 
         <Button
             android:id="@+id/btn_restart_b"
@@ -51,7 +51,7 @@
             android:background="@drawable/botonamarillo"
             android:text="Reiniciar"
             android:textColor="@color/blanco"
-            android:textSize="20dp"
+            android:textSize="20sp"
             tools:layout_editor_absoluteX="91dp"
             tools:layout_editor_absoluteY="145dp" />
 
@@ -63,20 +63,20 @@
             android:background="@drawable/botonverde"
             android:text="Home"
             android:textColor="@color/blanco"
-            android:textSize="20dp"
+            android:textSize="20sp"
             tools:layout_editor_absoluteX="136dp"
             tools:layout_editor_absoluteY="264dp" />
 
         <Button
-            android:id="@+id/btn_help_b"
+            android:id="@+id/btn_mute_b"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:background="@drawable/botonverde"
-            android:text="Ayuda"
+            android:text="MUTE"
             android:layout_marginBottom="40dp"
             android:textColor="@color/blanco"
-            android:textSize="20dp"
+            android:textSize="20sp"
             tools:layout_editor_absoluteX="136dp"
             tools:layout_editor_absoluteY="345dp" />
 

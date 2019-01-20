@@ -15,6 +15,7 @@ import androidlogic.games.archery_game.MainMenu;
 import androidlogic.games.archery_game.MainMenu;
 import bateria.EjecutableBateria;
 import burbujas.BubblesMain;
+import burbujas.MenuMultiplicacion;
 import gotas.AndroidLauncher;
 import gotas.Menu;
 
@@ -27,11 +28,11 @@ public class Practica extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.practica);
         retornarHome = findViewById(R.id.retornarHome);
-        prac = (ImageView) findViewById(R.id.pract);
-        suma = (Button) findViewById(R.id.suma);
-        res = (Button) findViewById(R.id.resta);
-        div = (Button) findViewById(R.id.division);
-        mul = (Button) findViewById(R.id.multiplicacion);
+        prac = findViewById(R.id.pract);
+        suma = findViewById(R.id.suma);
+        res = findViewById(R.id.resta);
+        div = findViewById(R.id.division);
+        mul = findViewById(R.id.multiplicacion);
         retornarHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -56,7 +57,7 @@ public class Practica extends Activity {
         mul.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), BubblesMain.class);
+                Intent intent = new Intent(getApplicationContext(), MenuMultiplicacion.class);
                 startActivity(intent);
             }
         });
