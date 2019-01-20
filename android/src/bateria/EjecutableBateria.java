@@ -3,14 +3,19 @@ package bateria;
 import android.animation.Animator;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -35,12 +40,15 @@ public class EjecutableBateria extends AppCompatActivity implements View.OnClick
     ArrayList<TextView> txtvList = new ArrayList<>();
     ImageView operacion, selector;
     ImageButton imb_pause;
-    LottieAnimationView animacionBateria;
+    Button btn_jugar;
+    LinearLayout main_linearLayout;
+    LottieAnimationView animacionBateria, animacionBateria1;
     MediaPlayer ring, heartExplosion;
     //vars
     int random = 0;
     final static int[] VFRAME = new int[]{6, 12, 18, 24, 30, 36, 40, 50, 54, 60, 68, 74};
     private int numberQuestion = 0, score = 1000, attemps = 0;
+    private SharedPreferences mSharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +81,17 @@ public class EjecutableBateria extends AppCompatActivity implements View.OnClick
         ring.setLooping(true);
 
         explosionField = ExplosionField.attach2Window(this);
+        animacionBateria1 = findViewById(R.id.animacionBateria_initial);
+
+        mSharedPreferences = getSharedPreferences("SHARED_PREFERENCES", Context.MODE_PRIVATE);
+        main_linearLayout = findViewById(R.id.main_layout_game_battery);
+        btn_jugar = findViewById(R.id.btn_jugar_battery);
+        btn_jugar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                main_linearLayout.setVisibility(View.VISIBLE);
+            }
+        });
 
         // animacionBateria.setRepeatCount(5);
         enunciado = findViewById(R.id.enunciado);
@@ -163,6 +182,8 @@ public class EjecutableBateria extends AppCompatActivity implements View.OnClick
                 } else {
                     explosionField.explode((View) hearts2.get(hearts2.size() - 1).getTarget());
                     heartExplosion.start();
+                    //View vieww = (View) hearts2.get(hearts2.size() - 1).getTarget();
+                    //reset(view);
                     hearts2.remove(hearts2.size() - 1);
                     attemps++;
                     decreaseScore();
@@ -179,6 +200,9 @@ public class EjecutableBateria extends AppCompatActivity implements View.OnClick
                 } else {
                     explosionField.explode((View) hearts2.get(hearts2.size() - 1).getTarget());
                     heartExplosion.start();
+                   // View vieww = (View) hearts2.get(hearts2.size() - 1).getTarget();
+                    //explosionField.clear();
+                    //reset(view);
                     hearts2.remove(hearts2.size() - 1);
                     attemps++;
                     decreaseScore();
@@ -191,10 +215,12 @@ public class EjecutableBateria extends AppCompatActivity implements View.OnClick
                     animacionBateria.setMaxFrame(extraerFrameParaAnimar(preguntas.get((random - 1)).respuesta));
                     animacionBateria.playAnimation();
 
-
                 } else {
                     explosionField.explode((View) hearts2.get(hearts2.size() - 1).getTarget());
                     heartExplosion.start();
+                    //View vieww = (View) hearts2.get(hearts2.size() - 1).getTarget();
+                    //explosionField.clear();
+                    //reset(view);
                     hearts2.remove(hearts2.size() - 1);
                     attemps++;
                     decreaseScore();
@@ -209,6 +235,9 @@ public class EjecutableBateria extends AppCompatActivity implements View.OnClick
 
                 } else {
                     explosionField.explode((View) hearts2.get(hearts2.size() - 1).getTarget());
+                    //View vieww = (View) hearts2.get(hearts2.size() - 1).getTarget();
+                    //explosionField.clear();
+                    //reset(view);
                     heartExplosion.start();
                     hearts2.remove(hearts2.size() - 1);
                     attemps++;
@@ -246,7 +275,15 @@ public class EjecutableBateria extends AppCompatActivity implements View.OnClick
 
             @Override
             public void onAnimationEnd(Animator animation) {
-                nextQuestion();
+              Handler handler = new Handler();
+              handler.postDelayed(new Runnable() {
+                  @Override
+                  public void run() {
+                      nextQuestion();
+                  }
+              }, 1000);
+
+
             }
 
             @Override
@@ -262,6 +299,7 @@ public class EjecutableBateria extends AppCompatActivity implements View.OnClick
     }
 
     private void launchMenu() {
+        final SharedPreferences.Editor editor = mSharedPreferences.edit();
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         // Get the layout inflater
         LayoutInflater inflater = this.getLayoutInflater();
@@ -273,24 +311,37 @@ public class EjecutableBateria extends AppCompatActivity implements View.OnClick
         builder.setView(view);
 
         TextView txv_score = view.findViewById(R.id.final_score);
+        TextView txv_title = view.findViewById(R.id.titulo);
         LinearLayout ll_score = view.findViewById(R.id.ll_score);
         CircleImageView cim_continue = view.findViewById(R.id.btn_play_drops);
         CircleImageView cim_home = view.findViewById(R.id.btn_home_drops);
-        CircleImageView cim_sound = view.findViewById(R.id.btn_sound_drops);
+        final CircleImageView cim_sound = view.findViewById(R.id.btn_sound_drops);
 
 
         final AlertDialog alertDialog = builder.create();
         alertDialog.setCanceledOnTouchOutside(false);
+        if(numberQuestion == 10){
+            txv_title.setText("Fin del juego");
+            cim_continue.setImageResource(R.drawable.devolver);
+        }
 
-        cim_continue.setImageResource(R.drawable.devolver);
+        if(mSharedPreferences.getBoolean("battery_sound", true)){
+            cim_sound.setImageResource(R.drawable.sonido);
+        }else{
+            cim_sound.setImageResource(R.drawable.mute);
+        }
+
 
         cim_continue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(numberQuestion == 10){
+                    numberQuestion = 0;
+                    score = 1000;
+                    nextQuestion();
+                }
                 alertDialog.dismiss();
-                numberQuestion = 0;
-                score = 1000;
-                nextQuestion();
+
 
             }
         });
@@ -301,6 +352,23 @@ public class EjecutableBateria extends AppCompatActivity implements View.OnClick
                 Intent intent = new Intent(getApplicationContext(),Practica.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
+            }
+        });
+
+        cim_sound.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(mSharedPreferences.getBoolean("battery_sound", true)){
+                    cim_sound.setImageResource(R.drawable.mute);
+                    ring.pause();
+                    editor.putBoolean("battery_sound", false);
+                    editor.commit();
+                }else{
+                    cim_sound.setImageResource(R.drawable.sonido);
+                    ring.start();
+                    editor.putBoolean("battery_sound", true);
+                    editor.commit();
+                }
             }
         });
 
@@ -329,6 +397,9 @@ public class EjecutableBateria extends AppCompatActivity implements View.OnClick
             hearts2.add(heart3);
 
             animacionBateria.setProgress(0);
+            reset((ImageView) findViewById(R.id.heart1));
+            reset((ImageView) findViewById(R.id.heart2));
+            reset((ImageView) findViewById(R.id.heart3));
             attemps = 0;
             enableTextView();
             extraerPreguntas();
@@ -358,8 +429,30 @@ public class EjecutableBateria extends AppCompatActivity implements View.OnClick
             score = score - 50;
         }else{
             score = score - 100;
-            nextQuestion();
+            disableTextView();
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    nextQuestion();
+
+                }
+            }, 1000);
             attemps = 0;
+
+        }
+    }
+
+    private void reset(View root) {
+        if (root instanceof ViewGroup) {
+            ViewGroup parent = (ViewGroup) root;
+            for (int i = 0; i < parent.getChildCount(); i++) {
+                reset(parent.getChildAt(i));
+            }
+        } else {
+            root.setScaleX(1);
+            root.setScaleY(1);
+            root.setAlpha(1);
         }
     }
 

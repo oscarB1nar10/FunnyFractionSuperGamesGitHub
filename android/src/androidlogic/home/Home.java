@@ -1,6 +1,7 @@
 package androidlogic.home;
 import android.annotation.TargetApi;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
@@ -41,6 +42,8 @@ public class Home extends AppCompatActivity implements GoogleApiClient.OnConnect
     private ImageButton US,ES;
     private Button tuto, prac, evalu;
     private GoogleApiClient googleApiClient;
+    //vars
+    private SharedPreferences mSharedPreferences;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -57,6 +60,9 @@ public class Home extends AppCompatActivity implements GoogleApiClient.OnConnect
                 .enableAutoManage(this, this)
                 .addApi(Auth.GOOGLE_SIGN_IN_API)
                 .build();
+
+        mSharedPreferences = getSharedPreferences("SHARED_PREFERENCES",MODE_PRIVATE);
+        deletePreferences();
 
         // setup DrawerLayout
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_main);
@@ -130,6 +136,14 @@ public class Home extends AppCompatActivity implements GoogleApiClient.OnConnect
         String usuario = dato.getString("usuario");
         logeando.setText(usuario);
     }
+
+    private void deletePreferences() {
+        SharedPreferences.Editor editor = mSharedPreferences.edit();
+        editor.putInt("currentLevel",0);
+        editor.putInt("score",0);
+        editor.commit();
+    }
+
     public void idioma(View v){
         Intent refrescar = new Intent(this, Home.class);
         refrescar.putExtra("usuario", logeando.getText().toString());

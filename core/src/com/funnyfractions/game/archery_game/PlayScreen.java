@@ -272,7 +272,8 @@ public class PlayScreen  extends InputProcessorsV2 implements Screen , Applicati
 
                 System.out.println("inside to this place after x seconds");
                 for (int i = 0; i < resOp.size(); i++) {
-                    drawSprite(resOp.get(i), fruit[i].getPosition().x, fruit[i].getPosition().y, 0);
+                    float degree = (float) Math.toDegrees(fruit[i].getAngle());
+                    drawSprite(resOp.get(i), fruit[i].getPosition().x , fruit[i].getPosition().y, degree);
                 }
 
                 changeSprites = false;
@@ -303,7 +304,7 @@ public class PlayScreen  extends InputProcessorsV2 implements Screen , Applicati
                 mp3Sound.play();
             }
 
-            if(levelV == 2){
+            if(levelV == 10){
                 pref.putBoolean("pause",true);
                 pref.putInteger("currentLevel",100);
                 pref.flush();

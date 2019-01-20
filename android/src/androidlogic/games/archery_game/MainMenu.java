@@ -16,15 +16,24 @@ import com.funnyfractions.game.tutorials.AndroidLauncher2;
 
 public class MainMenu extends Activity implements View.OnClickListener{
 
-    private Button buttonLevels;
+    //widgets
+    private Button btn_jugar;
+    private LinearLayout main_layout;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.archery_layout);
+        setContentView(R.layout.menu_division);
 
-        buttonLevels=findViewById(R.id.levels);
-        buttonLevels.setOnClickListener(this);
+        main_layout = findViewById(R.id.main_layout);
+        main_layout.setBackgroundResource(R.drawable.fondo_archery_game);
 
+        btn_jugar = findViewById(R.id.btn_jugar);
+        btn_jugar.setOnClickListener(this);
+
+
+        //buttonLevels=findViewById(R.id.levels);
+        //buttonLevels.setOnClickListener(this);
 
     }
 
@@ -33,7 +42,7 @@ public class MainMenu extends Activity implements View.OnClickListener{
     public void onClick(View v) {
 
         switch (v.getId()){
-            case R.id.levels: {
+            case R.id.btn_jugar: {
                 Intent intent=new Intent(getApplicationContext(),AndroidLauncher2.class);
                 startActivity(intent);
                 break;
