@@ -221,19 +221,19 @@ public class PlayScreen  extends InputProcessorsV2 implements Screen , Applicati
 
     @Override
     public void render(float delta) {
-
-        Gdx.gl.glClearColor(1, 0, 0, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
-        //assing the camera to tmr
-
-        tmr.setView(camera);
-        tmr.render();
-
-        box2DDebugRenderer.render(world, camera.combined);
-        //here we specify the recpective  projectionMatriz to our batch.
-        fs.batch.setProjectionMatrix(camera.combined);
         getPause();
+        if(!pause) {
+            Gdx.gl.glClearColor(1, 0, 0, 1);
+            Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+            //assing the camera to tmr
+
+            tmr.setView(camera);
+            tmr.render();
+
+            box2DDebugRenderer.render(world, camera.combined);
+            //here we specify the recpective  projectionMatriz to our batch.
+            fs.batch.setProjectionMatrix(camera.combined);
 
             fs.batch.begin();
             level.draw(fs.batch, "Level: " + levelValue, 100, 800);
@@ -273,7 +273,7 @@ public class PlayScreen  extends InputProcessorsV2 implements Screen , Applicati
                 System.out.println("inside to this place after x seconds");
                 for (int i = 0; i < resOp.size(); i++) {
                     float degree = (float) Math.toDegrees(fruit[i].getAngle());
-                    drawSprite(resOp.get(i), fruit[i].getPosition().x , fruit[i].getPosition().y, degree);
+                    drawSprite(resOp.get(i), fruit[i].getPosition().x, fruit[i].getPosition().y, degree);
                 }
 
                 changeSprites = false;
@@ -287,9 +287,12 @@ public class PlayScreen  extends InputProcessorsV2 implements Screen , Applicati
             operationImage.draw(fs.batch);
             fs.batch.end();
 
-            if(!pause) {
+            if (!pause) {
                 update(delta);
             }
+        }else{
+            delta = 0;
+        }
     }
 
     private void getPause() {
@@ -305,12 +308,17 @@ public class PlayScreen  extends InputProcessorsV2 implements Screen , Applicati
             }
 
             if(levelV == 10){
+                //this.pause();
                 pref.putBoolean("pause",true);
                 pref.putInteger("currentLevel",100);
                 pref.flush();
                 actionResolver.menu();
 
-
+            }else if(levelV >= 101){
+                pref.putInteger("currentLevel",0);
+                pref.putInteger("score",0);
+                pref.putBoolean("pause",false);
+                pref.flush();
             }
     }
 
@@ -588,7 +596,13 @@ public class PlayScreen  extends InputProcessorsV2 implements Screen , Applicati
                         isPosibleShot = false;
                         numberShots--;
                     }else{
-                        actionResolver.goToAndroid();
+                        if(levelV != 9){
+                            actionResolver.goToAndroid();
+                        }else{
+                            Preferences pref = Gdx.app.getPreferences("SHARED_PREFERENCES");
+                            pref.putInteger("currentLevel",10);
+                            pref.flush();
+                        }
                     }
                 }
 
@@ -623,7 +637,13 @@ public class PlayScreen  extends InputProcessorsV2 implements Screen , Applicati
                     isPosibleShot = false;
                     numberShots --;
                 }else {
-                    actionResolver.goToAndroid();
+                    if(levelV != 9){
+                        actionResolver.goToAndroid();
+                    }else{
+                        Preferences pref = Gdx.app.getPreferences("SHARED_PREFERENCES");
+                        pref.putInteger("currentLevel",10);
+                        pref.flush();
+                    }
                 }
             }
 
@@ -656,7 +676,13 @@ public class PlayScreen  extends InputProcessorsV2 implements Screen , Applicati
                     isPosibleShot = false;
                     numberShots --;
                 }else {
-                    actionResolver.goToAndroid();
+                    if(levelV != 9){
+                        actionResolver.goToAndroid();
+                    }else{
+                        Preferences pref = Gdx.app.getPreferences("SHARED_PREFERENCES");
+                        pref.putInteger("currentLevel",10);
+                        pref.flush();
+                    }
                 }
             }
 

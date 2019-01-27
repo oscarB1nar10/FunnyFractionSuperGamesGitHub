@@ -359,7 +359,8 @@ public class EjecutableBateria extends Fragment implements View.OnClickListener 
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(),Practica.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
+                intent.putExtra("numFragment",1);
+                getContext().startActivity(intent);
             }
         });
 

@@ -9,17 +9,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.funnyfractions.game.R;
 import com.funnyfractions.game.archery_game.ActionResolver;
+import com.funnyfractions.game.tutorials.AndroidLauncher2;
 
 import androidlogic.games.archery_game.MenuArcheryActivity;
 import androidlogic.home.Home;
 import androidlogic.practice.Practica;
-import gotas.AndroidLauncher;
-import gotas.Menu;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ActionResolverAndroid implements ActionResolver {
 
@@ -83,9 +84,101 @@ public class ActionResolverAndroid implements ActionResolver {
     public void menu() {
 
         final Activity activity = (Activity) context;
+        activity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                //here it's necessary get reference to shared preferences
+                final SharedPreferences.Editor editor2 = sharedP.edit();
+                final AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                boolean soundV = true;
+                // Get the layout inflater
+                LayoutInflater inflater = activity.getLayoutInflater();
+                View view = inflater.inflate(R.layout.menu_drop_game, null);
+
+
+                TextView txv_score = view.findViewById(R.id.final_score);
+                TextView txv_title = view.findViewById(R.id.titulo);
+                LinearLayout ll_score = view.findViewById(R.id.ll_score);
+                CircleImageView cim_continue = view.findViewById(R.id.btn_play_drops);
+                CircleImageView cim_home = view.findViewById(R.id.btn_home_drops);
+                final CircleImageView cim_sound = view.findViewById(R.id.btn_sound_drops);
+
+                builder.setView(view);
+
+                if(sharedP.getInt("currentLevel",0) == 100){
+                    txv_title.setText("Fin del juego");
+                    ll_score.setVisibility(View.VISIBLE);
+                    cim_continue.setImageResource(R.drawable.devolver);
+                    txv_score.setText(""+sharedP.getInt("score",0));
+                }
+
+                if(sharedP.getBoolean("sound", true)){
+                    cim_sound.setImageResource(R.drawable.sonido);
+                }else{
+                    cim_sound.setImageResource(R.drawable.mute);
+                }
+
+                final AlertDialog alertDialog = builder.create();
+                alertDialog.show();
+                alertDialog.setCanceledOnTouchOutside(false);
+
+                cim_continue.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if(sharedP.getInt("currentLevel",0) == 100){
+                            editor2.putInt("currentLevel",0);
+                            editor2.putInt("score",0);
+                            editor2.putBoolean("pause",false);
+                            editor2.commit();
+
+                            Intent intent = new Intent(context, AndroidLauncher2.class);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            context.startActivity(intent);
+
+                        }else {
+                            editor2.putBoolean("pause",false);
+                            editor2.commit();
+                            alertDialog.dismiss();
+                        }
+
+                    }
+                });
+
+                cim_home.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(context,Practica.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        intent.putExtra("numFragment",0);
+                        activity.startActivity(intent);
+                    }
+                });
+
+
+                cim_sound.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if(sharedP.getBoolean("sound", true)){
+                            cim_sound.setImageResource(R.drawable.mute);
+                            editor2.putBoolean("sound",false);
+                            editor2.commit();
+
+                        }else{
+                            cim_sound.setImageResource(R.drawable.sonido);
+                            editor2.putBoolean("sound",true);
+                            editor2.commit();
+                        }
+                    }
+                });
+
+
+
+            }
+        });
         /*
             Here we show a menu to control the game run.
          */
+        /*
         activity.runOnUiThread(new Runnable() {
             public void run() {
                 //here it's necessary get reference to shared preferences
@@ -200,8 +293,9 @@ public class ActionResolverAndroid implements ActionResolver {
                     }
                 });
             }
-        });
+        });*/
     }
+
 
     @Override
     public void menuGotas(final CharSequence instancia, final int puntaje) {
@@ -237,36 +331,30 @@ public class ActionResolverAndroid implements ActionResolver {
                 if (instancia.equals("pausa")){
                     titulo.setText("PAUSA");
                     puntuacion.setText(" ");
-                    play.setOnClickListener(new View.OnClickListener() {
-                        SharedPreferences.Editor editor = sharedP.edit();
-                        @Override
-                        public void onClick(View v) {
-                            alertDialog.dismiss();
-                            editor.putBoolean("pause",false);
-                            editor.commit();
-
-                        }
-                    });
                 }
                 else {
                     titulo.setText("FIN DE JUEGO");
                     puntuacion.setText("Puntuacion final: "+puntaje+"/ 100");
-                    play.setImageResource(R.drawable.devolver);
-                    play.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            Intent intent = new Intent(context, AndroidLauncher.class);
-                            ((Activity) context).finish();
-                            context.startActivity(intent);
-                        }
-                    });
+                    play.setEnabled(false);
                 }
+
+                play.setOnClickListener(new View.OnClickListener() {
+                    SharedPreferences.Editor editor = sharedP.edit();
+                    @Override
+                    public void onClick(View v) {
+                        alertDialog.dismiss();
+                        editor.putBoolean("pause",false);
+                        editor.commit();
+
+                    }
+                });
 
                 home.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         Intent intent = new Intent(context,Practica.class);
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        intent.putExtra("numFragment",3);
                         activity.startActivity(intent);
                     }
                 });

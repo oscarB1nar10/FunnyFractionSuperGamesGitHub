@@ -18,17 +18,25 @@ import android.widget.RelativeLayout;
 import com.funnyfractions.game.R;
 import com.funnyfractions.game.tutorials.AndroidLauncher2;
 
+import interfaces.PracticeAndFragments;
+
 public class MainMenu extends Fragment implements View.OnClickListener{
 
     //widgets
     private Button btn_jugar;
     private LinearLayout main_layout;
-
+    
+    //vars
     OnFragmentInteractionListener mListener;
+    PracticeAndFragments practiceAndFragments;
+
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        //practiceAndFragments = getArguments().getParcelable("practiceAndFrangment");
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.menu_division, container, false);
 
@@ -40,6 +48,7 @@ public class MainMenu extends Fragment implements View.OnClickListener{
 
         return view;
     }
+
 
     public interface OnFragmentInteractionListener {
         void onFragmentInteraction(Uri uri);

@@ -3,6 +3,7 @@ package androidlogic.practice;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -18,12 +19,21 @@ import androidlogic.games.archery_game.MainMenu;
 import bateria.EjecutableBateria;
 import burbujas.MenuMultiplicacion;
 import gotas.Menu;
+import interfaces.PracticeAndFragments;
 
-public class Practica extends AppCompatActivity implements MainMenu.OnFragmentInteractionListener, EjecutableBateria.OnFragmentInteractionListener, MenuMultiplicacion.OnFragmentInteractionListener{
+public class Practica extends AppCompatActivity implements
+                                                MainMenu.OnFragmentInteractionListener,
+                                                EjecutableBateria.OnFragmentInteractionListener,
+                                                MenuMultiplicacion.OnFragmentInteractionListener,
+                                                Menu.OnFragmentInteractionListener{
 
-    private Button mul, div;
+    //widgets
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
+
+    //vars
+    PracticeAndFragments practiceAndFragments;
+    private int numFragment;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -32,8 +42,14 @@ public class Practica extends AppCompatActivity implements MainMenu.OnFragmentIn
 
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
-        mViewPager = (ViewPager) findViewById(R.id.container);
+        mViewPager = findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
+
+        if(getIntent() != null){
+            numFragment = getIntent().getIntExtra("numFragment",0);
+            mViewPager.setCurrentItem(numFragment);
+        }
+
     }
 
     @Override
@@ -54,8 +70,9 @@ public class Practica extends AppCompatActivity implements MainMenu.OnFragmentIn
     }
 
     public static class PlaceholderFragment extends Fragment {
-        public static Fragment newInstance(int sectionNumber) {
+        public static Fragment newInstance(int sectionNumber, PracticeAndFragments practiceAndFragments) {
             Fragment fragment = null;
+            Bundle bundle;
             switch (sectionNumber){
                 case 1:
                     fragment = new MainMenu();
@@ -82,7 +99,7 @@ public class Practica extends AppCompatActivity implements MainMenu.OnFragmentIn
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
-            return PlaceholderFragment.newInstance(position + 1);
+            return PlaceholderFragment.newInstance((position + 1), practiceAndFragments);
         }
         @Override
         public int getCount() {

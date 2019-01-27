@@ -22,6 +22,8 @@ import java.util.ArrayList;
 import androidlogic.practice.Practica;
 import tyrantgit.explosionfield.ExplosionField;
 
+import static android.support.test.InstrumentationRegistry.getContext;
+
 public class BubblesMain extends Activity implements View.OnClickListener {
     ArrayList<ObjectAnimator> objectAnimators = new <ObjectAnimator> ArrayList();
     MediaPlayer sonido,waterSound;
@@ -299,10 +301,10 @@ public class BubblesMain extends Activity implements View.OnClickListener {
         btn_home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), Practica.class);
+                Intent intent = new Intent(getContext(),Practica.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                finish();
-                startActivity(intent);
+                intent.putExtra("numFragment",2);
+                getContext().startActivity(intent);
             }
         });
 
