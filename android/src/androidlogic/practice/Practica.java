@@ -1,83 +1,41 @@
 package androidlogic.practice;
 
-import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-
 import com.funnyfractions.game.R;
-
-import androidlogic.games.archery_game.MainMenu;
 import androidlogic.games.archery_game.MainMenu;
 import bateria.EjecutableBateria;
-import burbujas.BubblesMain;
 import burbujas.MenuMultiplicacion;
-import gotas.AndroidLauncher;
 import gotas.Menu;
 
-public class Practica extends Activity {
-    private ImageButton retornarHome;
-    private ImageView prac;
-    private Button suma, res, mul, div;
+public class Practica extends AppCompatActivity implements MainMenu.OnFragmentInteractionListener, EjecutableBateria.OnFragmentInteractionListener, MenuMultiplicacion.OnFragmentInteractionListener{
+
+    private Button mul, div;
+    private SectionsPagerAdapter mSectionsPagerAdapter;
+    private ViewPager mViewPager;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.practica);
-        retornarHome = findViewById(R.id.retornarHome);
-        prac = findViewById(R.id.pract);
-        suma = findViewById(R.id.suma);
-        res = findViewById(R.id.resta);
-        div = findViewById(R.id.division);
-        mul = findViewById(R.id.multiplicacion);
-        retornarHome.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onBackPressed();
-            }
-        });
-        validarIdioma();
-        suma.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), MainMenu.class);
-                startActivity(intent);
-            }
-        });
-        res.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), EjecutableBateria.class);
-                startActivity(intent);
-            }
-        });
-        mul.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), MenuMultiplicacion.class);
-                startActivity(intent);
-            }
-        });
-        div.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), Menu.class);
-                startActivity(intent);
-            }
-        });
 
+        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+
+        mViewPager = (ViewPager) findViewById(R.id.container);
+        mViewPager.setAdapter(mSectionsPagerAdapter);
     }
 
-    public void validarIdioma(){
-        if(suma.getText().equals("Suma")){
-            prac.setImageResource(R.drawable.pract);
-        }else{
-            prac.setImageResource(R.drawable.practices);
-        }
-    }
     @Override
     public void onBackPressed() {
         super.onBackPressed();
@@ -87,7 +45,49 @@ public class Practica extends Activity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        prac.setImageDrawable(null);
-        retornarHome.setImageDrawable(null);
+    }
+
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
+    }
+
+    public static class PlaceholderFragment extends Fragment {
+        public static Fragment newInstance(int sectionNumber) {
+            Fragment fragment = null;
+            switch (sectionNumber){
+                case 1:
+                    fragment = new MainMenu();
+                    break;
+                case 2:
+                    fragment = new EjecutableBateria();
+                    break;
+                case 3:
+                    fragment = new MenuMultiplicacion();
+                    break;
+                case 4:
+                    fragment = new Menu();
+            }
+
+            return fragment;
+        }
+    }
+
+    public class SectionsPagerAdapter extends FragmentPagerAdapter {
+        public SectionsPagerAdapter(FragmentManager fm) {
+            super(fm);
+        }
+        @Override
+        public Fragment getItem(int position) {
+            // getItem is called to instantiate the fragment for the given page.
+            // Return a PlaceholderFragment (defined as a static inner class below).
+            return PlaceholderFragment.newInstance(position + 1);
+        }
+        @Override
+        public int getCount() {
+            // Show 3 total pages.
+            return 4;
+        }
     }
 }

@@ -2,10 +2,14 @@ package gotas;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -15,7 +19,7 @@ import com.funnyfractions.game.R;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Menu extends Activity implements View.OnClickListener {
+public class Menu extends Fragment implements View.OnClickListener {
     Button skip, play;
     ImageView operacion;
     Handler handler = new Handler();
@@ -25,11 +29,13 @@ public class Menu extends Activity implements View.OnClickListener {
     int random = 0;
     int aux = 0;
 
+    OnFragmentInteractionListener mListener;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.menu);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.menu, container, false);
+
         random = (int)(Math.random()*10);
 
         //region imagenes
@@ -60,26 +66,31 @@ public class Menu extends Activity implements View.OnClickListener {
         lista.put(R.drawable.ope4, "48_45");
         //endregion
 
-        skip = findViewById(R.id.btnskip);
-        play = findViewById(R.id.btn_jugar);
-        operacion = findViewById(R.id.imgoperacion);
-        layout_division = findViewById(R.id.linearLayout_division);
+        skip = view.findViewById(R.id.btnskip);
+        play = view.findViewById(R.id.btn_jugar);
+        operacion = view.findViewById(R.id.imgoperacion);
+        layout_division = view.findViewById(R.id.linearLayout_division);
 
         aux = imagenes.get(random);
         operacion.setImageResource(aux);
         play.setOnClickListener(this);
         skip.setOnClickListener(this);
+        return view;
+    }
 
+
+    public interface OnFragmentInteractionListener {
+        void onFragmentInteraction(Uri uri);
     }
 
     @Override
-    protected void onPause() {
+    public void onPause() {
         super.onPause();
         handler.removeCallbacksAndMessages(null);
     }
 
     @Override
-    protected void onResume() {
+    public void onResume() {
         super.onResume();
     }
 
@@ -91,7 +102,7 @@ public class Menu extends Activity implements View.OnClickListener {
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        Intent intent = new Intent(getApplicationContext(), AndroidLauncher.class);
+                        Intent intent = new Intent(getContext(), AndroidLauncher.class);
                         intent.putExtra("operacion", ""+lista.get(aux));
                         startActivity(intent);
                     }
@@ -99,7 +110,7 @@ public class Menu extends Activity implements View.OnClickListener {
                 break;
             case R.id.btnskip:
                 handler.removeCallbacksAndMessages(null);
-                Intent intent = new Intent(getApplicationContext(), AndroidLauncher.class);
+                Intent intent = new Intent(getContext(), AndroidLauncher.class);
                 intent.putExtra("operacion", ""+lista.get(aux));
                 startActivity(intent);
                 break;

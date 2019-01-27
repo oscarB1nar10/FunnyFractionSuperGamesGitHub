@@ -4,14 +4,14 @@ import android.animation.Animator;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +20,6 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.funnyfractions.game.R;
@@ -31,7 +30,7 @@ import androidlogic.practice.Practica;
 import de.hdodenhof.circleimageview.CircleImageView;
 import tyrantgit.explosionfield.ExplosionField;
 
-public class EjecutableBateria extends AppCompatActivity implements View.OnClickListener {
+public class EjecutableBateria extends Fragment implements View.OnClickListener {
     ArrayList<Pregunta> preguntas;
     ArrayList<ObjectAnimator> hearts2;
     ExplosionField explosionField;
@@ -44,25 +43,28 @@ public class EjecutableBateria extends AppCompatActivity implements View.OnClick
     LinearLayout main_linearLayout;
     LottieAnimationView animacionBateria, animacionBateria1;
     MediaPlayer ring, heartExplosion;
+    View view;
     //vars
     int random = 0;
     final static int[] VFRAME = new int[]{6, 12, 18, 24, 30, 36, 40, 50, 54, 60, 68, 74};
     private int numberQuestion = 0, score = 1000, attemps = 0;
     private SharedPreferences mSharedPreferences;
+    OnFragmentInteractionListener mListener;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_ejecutable_bateria);
-        animacionBateria = findViewById(R.id.animacionBateria);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        View view = inflater.inflate(R.layout.activity_ejecutable_bateria, container, false);
+        animacionBateria = view.findViewById(R.id.animacionBateria);
         animacionBateria.useHardwareAcceleration(true);
         startBattery();
         hearts2 = new ArrayList<>();
 
         hearts = new ArrayList<>();
-        hearts.add((ImageView) findViewById(R.id.heart1));
-        hearts.add((ImageView) findViewById(R.id.heart2));
-        hearts.add((ImageView) findViewById(R.id.heart3));
+        hearts.add((ImageView) view.findViewById(R.id.heart1));
+        hearts.add((ImageView) view.findViewById(R.id.heart2));
+        hearts.add((ImageView) view.findViewById(R.id.heart3));
 
         ObjectAnimator heart1 = ObjectAnimator.ofFloat(hearts.get(2), "translationY", 0, 0);
         ObjectAnimator heart2 = ObjectAnimator.ofFloat(hearts.get(1), "translationY", 0, 0);
@@ -72,20 +74,21 @@ public class EjecutableBateria extends AppCompatActivity implements View.OnClick
         hearts2.add(heart2);
         hearts2.add(heart3);
 
-        imb_pause = findViewById(R.id.imb_pause);
+        imb_pause = view.findViewById(R.id.imb_pause);
         imb_pause.setOnClickListener(this);
 
-        ring = MediaPlayer.create(EjecutableBateria.this,R.raw.spatial_sound);
-        heartExplosion = MediaPlayer.create(EjecutableBateria.this, R.raw.bubble);
+        ring = MediaPlayer.create(getContext(),R.raw.spatial_sound);
+        heartExplosion = MediaPlayer.create(getContext(), R.raw.bubble);
         heartExplosion.setVolume(1f,0.5f);
         ring.setLooping(true);
 
-        explosionField = ExplosionField.attach2Window(this);
-        animacionBateria1 = findViewById(R.id.animacionBateria_initial);
+        explosionField = ExplosionField.attach2Window(getActivity());
+        animacionBateria1 = view.findViewById(R.id.animacionBateria_initial);
 
-        mSharedPreferences = getSharedPreferences("SHARED_PREFERENCES", Context.MODE_PRIVATE);
-        main_linearLayout = findViewById(R.id.main_layout_game_battery);
-        btn_jugar = findViewById(R.id.btn_jugar_battery);
+        mSharedPreferences = this.getActivity().getSharedPreferences("SHARED_PREFERENCES", Context.MODE_PRIVATE);
+
+        main_linearLayout = view.findViewById(R.id.main_layout_game_battery);
+        btn_jugar = view.findViewById(R.id.btn_jugar_battery);
         btn_jugar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -94,28 +97,33 @@ public class EjecutableBateria extends AppCompatActivity implements View.OnClick
         });
 
         // animacionBateria.setRepeatCount(5);
-        enunciado = findViewById(R.id.enunciado);
-        operacion = findViewById(R.id.operacion);
-        selector = findViewById(R.id.selector);
-        pregunta = findViewById(R.id.pregunta);
+        enunciado = view.findViewById(R.id.enunciado);
+        operacion = view.findViewById(R.id.operacion);
+        selector = view.findViewById(R.id.selector);
+        pregunta = view.findViewById(R.id.pregunta);
         preguntas = new ArrayList<>();
         //_----------------------------------
-        respuesta1 = findViewById(R.id.valor2);
+        respuesta1 = view.findViewById(R.id.valor2);
         txtvList.add(respuesta1);
         respuesta1.setOnClickListener(this);
-        respuesta2 = findViewById(R.id.valor3);
+        respuesta2 = view.findViewById(R.id.valor3);
         txtvList.add(respuesta2);
         respuesta2.setOnClickListener(this);
-        respuesta3 = findViewById(R.id.valor4);
+        respuesta3 = view.findViewById(R.id.valor4);
         txtvList.add(respuesta3);
         respuesta3.setOnClickListener(this);
-        respuesta4 = findViewById(R.id.valor5);
+        respuesta4 = view.findViewById(R.id.valor5);
         txtvList.add(respuesta4);
         respuesta4.setOnClickListener(this);
         //__-------------------------------
         anadirEnunciados();
         extraerPreguntas();
         asignarValores();
+        return view;
+    }
+
+    public interface OnFragmentInteractionListener {
+        void onFragmentInteraction(Uri uri);
     }
 
     private void asignarValores() {
@@ -300,7 +308,7 @@ public class EjecutableBateria extends AppCompatActivity implements View.OnClick
 
     private void launchMenu() {
         final SharedPreferences.Editor editor = mSharedPreferences.edit();
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         // Get the layout inflater
         LayoutInflater inflater = this.getLayoutInflater();
 
@@ -349,7 +357,7 @@ public class EjecutableBateria extends AppCompatActivity implements View.OnClick
         cim_home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(),Practica.class);
+                Intent intent = new Intent(getContext(),Practica.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
             }
@@ -377,16 +385,15 @@ public class EjecutableBateria extends AppCompatActivity implements View.OnClick
         alertDialog.show();
     }
 
-
     private void nextQuestion(){
         if(numberQuestion < 10) {
             selector.setImageResource(R.drawable.selector);
             hearts = null;
             hearts = new ArrayList<>();
 
-            hearts.add((ImageView) findViewById(R.id.heart1));
-            hearts.add((ImageView) findViewById(R.id.heart2));
-            hearts.add((ImageView) findViewById(R.id.heart3));
+            hearts.add((ImageView) view.findViewById(R.id.heart1));
+            hearts.add((ImageView) view.findViewById(R.id.heart2));
+            hearts.add((ImageView) view.findViewById(R.id.heart3));
 
             ObjectAnimator heart1 = ObjectAnimator.ofFloat(hearts.get(2), "translationY", 0, 0);
             ObjectAnimator heart2 = ObjectAnimator.ofFloat(hearts.get(1), "translationY", 0, 0);
@@ -397,9 +404,9 @@ public class EjecutableBateria extends AppCompatActivity implements View.OnClick
             hearts2.add(heart3);
 
             animacionBateria.setProgress(0);
-            reset((ImageView) findViewById(R.id.heart1));
-            reset((ImageView) findViewById(R.id.heart2));
-            reset((ImageView) findViewById(R.id.heart3));
+            reset((ImageView) view.findViewById(R.id.heart1));
+            reset((ImageView) view.findViewById(R.id.heart2));
+            reset((ImageView) view.findViewById(R.id.heart3));
             attemps = 0;
             enableTextView();
             extraerPreguntas();
@@ -457,19 +464,19 @@ public class EjecutableBateria extends AppCompatActivity implements View.OnClick
     }
 
     @Override
-    protected void onPause() {
+    public void onPause() {
         super.onPause();
         ring.pause();
     }
 
     @Override
-    protected void onStart() {
+    public void onStart() {
         super.onStart();
         ring.start();
     }
 
     @Override
-    protected void onStop() {
+    public void onStop() {
         super.onStop();
         ring.stop();
     }

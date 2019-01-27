@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--suppress LibGDXOpenGLVersion -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.funnyfractions.game" >
+    package="com.funnyfractions.game">
 
 
     <uses-permission android:name="android.permission.INTERNET"/>
@@ -26,86 +27,71 @@
         </activity>
 
         <activity android:name="androidlogic.login.Registro"
-            android:screenOrientation="sensorLandscape">
+            android:screenOrientation="sensorLandscape"
+            android:theme="@style/loginTheme"/>
 
-        </activity>
         <activity android:name="androidlogic.login.Recupera"
-            android:screenOrientation="sensorLandscape">
+            android:screenOrientation="sensorLandscape"
+            android:theme="@style/loginTheme"/>
 
-        </activity>
         <activity android:name=".tutorials.AndroidLauncher2"
-            android:screenOrientation="sensorLandscape">
+            android:screenOrientation="sensorLandscape"
+            android:theme="@style/loginTheme"/>
 
-        </activity>
         <activity android:name="androidlogic.home.Home"
             android:screenOrientation="sensorLandscape"
-            android:theme="@style/loginTheme">
+            android:theme="@style/loginTheme"/>
 
-        </activity>
         <activity android:name="androidlogic.tutorials.Tutorial"
-            android:screenOrientation="sensorLandscape">
+            android:screenOrientation="sensorLandscape"
+            android:theme="@style/loginTheme"/>
 
-        </activity>
         <activity android:name="androidlogic.tutorials.TutorialDivision"
-            android:screenOrientation="sensorLandscape">
+            android:screenOrientation="sensorLandscape"
+            android:theme="@style/loginTheme"/>
 
-        </activity>
         <activity android:name="androidlogic.tutorials.TutorialMultiplicacion"
-            android:screenOrientation="sensorLandscape">
+            android:screenOrientation="sensorLandscape"
+            android:theme="@style/loginTheme"/>
 
-        </activity>
         <activity android:name="androidlogic.tutorials.TutorialQueSon"
-            android:screenOrientation="sensorLandscape">
+            android:screenOrientation="sensorLandscape"
+            android:theme="@style/loginTheme"/>
 
-        </activity>
         <activity android:name="androidlogic.tutorials.TutorialResta"
-            android:screenOrientation="sensorLandscape">
+            android:screenOrientation="sensorLandscape"
+            android:theme="@style/loginTheme"/>
 
-        </activity>
         <activity android:name="androidlogic.tutorials.TutorialSuma"
-            android:screenOrientation="sensorLandscape">
+            android:screenOrientation="sensorLandscape"
+            android:theme="@style/loginTheme"/>
 
-        </activity>
         <activity android:name="androidlogic.practice.Practica"
-            android:screenOrientation="sensorLandscape">
+            android:screenOrientation="sensorLandscape"
+            android:theme="@style/loginTheme"/>
 
-        </activity>
         <activity android:name="androidlogic.evaluacion.EvaluacionActivity"
-            android:screenOrientation="sensorLandscape">
+            android:screenOrientation="sensorLandscape"
+            android:theme="@style/loginTheme"/>
 
-        </activity>
-        <activity android:name="androidlogic.games.archery_game.MainMenu"
-            android:screenOrientation="portrait">
-
-        </activity>
         <activity android:name="androidlogic.games.archery_game.Levels"
-            android:screenOrientation="sensorLandscape">
+            android:screenOrientation="sensorLandscape"
+            android:theme="@style/loginTheme"/>
 
-        </activity>
         <activity android:name="androidlogic.games.archery_game.MenuArcheryActivity"
-            android:screenOrientation="sensorLandscape">
-        </activity>
+            android:screenOrientation="sensorLandscape"
+            android:theme="@style/loginTheme"/>
 
-        <activity android:name="bateria.EjecutableBateria"
-            android:screenOrientation="sensorLandscape">
-
-        </activity>
         <activity android:name="burbujas.BubblesMain"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:theme="@style/loginTheme"/>
+
         <activity android:name="burbujas.GameOver"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:theme="@style/loginTheme"/>
+
         <activity android:name="gotas.AndroidLauncher"
-            android:screenOrientation="sensorLandscape">
-
-        </activity>
-        <activity android:name="gotas.Menu"
-            android:screenOrientation="sensorLandscape">
-        </activity>
-
-        <activity android:name="burbujas.MenuMultiplicacion"
-            android:screenOrientation="portrait">
-        </activity>
-            
+            android:screenOrientation="sensorLandscape"
+            android:theme="@style/loginTheme"/>
     </application>
-
 </manifest>

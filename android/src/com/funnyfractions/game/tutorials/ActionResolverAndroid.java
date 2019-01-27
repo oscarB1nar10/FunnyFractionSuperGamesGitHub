@@ -18,6 +18,8 @@ import com.funnyfractions.game.archery_game.ActionResolver;
 import androidlogic.games.archery_game.MenuArcheryActivity;
 import androidlogic.home.Home;
 import androidlogic.practice.Practica;
+import gotas.AndroidLauncher;
+import gotas.Menu;
 
 public class ActionResolverAndroid implements ActionResolver {
 
@@ -235,23 +237,30 @@ public class ActionResolverAndroid implements ActionResolver {
                 if (instancia.equals("pausa")){
                     titulo.setText("PAUSA");
                     puntuacion.setText(" ");
+                    play.setOnClickListener(new View.OnClickListener() {
+                        SharedPreferences.Editor editor = sharedP.edit();
+                        @Override
+                        public void onClick(View v) {
+                            alertDialog.dismiss();
+                            editor.putBoolean("pause",false);
+                            editor.commit();
+
+                        }
+                    });
                 }
                 else {
                     titulo.setText("FIN DE JUEGO");
                     puntuacion.setText("Puntuacion final: "+puntaje+"/ 100");
-                    play.setEnabled(false);
+                    play.setImageResource(R.drawable.devolver);
+                    play.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent intent = new Intent(context, AndroidLauncher.class);
+                            ((Activity) context).finish();
+                            context.startActivity(intent);
+                        }
+                    });
                 }
-
-                play.setOnClickListener(new View.OnClickListener() {
-                    SharedPreferences.Editor editor = sharedP.edit();
-                    @Override
-                    public void onClick(View v) {
-                        alertDialog.dismiss();
-                        editor.putBoolean("pause",false);
-                        editor.commit();
-
-                    }
-                });
 
                 home.setOnClickListener(new View.OnClickListener() {
                     @Override

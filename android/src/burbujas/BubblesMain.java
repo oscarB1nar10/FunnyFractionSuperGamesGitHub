@@ -299,7 +299,7 @@ public class BubblesMain extends Activity implements View.OnClickListener {
         btn_home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), MenuMultiplicacion.class);
+                Intent intent = new Intent(getApplicationContext(), Practica.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 finish();
                 startActivity(intent);

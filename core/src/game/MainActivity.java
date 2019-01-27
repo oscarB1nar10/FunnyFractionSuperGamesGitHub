@@ -40,12 +40,11 @@ public class MainActivity extends Game implements InputProcessor {
 	public MainActivity(String respuesta, ActionResolver actionResolver) {
 		this.actionResolver = actionResolver;
 		this.respuesta = respuesta;
-
 	}
 
 	@Override
 	public void create() {
-		puntaje = 100;
+		puntaje = 200;
 		dropImage = new ArrayList<Drops>();
 		pref = Gdx.app.getPreferences("SHARED_PREFERENCES");
 		pref.putBoolean("pause",false);
@@ -143,7 +142,7 @@ public class MainActivity extends Game implements InputProcessor {
 		if(bucket.x < 0) bucket.x = 0;
 		if(bucket.x > 800 - 64) bucket.x = 800 - 64;
 
-		if(nextDrop && toques < 10 && !pref.getBoolean("pause",false)){
+		if(nextDrop && toques < 20 && !pref.getBoolean("pause",false)){
 			spawnRaindrop();
 			toques++;
 			random = (int) (Math.random()*dropImage.size());
@@ -153,7 +152,7 @@ public class MainActivity extends Game implements InputProcessor {
 		Iterator<Rectangles> iter = raindrops.iterator();
 		while(iter.hasNext() && !pref.getBoolean("pause",false)) {
 			Rectangles raindrop = iter.next();
-			raindrop.y -= 350 * Gdx.graphics.getDeltaTime();
+			raindrop.y -= 400 * Gdx.graphics.getDeltaTime();
 			if(raindrop.y + 64 < 0) {
 			    if(raindrop.getDescription().equals(respuesta)){
 			        puntaje = puntaje - 10;
@@ -173,8 +172,8 @@ public class MainActivity extends Game implements InputProcessor {
 			}
 		}
 
-		if(toques == 10 && nextDrop){
-			actionResolver.menuGotas("Final", puntaje);
+		if(toques == 20 && nextDrop){
+			actionResolver.menuGotas("Final", puntaje/2);
         }
 
 	}
