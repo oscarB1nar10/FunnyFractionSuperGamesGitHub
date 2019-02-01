@@ -37,6 +37,8 @@ public class Practica extends AppCompatActivity implements
     //vars
     PracticeAndFragments practiceAndFragments;
     private int numFragment;
+    boolean showOperation;
+    Bundle bundle;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -51,6 +53,9 @@ public class Practica extends AppCompatActivity implements
 
         if(getIntent() != null){
             numFragment = getIntent().getIntExtra("numFragment",0);
+            if(numFragment == 3){
+                showOperation = getIntent().getBooleanExtra("showOperation",false);
+            }
             mViewPager.setCurrentItem(numFragment);
         }
 
@@ -73,43 +78,6 @@ public class Practica extends AppCompatActivity implements
 
     }
 
-    /*@SuppressLint("ValidFragment")
-    public  class PlaceholderFragment extends Fragment {
-
-
-        public  Fragment newInstance(int sectionNumber, PracticeAndFragments practiceAndFragments) {
-
-            FragmentManager fragmentManager = getFragmentManager();
-            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-
-            Fragment fragment = null;
-            Bundle bundle;
-            switch (sectionNumber){
-                case 1:
-                    fragment = new MainMenu();
-                    break;
-                case 2:
-                    fragment = new EjecutableBateria();
-                    break;
-                case 3:
-                    fragment = new MenuMultiplicacion();
-                    break;
-                case 4:
-                    fragment = new Menu();
-            }
-
-            // Replace whatever is in the fragment_container view with this fragment,
-            // and add the transaction to the back stack
-            fragmentTransaction.replace(R.id.container_vp, fragment);
-            fragmentTransaction.addToBackStack(null);
-
-            // Commit the transaction
-            fragmentTransaction.commit();
-
-            return fragment;
-        }
-    }*/
-
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
         public SectionsPagerAdapter(FragmentManager fm) {
@@ -129,7 +97,10 @@ public class Practica extends AppCompatActivity implements
                     fragment = new MenuMultiplicacion();
                     break;
                 case 4:
+                    bundle = new Bundle();
+                    bundle.putBoolean("showOperation",showOperation);
                     fragment = new Menu();
+                    fragment.setArguments(bundle);
                     break;
             }
 

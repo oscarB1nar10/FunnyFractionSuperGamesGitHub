@@ -39,7 +39,7 @@ public class EvaluacionActivity extends AppCompatActivity implements EvaluationV
     private MediaPlayer musicafondo, selectsound, correctsound, errorsound, introsound;
     private ImageView question;
     private Button btn_play_evaluation, btn_instrucc_evaluation, btn_settings_evaluation;
-    private ImageButton btn_fifty_fifty, btn_call, btn_public , btn_salir;
+    private ImageButton btn_fifty_fifty, btn_call, btn_public , btn_salir, btn_salir_menu;
     private TextView  answera, answerb, answerc, answerd;
     private LinearLayout linearLayout_options, linearLayout_images;
     //variables
@@ -78,6 +78,7 @@ public class EvaluacionActivity extends AppCompatActivity implements EvaluationV
         btn_call = findViewById(R.id.btn_call);
         btn_public = findViewById(R.id.btn_public);
         btn_salir = findViewById(R.id.btn_exit);
+        btn_salir_menu = findViewById(R.id.btn_exit_menu_millionary);
         //region sonidos
         musicafondo = MediaPlayer.create(this, R.raw.musicafondo);
         musicafondo.setLooping(true);
@@ -103,6 +104,7 @@ public class EvaluacionActivity extends AppCompatActivity implements EvaluationV
         btn_fifty_fifty.setOnClickListener(this);
         btn_call.setOnClickListener(this);
         btn_salir.setOnClickListener(this);
+        btn_salir_menu.setOnClickListener(this);
         btn_public.setOnClickListener(this);
     }
 
@@ -288,6 +290,10 @@ public class EvaluacionActivity extends AppCompatActivity implements EvaluationV
                 break;
 
             case R.id.btn_exit:
+                exitGame();
+                break;
+
+            case R.id.btn_exit_menu_millionary:
                 exitGame();
                 break;
 

@@ -46,7 +46,7 @@ public class ActionResolverAndroid implements ActionResolver {
         }else{
             SharedPreferences.Editor editor = sharedP.edit();
             editor.putInt("currentLevel", 1);
-            editor.commit();
+            editor.apply();
         }
         Intent intent = new Intent(context, AndroidLauncher2.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -78,7 +78,6 @@ public class ActionResolverAndroid implements ActionResolver {
 
     @Override
     public void menu() {
-
         final Activity activity = (Activity) context;
         activity.runOnUiThread(new Runnable() {
             @Override
@@ -125,7 +124,7 @@ public class ActionResolverAndroid implements ActionResolver {
                             editor2.putInt("currentLevel",0);
                             editor2.putInt("score",0);
                             editor2.putBoolean("pause",false);
-                            editor2.commit();
+                            editor2.apply();
 
                             Intent intent = new Intent(context, AndroidLauncher2.class);
                             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -166,132 +165,9 @@ public class ActionResolverAndroid implements ActionResolver {
                         }
                     }
                 });
-
-
-
             }
         });
-        /*
-            Here we show a menu to control the game run.
-         */
-        /*
-        activity.runOnUiThread(new Runnable() {
-            public void run() {
-                //here it's necessary get reference to shared preferences
-                SharedPreferences prefs = context.getSharedPreferences("SHARED_PREFERENCES", Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor2 = sharedP.edit();
-                final AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                boolean soundV = true;
-                // Get the layout inflater
-                LayoutInflater inflater = activity.getLayoutInflater();
-                View view = inflater.inflate(R.layout.pause_menu_archery_game, null);
-
-                ImageButton restar = view.findViewById(R.id.btn_restar);
-                ImageButton play = view.findViewById(R.id.btn_play);
-                ImageView stars = view.findViewById(R.id.imgv_stars);
-                ImageButton home = view.findViewById(R.id.btn_home);
-                final ImageButton sound = view.findViewById(R.id.btn_sound);
-
-
-                //check whether the sound state
-                if(prefs.getBoolean("sound",true) == true){
-                    sound.setImageResource(R.drawable.sonido);
-                    soundV = true;
-                }else{
-                    sound.setImageResource(R.drawable.mute);
-                    soundV = false;
-                }
-                // Inflate and set the layout for the dialog
-                // Pass null as the parent view because its going in the dialog layout
-                builder.setView(view);
-                // Add action buttons
-                builder.create();
-                final AlertDialog alertDialog = builder.show();
-                alertDialog.setCanceledOnTouchOutside(false);
-
-                //check the level state
-                if(prefs.getInt("currentLevel",-1) == 100){
-                    if (prefs.getInt("score",-1)>=700 && prefs.getInt("score",-1)<=1000){
-
-                        editor2.putInt("currentLevel",0);
-                        editor2.commit();
-                        stars.setImageResource(R.drawable.star100);
-                        play.setEnabled(false);
-                    }else if(prefs.getInt("score",-1)>=500 && prefs.getInt("score",-1)<=699){
-                        editor2.putInt("currentLevel",0);
-                        editor2.commit();
-                        stars.setImageResource(R.drawable.star70);
-                        play.setEnabled(false);
-                    }else{
-                        editor2.putInt("currentLevel",0);
-                        editor2.commit();
-                        stars.setImageResource(R.drawable.star30);
-                        play.setEnabled(false);
-                    }
-                }else{
-                    stars.setVisibility(View.INVISIBLE);
-                }
-
-                restar.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        SharedPreferences.Editor editor2 = sharedP.edit();
-                        editor2.putInt("currentLevel",0);
-                        editor2.putInt("score",0);
-                        editor2.commit();
-                        Intent intent = new Intent(context, AndroidLauncher2.class);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                        context.startActivity(intent);
-                    }
-                });
-
-                play.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        alertDialog.dismiss();
-                        SharedPreferences.Editor editor2 = sharedP.edit();
-                        editor2.putBoolean("pause",false);
-                        editor2.commit();
-
-                    }
-
-                });
-
-                final boolean finalSoundV = soundV;
-                sound.setOnClickListener(new View.OnClickListener() {
-                    private boolean so = finalSoundV;
-                    @Override
-                    public void onClick(View v) {
-                        if(so){
-                            sound.setImageResource(R.drawable.mute);
-                            SharedPreferences.Editor editor2 = sharedP.edit();
-                            editor2.putBoolean("sound",false);
-                            editor2.commit();
-                            so = false;
-                        }else{
-                            sound.setImageResource(R.drawable.sonido);
-                            SharedPreferences.Editor editor2 = sharedP.edit();
-                            editor2.putBoolean("sound",true);
-                            editor2.commit();
-                            so = true;
-                        }
-
-
-                    }
-                });
-
-                home.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent intent = new Intent(context, Practica.class);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                        context.startActivity(intent);
-                    }
-                });
-            }
-        });*/
     }
-
 
     @Override
     public void menuGotas(final CharSequence instancia, final int puntaje) {
@@ -314,7 +190,7 @@ public class ActionResolverAndroid implements ActionResolver {
                 TextView puntuacion = view.findViewById(R.id.puntuacion);
                 final ImageView sound = view.findViewById(R.id.btn_sound_drops);
 
-                if(sharedP.getBoolean("sound_drop",true) == true){
+                if(sharedP.getBoolean("sound_drop",true)){
                     sound.setImageResource(R.drawable.sonido);
                 }else{
                     sound.setImageResource(R.drawable.mute);
@@ -324,26 +200,34 @@ public class ActionResolverAndroid implements ActionResolver {
                 builder.create();
                 final AlertDialog alertDialog = builder.show();
 
-                if (instancia.equals("pausa")){
+                if (instancia.equals("pausa")) {
                     titulo.setText("PAUSA");
                     puntuacion.setText(" ");
-                }
-                else {
+                    play.setOnClickListener(new View.OnClickListener() {
+                        SharedPreferences.Editor editor = sharedP.edit();
+
+                        @Override
+                        public void onClick(View v) {
+                            alertDialog.dismiss();
+                            editor.putBoolean("pause", false);
+                            editor.apply();
+                        }
+                    });
+                } else {
                     titulo.setText("FIN DE JUEGO");
-                    puntuacion.setText("Puntuacion final: "+puntaje+"/ 100");
-                    play.setEnabled(false);
+                    puntuacion.setText("Puntuacion final: " + puntaje + "/ 100");
+                    play.setImageResource(R.drawable.devolver);
+                    play.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent intent = new Intent(context, Practica.class);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            intent.putExtra("numFragment", 3);
+                            intent.putExtra("showOperation",true);
+                            activity.startActivity(intent);
+                        }
+                    });
                 }
-
-                play.setOnClickListener(new View.OnClickListener() {
-                    SharedPreferences.Editor editor = sharedP.edit();
-                    @Override
-                    public void onClick(View v) {
-                        alertDialog.dismiss();
-                        editor.putBoolean("pause",false);
-                        editor.commit();
-
-                    }
-                });
 
                 home.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -367,7 +251,7 @@ public class ActionResolverAndroid implements ActionResolver {
                             editor.putBoolean("sound_drop", true);
                             sound.setImageResource(R.drawable.sonido);
                         }
-                        editor.commit();
+                        editor.apply();
                     }
                 });
             }

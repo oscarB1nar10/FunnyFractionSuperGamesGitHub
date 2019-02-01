@@ -1,11 +1,9 @@
 package gotas;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,7 +18,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Menu extends Fragment implements View.OnClickListener {
-    Button skip, play;
+    Button skip, play, settings, instrucciones;
     ImageView operacion;
     Handler handler = new Handler();
     HashMap<Integer, String> lista = new HashMap<>();
@@ -31,10 +29,35 @@ public class Menu extends Fragment implements View.OnClickListener {
 
     OnFragmentInteractionListener mListener;
 
+    public static Menu newInstance() {
+
+        Bundle args = new Bundle();
+
+        Menu fragment = new Menu();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.menu, container, false);
+
+        layout_division = view.findViewById(R.id.linearLayout_division);
+
+        if(getArguments() != null) {
+            if (getArguments().getBoolean("showOperation", false)) {
+                layout_division.setVisibility(View.VISIBLE);
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        Intent intent = new Intent(getContext(), AndroidLauncher.class);
+                        intent.putExtra("operacion", ""+lista.get(aux));
+                        startActivity(intent);
+                    }
+                },6000);
+            }
+        }
 
         random = (int)(Math.random()*10);
 
@@ -68,8 +91,9 @@ public class Menu extends Fragment implements View.OnClickListener {
 
         skip = view.findViewById(R.id.btnskip);
         play = view.findViewById(R.id.btn_jugar);
+        settings = view.findViewById(R.id.btn_settings);
         operacion = view.findViewById(R.id.imgoperacion);
-        layout_division = view.findViewById(R.id.linearLayout_division);
+
 
         aux = imagenes.get(random);
         operacion.setImageResource(aux);

@@ -301,10 +301,10 @@ public class BubblesMain extends Activity implements View.OnClickListener {
         btn_home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getContext(),Practica.class);
+                Intent intent = new Intent(getApplicationContext(),Practica.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 intent.putExtra("numFragment",2);
-                getContext().startActivity(intent);
+                getApplicationContext().startActivity(intent);
             }
         });
 
@@ -314,7 +314,6 @@ public class BubblesMain extends Activity implements View.OnClickListener {
                 if(btn_restar.getText().equals("Resumen")){
                     ResumeAnimation();
                     ad.dismiss();
-
                 }else{
                     numjuegos = 0;
                     puntuacion = 0;
