@@ -55,7 +55,7 @@ public class EjecutableBateria extends Fragment implements View.OnClickListener 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.activity_ejecutable_bateria, container, false);
+         view = inflater.inflate(R.layout.activity_ejecutable_bateria, container, false);
         animacionBateria = view.findViewById(R.id.animacionBateria);
         animacionBateria.useHardwareAcceleration(true);
         startBattery();
@@ -88,7 +88,7 @@ public class EjecutableBateria extends Fragment implements View.OnClickListener 
         mSharedPreferences = this.getActivity().getSharedPreferences("SHARED_PREFERENCES", Context.MODE_PRIVATE);
 
         main_linearLayout = view.findViewById(R.id.main_layout_game_battery);
-        btn_jugar = view.findViewById(R.id.btn_jugar_battery);
+        btn_jugar = view.findViewById(R.id.btn_jugar);
         btn_jugar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -312,7 +312,7 @@ public class EjecutableBateria extends Fragment implements View.OnClickListener 
         // Get the layout inflater
         LayoutInflater inflater = this.getLayoutInflater();
 
-        View view = inflater.inflate(R.layout.menu_drop_game, null);
+         view = inflater.inflate(R.layout.menu_drop_game, null);
 
         // Inflate and set the layout for the dialog
         // Pass null as the parent view because its going in the dialog layout
@@ -473,7 +473,7 @@ public class EjecutableBateria extends Fragment implements View.OnClickListener 
     @Override
     public void onStart() {
         super.onStart();
-        ring.start();
+        //ring.start();
     }
 
     @Override

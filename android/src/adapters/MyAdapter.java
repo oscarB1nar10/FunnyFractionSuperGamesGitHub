@@ -59,9 +59,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
             title = view.findViewById(R.id.txv_title);
             information = view.findViewById(R.id.txv_information);
             circleImageView = view.findViewById(R.id.img_example1);
-            optionalImg1 = view.findViewById(R.id.img_optional1);
-            optionalImg2 = view.findViewById(R.id.img_optional2);
-            optionalImg3 = view.findViewById(R.id.img_optional3);
+
 
         }
     }

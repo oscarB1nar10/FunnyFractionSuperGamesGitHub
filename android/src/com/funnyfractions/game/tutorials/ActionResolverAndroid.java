@@ -7,7 +7,6 @@ import android.content.SharedPreferences;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -15,10 +14,7 @@ import android.widget.Toast;
 
 import com.funnyfractions.game.R;
 import com.funnyfractions.game.archery_game.ActionResolver;
-import com.funnyfractions.game.tutorials.AndroidLauncher2;
 
-import androidlogic.games.archery_game.MenuArcheryActivity;
-import androidlogic.home.Home;
 import androidlogic.practice.Practica;
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -76,8 +72,8 @@ public class ActionResolverAndroid implements ActionResolver {
 
     @Override
     public void pauseArcheryGame() {
-        Intent intent = new Intent(context, MenuArcheryActivity.class);
-        context.startActivity(intent);
+        //Intent intent = new Intent(context, MenuArcheryActivity.class);
+        //context.startActivity(intent);
     }
 
     @Override

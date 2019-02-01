@@ -199,6 +199,6 @@
     </LinearLayout>
 
     </LinearLayout>
-    <include layout="@layout/battery_menu"></include>
+    <include layout="@layout/menu_division"></include>
 
 </LinearLayout>

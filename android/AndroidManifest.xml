@@ -78,10 +78,6 @@
             android:screenOrientation="sensorLandscape"
             android:theme="@style/loginTheme"/>
 
-        <activity android:name="androidlogic.games.archery_game.MenuArcheryActivity"
-            android:screenOrientation="sensorLandscape"
-            android:theme="@style/loginTheme"/>
-
         <activity android:name="burbujas.BubblesMain"
             android:screenOrientation="portrait"
             android:theme="@style/loginTheme"/>
