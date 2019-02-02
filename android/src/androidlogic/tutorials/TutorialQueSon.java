@@ -32,21 +32,8 @@ public class TutorialQueSon extends AppCompatActivity {
         setContentView(R.layout.tutoriales_queson);
 
         sumaTutorialInformationsList = new ArrayList<>();
-        SumaTutorialInformation sumaTutorialInformation1 = new SumaTutorialInformation();
 
-        sumaTutorialInformation1.setTitle(getString(R.string.txtQueson));
-        sumaTutorialInformation1.setInformation(getString(R.string.txtdefinicion));
-        sumaTutorialInformation1.setMainImage(R.drawable.fraccionejemplo);
-
-        sumaTutorialInformationsList.add(sumaTutorialInformation1);
-
-        SumaTutorialInformation sumaTutorialInformation2 = new SumaTutorialInformation();
-
-        sumaTutorialInformation2.setTitle(getString(R.string.txtQueson));
-        sumaTutorialInformation2.setInformation(getString(R.string.txtdefinicion));
-        sumaTutorialInformation2.setMainImage(R.drawable.fraccionejemplo);
-
-        sumaTutorialInformationsList.add(sumaTutorialInformation2);
+        fillTheCards();
 
         mRecyclerView = findViewById(R.id.my_recycler_view);
         mRecyclerView.setHasFixedSize(true);
@@ -60,6 +47,71 @@ public class TutorialQueSon extends AppCompatActivity {
         mRecyclerView.setAdapter(mAdapter);
 
 
+
+
+    }
+
+    /*
+        Here we add the information necessary to fill the cards
+     */
+
+    private void fillTheCards(){
+
+        SumaTutorialInformation sumaTutorialInformation1 = new SumaTutorialInformation();
+
+        sumaTutorialInformation1.setTitle(getString(R.string.txtQueson));
+        sumaTutorialInformation1.setInformation(getString(R.string.txtdefinicion));
+        sumaTutorialInformation1.setMainImage(R.drawable.fraccionejemplo);
+
+        sumaTutorialInformationsList.add(sumaTutorialInformation1);
+
+        SumaTutorialInformation sumaTutorialInformation2 = new SumaTutorialInformation();
+
+        sumaTutorialInformation2.setTitle(getString(R.string.txtsumhomo));
+        sumaTutorialInformation2.setInformation(getString(R.string.txteoriasumhomo));
+        sumaTutorialInformation2.setMainImage(R.drawable.fraccionejemplo);
+
+        sumaTutorialInformationsList.add(sumaTutorialInformation2);
+
+        SumaTutorialInformation sumaTutorialInformation3 = new SumaTutorialInformation();
+
+        sumaTutorialInformation3.setTitle(getString(R.string.txtsumhete));
+        sumaTutorialInformation3.setInformation(getString(R.string.txteoriasumhete));
+        sumaTutorialInformation3.setMainImage(R.drawable.fraccionejemplo);
+
+        sumaTutorialInformationsList.add(sumaTutorialInformation3);
+
+        SumaTutorialInformation sumaTutorialInformation4 = new SumaTutorialInformation();
+
+        sumaTutorialInformation4.setTitle(getString(R.string.txtreshomo));
+        sumaTutorialInformation4.setInformation(getString(R.string.txteoriareshomo));
+        sumaTutorialInformation4.setMainImage(R.drawable.fraccionejemplo);
+
+        sumaTutorialInformationsList.add(sumaTutorialInformation4);
+
+        SumaTutorialInformation sumaTutorialInformation5 = new SumaTutorialInformation();
+
+        sumaTutorialInformation5.setTitle(getString(R.string.txtreshete));
+        sumaTutorialInformation5.setInformation(getString(R.string.txteoriareshete));
+        sumaTutorialInformation5.setMainImage(R.drawable.fraccionejemplo);
+
+        sumaTutorialInformationsList.add(sumaTutorialInformation5);
+
+        SumaTutorialInformation sumaTutorialInformation6 = new SumaTutorialInformation();
+
+        sumaTutorialInformation6.setTitle(getString(R.string.txtmul));
+        sumaTutorialInformation6.setInformation(getString(R.string.txteoriamul));
+        sumaTutorialInformation6.setMainImage(R.drawable.fraccionejemplo);
+
+        sumaTutorialInformationsList.add(sumaTutorialInformation6);
+
+        SumaTutorialInformation sumaTutorialInformation7 = new SumaTutorialInformation();
+
+        sumaTutorialInformation7.setTitle(getString(R.string.txtdiv));
+        sumaTutorialInformation7.setInformation(getString(R.string.txteoriadiv));
+        sumaTutorialInformation7.setMainImage(R.drawable.fraccionejemplo);
+
+        sumaTutorialInformationsList.add(sumaTutorialInformation7);
 
 
     }

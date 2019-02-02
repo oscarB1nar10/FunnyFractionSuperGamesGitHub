@@ -42,27 +42,7 @@
             android:screenOrientation="sensorLandscape"
             android:theme="@style/loginTheme"/>
 
-        <activity android:name="androidlogic.tutorials.Tutorial"
-            android:screenOrientation="sensorLandscape"
-            android:theme="@style/loginTheme"/>
-
-        <activity android:name="androidlogic.tutorials.TutorialDivision"
-            android:screenOrientation="sensorLandscape"
-            android:theme="@style/loginTheme"/>
-
-        <activity android:name="androidlogic.tutorials.TutorialMultiplicacion"
-            android:screenOrientation="sensorLandscape"
-            android:theme="@style/loginTheme"/>
-
         <activity android:name="androidlogic.tutorials.TutorialQueSon"
-            android:screenOrientation="sensorLandscape"
-            android:theme="@style/loginTheme"/>
-
-        <activity android:name="androidlogic.tutorials.TutorialResta"
-            android:screenOrientation="sensorLandscape"
-            android:theme="@style/loginTheme"/>
-
-        <activity android:name="androidlogic.tutorials.TutorialSuma"
             android:screenOrientation="sensorLandscape"
             android:theme="@style/loginTheme"/>
 

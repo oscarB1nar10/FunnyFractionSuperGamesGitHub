@@ -63,33 +63,31 @@
         android:layout_gravity="center_horizontal"
         />
 
+    <RelativeLayout
+        android:id="@+id/main_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="10dp"
 
+        >
 
-    <Button
-        android:id="@+id/btntuto"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="26dp"
-        android:background="@drawable/botones_home"
-        android:text="@string/btnTutoriales"
-        app:layout_constraintBottom_toTopOf="@+id/btnprac"
-        app:layout_constraintStart_toStartOf="@+id/btnprac"
-        tools:ignore="MissingConstraints"
-        android:layout_marginRight="10dp"
-        android:layout_gravity="end"/>
+        <Button
+            android:id="@+id/btntuto"
+            android:layout_width="254dp"
+            android:layout_height="56dp"
+            android:layout_marginLeft="230dp"
+            android:background="@drawable/tutoriales"
+            />
+
 
     <Button
         android:id="@+id/btnprac"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="24dp"
-        android:background="@drawable/botones_home"
-        android:text="@string/btnPracticas"
-        app:layout_constraintBottom_toTopOf="@+id/btnevalu"
-        app:layout_constraintStart_toStartOf="@+id/btnevalu"
-        tools:ignore="MissingConstraints"
-        android:layout_marginRight="10dp"
-        android:layout_gravity="end"/>
+        android:layout_width="254dp"
+        android:layout_height="56dp"
+        android:layout_marginLeft="230dp"
+        android:background="@drawable/practicas"
+        android:layout_below="@+id/btntuto"
+        />
 
     <Button
         android:id="@+id/btnevalu"
@@ -100,6 +98,7 @@
         tools:ignore="MissingConstraints"
         android:layout_marginRight="10dp"
         android:layout_gravity="end"/>
+    </RelativeLayout>
 
 
 </LinearLayout>

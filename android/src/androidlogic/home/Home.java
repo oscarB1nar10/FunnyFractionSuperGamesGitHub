@@ -32,7 +32,7 @@ import java.util.Locale;
 import androidlogic.evaluacion.EvaluacionActivity;
 import androidlogic.login.MainActivity;
 import androidlogic.practice.Practica;
-import androidlogic.tutorials.Tutorial;
+import androidlogic.tutorials.TutorialQueSon;
 
 public class Home extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener,
                                                         NavigationView.OnNavigationItemSelectedListener {
@@ -111,7 +111,7 @@ public class Home extends AppCompatActivity implements GoogleApiClient.OnConnect
             @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), Tutorial.class);
+                Intent intent = new Intent(getApplicationContext(), TutorialQueSon.class);
                 startActivity(intent);
                 overridePendingTransition(R.anim.zoom_back_in, R.anim.zoom_back_out);
             }
