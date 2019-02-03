@@ -139,6 +139,8 @@ public class PlayScreen  extends InputProcessorsV2 implements Screen , Applicati
     private Sound archery_sound, collition;
     //coorect answer position
     private int correctAnswerPosition = 0;
+    Preferences pref = Gdx.app.getPreferences("SHARED_PREFERENCES");
+
 
 
     public PlayScreen(FirstScreen firstScreen, ActionResolver actionResolver) {
@@ -296,7 +298,6 @@ public class PlayScreen  extends InputProcessorsV2 implements Screen , Applicati
     }
 
     private void getPause() {
-        Preferences pref = Gdx.app.getPreferences("SHARED_PREFERENCES");
         pause = pref.getBoolean("pause",true);
         sound = pref.getBoolean("sound",true);
         levelV = pref.getInteger("currentLevel",0);
@@ -362,7 +363,6 @@ public class PlayScreen  extends InputProcessorsV2 implements Screen , Applicati
     @Override
     public void resume() {
         System.out.println("Entre a este lugar");
-
     }
 
     @Override
@@ -450,7 +450,9 @@ public class PlayScreen  extends InputProcessorsV2 implements Screen , Applicati
                 if(fixtureA.getUserData().equals("dart") && (!fixtureB.getUserData().equals("floor")) ||
                         (!fixtureA.getUserData().equals("floor")) && fixtureB.getUserData().equals("dart")     ) {
                     isDartCollideWF = true;
-                    collition.play();
+                    if(pref.getBoolean("sound", true)) {
+                        collition.play();
+                    }
                     if(fixtureA.getUserData().equals("dart")){
                         dartToDelete = fixtureA.getBody();
 
@@ -464,7 +466,9 @@ public class PlayScreen  extends InputProcessorsV2 implements Screen , Applicati
                 }else if(fixtureA.getUserData().equals("dart") && (fixtureB.getUserData().equals("floor")) ||
                         (fixtureA.getUserData().equals("floor")) && fixtureB.getUserData().equals("dart")){
                         isDartCollideWF = true;
+                    if(pref.getBoolean("sound", true)) {
                         collition.play();
+                    }
                         if(fixtureA.getUserData().equals("dart")){
                             dartToDelete = fixtureA.getBody();
                             }else {
@@ -581,7 +585,9 @@ public class PlayScreen  extends InputProcessorsV2 implements Screen , Applicati
                         dart = new Dart(new Texture(Gdx.files.internal("arc.png")), arcBody);
                         shootinDart = true;
                         arcBody.setLinearVelocity(2500, 2500);
-                        archery_sound.play();
+                        if(pref.getBoolean("sound", true)) {
+                            archery_sound.play();
+                        }
 
                         //when the dart is shot the arc must contract
                         crossBow.changeTexture(0, 0, CrossBow.CROSS_BOW_POSITION_X, CrossBow.CROSS_BOW_POSITION_Y);
@@ -595,7 +601,6 @@ public class PlayScreen  extends InputProcessorsV2 implements Screen , Applicati
                         if(levelV != 9){
                             actionResolver.goToAndroid();
                         }else{
-                            Preferences pref = Gdx.app.getPreferences("SHARED_PREFERENCES");
                             pref.putInteger("currentLevel",10);
                             pref.flush();
                         }
@@ -623,7 +628,9 @@ public class PlayScreen  extends InputProcessorsV2 implements Screen , Applicati
                     dart = new Dart(new Texture(Gdx.files.internal("arc.png")), arcBody);
                     shootinDart = true;
                     arcBody.setLinearVelocity(2500, 500);
-                    archery_sound.play();
+                    if(pref.getBoolean("sound", true)) {
+                        archery_sound.play();
+                    }
                     //when the dart is shot the arc must contract
                     crossBow.changeTexture(0, 0, CrossBow.CROSS_BOW_POSITION_X, CrossBow.CROSS_BOW_POSITION_Y);
                     //restore the arc . The stretch distance, the initial texture {
@@ -636,7 +643,6 @@ public class PlayScreen  extends InputProcessorsV2 implements Screen , Applicati
                     if(levelV != 9){
                         actionResolver.goToAndroid();
                     }else{
-                        Preferences pref = Gdx.app.getPreferences("SHARED_PREFERENCES");
                         pref.putInteger("currentLevel",10);
                         pref.flush();
                     }
@@ -662,7 +668,9 @@ public class PlayScreen  extends InputProcessorsV2 implements Screen , Applicati
                     dart = new Dart(new Texture(Gdx.files.internal("arc.png")), arcBody);
                     shootinDart = true;
                     arcBody.setLinearVelocity(7200, -1000);
-                    archery_sound.play();
+                    if(pref.getBoolean("sound", true)) {
+                        archery_sound.play();
+                    }
                     //when the dart is shot the arc must contract
                     crossBow.changeTexture(0, 0, CrossBow.CROSS_BOW_POSITION_X, CrossBow.CROSS_BOW_POSITION_Y);
                     //restore the arc . The stretch distance, the initial texture {
@@ -675,7 +683,6 @@ public class PlayScreen  extends InputProcessorsV2 implements Screen , Applicati
                     if(levelV != 9){
                         actionResolver.goToAndroid();
                     }else{
-                        Preferences pref = Gdx.app.getPreferences("SHARED_PREFERENCES");
                         pref.putInteger("currentLevel",10);
                         pref.flush();
                     }
@@ -697,11 +704,9 @@ public class PlayScreen  extends InputProcessorsV2 implements Screen , Applicati
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         int btnBounds = (128 * Gdx.graphics.getWidth()) / 1280;
         if ((screenX == 0 || screenX < btnBounds) && (screenY == 0 || screenY < btnBounds)) {
-            Preferences pref = Gdx.app.getPreferences("SHARED_PREFERENCES");
             pref.putBoolean("pause",true);
             pref.flush();
             actionResolver.menu();
-
         }
 
         return true;
@@ -840,7 +845,6 @@ public class PlayScreen  extends InputProcessorsV2 implements Screen , Applicati
     }
 
     public void getPreferences (){
-        Preferences pref = Gdx.app.getPreferences("SHARED_PREFERENCES");
          levelValue = pref.getInteger("currentLevel",0);
          scoreValue = pref.getInteger("score",0);
          pref.putBoolean("pause",false);

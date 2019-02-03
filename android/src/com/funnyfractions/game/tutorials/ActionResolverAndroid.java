@@ -170,7 +170,7 @@ public class ActionResolverAndroid implements ActionResolver {
     }
 
     @Override
-    public void menuGotas(final CharSequence instancia, final int puntaje) {
+    public void menuGotas(final CharSequence instancia, final int puntaje){
         final Activity activity = (Activity) context;
         /*
             Here we show a menu to control the game run.

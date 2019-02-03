@@ -12,6 +12,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -164,7 +165,7 @@ public class EvaluacionActivity extends AppCompatActivity implements EvaluationV
         }, 2000);
     }
 
-       /**
+     /**
      * where value is the truth value of answer selected
      * 1: correct
      * 2: incorrect
@@ -214,6 +215,33 @@ public class EvaluacionActivity extends AppCompatActivity implements EvaluationV
                 }
             }
         }, 3000);
+    }
+
+    public void instrucciones(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        LayoutInflater layout = this.getLayoutInflater();
+        View view = layout.inflate(R.layout.instrucciones, null);
+        LinearLayout layoutdialog = view.findViewById(R.id.linearDialog);
+        ArrayList<ImageView> imagen = new ArrayList<>();
+
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+
+        ImageView imageView = new ImageView(this);
+        ImageView imageView2 = new ImageView(this);
+        imageView.setImageResource(R.drawable.sheet);
+        imageView.setLayoutParams(params);
+        imageView.setAdjustViewBounds(true);
+        imageView2.setImageResource(R.drawable.fondoagua);
+        imageView2.setLayoutParams(params);
+        imageView2.setAdjustViewBounds(true);
+        imagen.add(imageView);
+        imagen.add(imageView2);
+        for(ImageView item : imagen) {
+            layoutdialog.addView(item);
+        }
+        builder.setView(view);
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
     @Override
@@ -275,7 +303,7 @@ public class EvaluacionActivity extends AppCompatActivity implements EvaluationV
                 break;
 
             case R.id.btn_instrucciones_evaluation:
-                Toast.makeText(this, "Pendiente", Toast.LENGTH_LONG).show();
+                instrucciones();
                 break;
 
             case R.id.btn_settings_evaluation:
