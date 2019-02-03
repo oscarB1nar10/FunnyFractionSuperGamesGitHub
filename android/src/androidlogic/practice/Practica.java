@@ -88,29 +88,30 @@ public class Practica extends AppCompatActivity implements
             Fragment fragment = null;
             switch ((position+1)){
                 case 1:
-                    fragment = new MainMenu();
+                    fragment = new PracticeCover();
                     break;
                 case 2:
-                    fragment = new EjecutableBateria();
+                    fragment = new MainMenu();
                     break;
                 case 3:
-                    fragment = new MenuMultiplicacion();
+                    fragment = new EjecutableBateria();
                     break;
                 case 4:
+                    fragment = new MenuMultiplicacion();
+                    break;
+                case 5:
                     bundle = new Bundle();
                     bundle.putBoolean("showOperation",showOperation);
                     fragment = new Menu();
                     fragment.setArguments(bundle);
                     break;
             }
-
-
             return fragment;
         }
         @Override
         public int getCount() {
             // Show 3 total pages.
-            return 4;
+            return 5;
         }
     }
 }

@@ -57,6 +57,9 @@ public class TutorialQueSon extends AppCompatActivity {
 
     private void fillTheCards(){
 
+        SumaTutorialInformation sumaTutorialInformation0 = new SumaTutorialInformation();
+        sumaTutorialInformationsList.add(sumaTutorialInformation0);
+
         SumaTutorialInformation sumaTutorialInformation1 = new SumaTutorialInformation();
 
         sumaTutorialInformation1.setTitle(getString(R.string.txtQueson));

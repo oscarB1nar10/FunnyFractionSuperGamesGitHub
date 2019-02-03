@@ -79,6 +79,7 @@ public class EvaluacionActivity extends AppCompatActivity implements EvaluationV
         btn_public = findViewById(R.id.btn_public);
         btn_salir = findViewById(R.id.btn_exit);
         btn_salir_menu = findViewById(R.id.btn_exit_menu_millionary);
+
         //region sonidos
         musicafondo = MediaPlayer.create(this, R.raw.musicafondo);
         musicafondo.setLooping(true);
@@ -323,13 +324,15 @@ public class EvaluacionActivity extends AppCompatActivity implements EvaluationV
                 musicafondo.start();
                 numberQuestion++;
                 dialog.dismiss();
-                //save data DB Realm
             }
         });
         txtTakeMoney.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                //save data DB Realm
+            public void onClick(View v){
+                linearLayout_images.setVisibility(View.GONE);
+                linearLayout_options.setVisibility(View.GONE);
+                enableHelps();
+                dialog.dismiss();
             }
         });
 
@@ -426,7 +429,6 @@ public class EvaluacionActivity extends AppCompatActivity implements EvaluationV
     }
 
     private void fiftyFifty(){
-
         btn_fifty_fifty.setImageResource(R.drawable.fifty_fiftymillionary_game_selected);
         btn_fifty_fifty.setEnabled(false);
         int random = (int) (Math.random() * answerOptions.size() + 1);
@@ -504,7 +506,12 @@ public class EvaluacionActivity extends AppCompatActivity implements EvaluationV
         txt_playAgain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(EvaluacionActivity.this, "I am ready to play again", Toast.LENGTH_SHORT).show();
+                numberQuestion = 1;
+                questionThrow(questionsList);
+                enableAnswerButton();
+                dialog.dismiss();
+                musicafondo.start();
+
             }
         });
         txt_exit.setOnClickListener(new View.OnClickListener() {
@@ -513,6 +520,8 @@ public class EvaluacionActivity extends AppCompatActivity implements EvaluationV
                 linearLayout_images.setVisibility(View.GONE);
                 linearLayout_options.setVisibility(View.GONE);
                 dialog.dismiss();
+                enableHelps();
+                musicafondo.stop();
             }
         });
         txt_money.setText("$ "+(500*numberQuestion));
@@ -527,6 +536,7 @@ public class EvaluacionActivity extends AppCompatActivity implements EvaluationV
         TextView txt_exit = view.findViewById(R.id.txt_exit);
         TextView txt_money = view.findViewById(R.id.txt_money);
         ImageView imageView = view.findViewById(R.id.imageview_trophy);
+        final MediaPlayer intro = MediaPlayer.create(this, R.raw.intro);
 
         builder.setView(view);
         final AlertDialog dialog = builder.create();
@@ -537,7 +547,11 @@ public class EvaluacionActivity extends AppCompatActivity implements EvaluationV
         txt_playAgain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(EvaluacionActivity.this, "I am ready to play again", Toast.LENGTH_SHORT).show();
+                numberQuestion = 1;
+                questionThrow(questionsList);
+                enableAnswerButton();
+                dialog.dismiss();
+                musicafondo.start();
             }
         });
         txt_exit.setOnClickListener(new View.OnClickListener() {
@@ -545,10 +559,20 @@ public class EvaluacionActivity extends AppCompatActivity implements EvaluationV
             public void onClick(View v) {
                 linearLayout_images.setVisibility(View.GONE);
                 linearLayout_options.setVisibility(View.GONE);
+                enableHelps();
                 dialog.dismiss();
             }
         });
         txt_money.setText("$ "+((500*numberQuestion)-500));
         dialog.show();
+    }
+
+    public void enableHelps(){
+        btn_call.setImageResource(R.drawable.call_mellionary);
+        btn_call.setEnabled(true);
+        btn_public.setImageResource(R.drawable.public_mellionary);
+        btn_public.setEnabled(true);
+        btn_fifty_fifty.setImageResource(R.drawable.fifty_fiftymillionary_game);
+        btn_fifty_fifty.setEnabled(true);
     }
 }

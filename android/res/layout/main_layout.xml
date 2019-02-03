@@ -14,7 +14,7 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:gravity="left"
+        android:gravity="start"
         android:orientation="vertical">
 
         <LinearLayout
@@ -95,16 +95,17 @@
                 android:src="@drawable/candado" />
             <EditText
                 android:id="@+id/txtUsuario"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:textSize="13dp"
+                android:textSize="13sp"
                 android:ems="10"
                 android:hint="@string/txtUsuario"
                 android:inputType="textPersonName"
                 tools:layout_editor_absoluteX="239dp"
                 tools:layout_editor_absoluteY="105dp"/>
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -131,7 +132,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:ems="10"
-                    android:textSize="13dp"
+                    android:textSize="13sp"
                     android:hint="@string/txtPassword"
                     android:inputType="textPassword"
                     tools:layout_editor_absoluteX="240dp"
@@ -140,19 +141,18 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="220dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:weightSum="2">
 
             <Button
                 android:id="@+id/btnIngresar"
-                android:layout_width="115dp"
-                android:layout_height="38dp"
-                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:background="@drawable/boton_login"
                 android:text="@string/btnIngresar"
-                android:textSize="13dp"
+                android:textSize="12sp"
                 tools:layout_editor_absoluteX="295dp"
                 tools:layout_editor_absoluteY="188dp" />
 
@@ -173,7 +173,9 @@
                 android:id="@+id/txtRegistrarse"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/txtRegistrarse" />
+                android:text="@string/txtRegistrarse"
+                android:textStyle="bold"
+                android:textColor="@color/color_Texto_burbuja"/>
 
             <android.support.v4.widget.Space
                 android:layout_width="20dp"
@@ -183,8 +185,11 @@
                 android:id="@+id/txtRecuperar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/txtRecuperar" />
+                android:text="@string/txtRecuperar"
+                android:textStyle="bold"
+                android:textColor="@color/color_Texto_burbuja"/>
         </LinearLayout>
 
     </LinearLayout>
+
 </LinearLayout>

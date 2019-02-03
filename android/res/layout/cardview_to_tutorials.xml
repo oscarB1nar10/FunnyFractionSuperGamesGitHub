@@ -7,7 +7,8 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:layout_margin="10dp"
+
+
     android:layout_gravity="center_horizontal">
     <!-- A CardView that contains a TextView -->
 
@@ -20,10 +21,13 @@ android:layout_height="match_parent"
 card_view:cardCornerRadius="20dp">
 
 
+
     <RelativeLayout
+        android:id="@+id/cover_page"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@drawable/sheet">
 
         <TextView
             android:id="@+id/txv_title"
@@ -39,7 +43,6 @@ card_view:cardCornerRadius="20dp">
             android:layout_width="160dp"
             android:layout_height="160dp"
             android:layout_below="@+id/txv_title"
-            android:src="@drawable/fraccionejemplo"
             android:layout_marginTop="20dp"
             app:civ_border_width="2dp"
             app:civ_border_color="#FF000000"/>

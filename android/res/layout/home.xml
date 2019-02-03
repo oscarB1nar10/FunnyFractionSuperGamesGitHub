@@ -12,7 +12,8 @@
     <RelativeLayout
         android:id="@+id/relativeLayout1"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:visibility="gone">
 
         <ImageView
             android:id="@+id/configurar"
@@ -32,7 +33,6 @@
 
     </RelativeLayout>
 
-
     <ImageButton
         android:id="@+id/englishH"
         android:layout_width="wrap_content"
@@ -40,7 +40,7 @@
         android:background="@color/transparente"
         android:onClick="idioma"
         android:src="@drawable/english"
-        android:visibility="invisible"
+        android:visibility="gone"
         tools:ignore="MissingConstraints" />
 
     <ImageButton
@@ -50,10 +50,8 @@
         android:background="@color/transparente"
         android:onClick="idioma"
         android:src="@drawable/spanish"
-        android:visibility="invisible"
+        android:visibility="gone"
         tools:ignore="MissingConstraints" />
-
-
 
     <TextView
         android:id="@+id/txt_logeo"
@@ -61,44 +59,75 @@
         android:layout_height="wrap_content"
         android:textColor="#65E538"
         android:layout_gravity="center_horizontal"
+        android:visibility="gone"
         />
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:padding="10dp"
+        android:layout_weight="2">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.7"
+            android:gravity="center_vertical">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:src="@drawable/logonicolas"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center_vertical">
+
+            <Button
+                android:id="@+id/btntuto"
+                android:layout_width="match_parent"
+                android:layout_height="75dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/tutoriales" />
+
+            <Button
+                android:id="@+id/btnprac"
+                android:layout_width="match_parent"
+                android:layout_height="75dp"
+                android:background="@drawable/practicas" />
+
+            <Button
+                android:id="@+id/btnevalu"
+                android:layout_width="match_parent"
+                android:layout_height="75dp"
+                android:background="@drawable/evaluacion" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
     <RelativeLayout
-        android:id="@+id/main_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="10dp"
+        android:visibility="gone">
 
-        >
-
-        <Button
-            android:id="@+id/btntuto"
-            android:layout_width="254dp"
-            android:layout_height="56dp"
-            android:layout_marginLeft="230dp"
-            android:background="@drawable/tutoriales"
+        <ImageView
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="20dp"
+            android:src="@drawable/logonicolas"
             />
 
 
-    <Button
-        android:id="@+id/btnprac"
-        android:layout_width="254dp"
-        android:layout_height="56dp"
-        android:layout_marginLeft="230dp"
-        android:background="@drawable/practicas"
-        android:layout_below="@+id/btntuto"
-        />
 
-    <Button
-        android:id="@+id/btnevalu"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/botones_home"
-        android:text="@string/btnEvaluacion"
-        tools:ignore="MissingConstraints"
-        android:layout_marginRight="10dp"
-        android:layout_gravity="end"/>
     </RelativeLayout>
-
 
 </LinearLayout>

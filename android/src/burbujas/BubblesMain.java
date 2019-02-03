@@ -303,7 +303,7 @@ public class BubblesMain extends Activity implements View.OnClickListener {
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(),Practica.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                intent.putExtra("numFragment",2);
+                intent.putExtra("numFragment",3);
                 getApplicationContext().startActivity(intent);
             }
         });

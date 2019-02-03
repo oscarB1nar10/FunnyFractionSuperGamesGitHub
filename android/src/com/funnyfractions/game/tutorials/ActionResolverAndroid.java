@@ -144,7 +144,7 @@ public class ActionResolverAndroid implements ActionResolver {
                     public void onClick(View v) {
                         Intent intent = new Intent(context,Practica.class);
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        intent.putExtra("numFragment",0);
+                        intent.putExtra("numFragment",1);
                         activity.startActivity(intent);
                     }
                 });
@@ -222,7 +222,7 @@ public class ActionResolverAndroid implements ActionResolver {
                         public void onClick(View v) {
                             Intent intent = new Intent(context, Practica.class);
                             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                            intent.putExtra("numFragment", 3);
+                            intent.putExtra("numFragment", 5);
                             intent.putExtra("showOperation",true);
                             activity.startActivity(intent);
                         }
@@ -234,7 +234,7 @@ public class ActionResolverAndroid implements ActionResolver {
                     public void onClick(View v) {
                         Intent intent = new Intent(context,Practica.class);
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        intent.putExtra("numFragment",3);
+                        intent.putExtra("numFragment",5);
                         activity.startActivity(intent);
                     }
                 });

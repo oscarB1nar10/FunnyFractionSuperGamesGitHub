@@ -354,7 +354,6 @@ public class PlayScreen  extends InputProcessorsV2 implements Screen , Applicati
 
     }
 
-
     @Override
     public void pause() {
 
@@ -441,8 +440,6 @@ public class PlayScreen  extends InputProcessorsV2 implements Screen , Applicati
 
 
     }
-
-
 
     public void captureContacts() {
         world.setContactListener(new ContactListener() {
@@ -538,7 +535,6 @@ public class PlayScreen  extends InputProcessorsV2 implements Screen , Applicati
             }
         });
     }
-
 
     public TextureAtlas getAtlas() {
         return crossbowAtlas;
@@ -803,8 +799,6 @@ public class PlayScreen  extends InputProcessorsV2 implements Screen , Applicati
         questons.add(new Texture(Gdx.files.internal("operations/5_7+3_4.png")));
     }
 
-
-
     public void questionAndThreeAnswers2(){
 
         int randomquestion = (int) (Math.random()*9);
@@ -844,7 +838,6 @@ public class PlayScreen  extends InputProcessorsV2 implements Screen , Applicati
             }
         }
     }
-
 
     public void getPreferences (){
         Preferences pref = Gdx.app.getPreferences("SHARED_PREFERENCES");

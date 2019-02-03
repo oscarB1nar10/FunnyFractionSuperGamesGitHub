@@ -75,12 +75,16 @@ public class Home extends AppCompatActivity implements GoogleApiClient.OnConnect
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        NavigationView navigationView =  findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        View header = navigationView.getHeaderView(0);
+        logeando = header.findViewById(R.id.nav_header_textView);
+
+
 
         config = (ImageView) findViewById(R.id.configurar);
         log = (ImageView) findViewById(R.id.logeo);
-        logeando = (TextView) findViewById(R.id.txt_logeo);
         //-----------------------------ImageButton---------
         US=findViewById(R.id.englishH);
         US.setEnabled(true);
@@ -187,8 +191,10 @@ public class Home extends AppCompatActivity implements GoogleApiClient.OnConnect
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+    }
 
+    private void normal_logOut(){
+        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
         Intent intent = new Intent(this, MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
@@ -210,6 +216,24 @@ public class Home extends AppCompatActivity implements GoogleApiClient.OnConnect
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+        switch (item.getItemId()){
+            case R.id.sign_out:
+                Auth.GoogleSignInApi.signOut(googleApiClient).setResultCallback(new ResultCallback<Status>() {
+                    @Override
+                    public void onResult(@NonNull Status status) {
+                        if(status.isSuccess()){
+                            Intent intent = new Intent(Home.this, MainActivity.class);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            startActivity(intent);
+                        }else{
+                            normal_logOut();
+                        }
+                    }
+                });
+                break;
+        }
+
         return false;
     }
 }

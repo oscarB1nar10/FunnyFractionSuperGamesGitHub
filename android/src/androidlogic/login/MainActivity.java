@@ -131,7 +131,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), Recupera.class);
                 startActivity(intent);
-                overridePendingTransition(R.anim.right_in, R.anim.right_out);
+                overridePendingTransition(R.anim.left_in, R.anim.left_out);
             }
         });
         logueo.setOnClickListener(new View.OnClickListener() {
