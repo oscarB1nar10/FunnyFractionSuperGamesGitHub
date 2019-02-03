@@ -39,7 +39,7 @@ public class EjecutableBateria extends Fragment implements View.OnClickListener 
     ArrayList<TextView> txtvList = new ArrayList<>();
     ImageView operacion, selector;
     ImageButton imb_pause;
-    Button btn_jugar;
+    Button btn_jugar, btn_instrucciones;
     LinearLayout main_linearLayout;
     LottieAnimationView animacionBateria, animacionBateria1;
     MediaPlayer ring, heartExplosion;
@@ -86,6 +86,9 @@ public class EjecutableBateria extends Fragment implements View.OnClickListener 
         animacionBateria1 = view.findViewById(R.id.animacionBateria_initial);
 
         mSharedPreferences = this.getActivity().getSharedPreferences("SHARED_PREFERENCES", Context.MODE_PRIVATE);
+        btn_instrucciones = view.findViewById(R.id.btn_instrucciones);
+
+        btn_instrucciones.setOnClickListener(this);
 
         main_linearLayout = view.findViewById(R.id.main_layout_game_battery);
         btn_jugar = view.findViewById(R.id.btn_jugar);
@@ -257,8 +260,53 @@ public class EjecutableBateria extends Fragment implements View.OnClickListener 
                 launchMenu();
 
                 break;
+
+            case R.id.btn_instrucciones:
+                    instructions();
+                break;
         }
 
+    }
+
+    private void instructions(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        LayoutInflater layout = this.getLayoutInflater();
+        View view = layout.inflate(R.layout.instrucciones, null);
+        LinearLayout layoutdialog = view.findViewById(R.id.linearDialog);
+        ArrayList<ImageView> imagen = new ArrayList<>();
+
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+
+        ImageView imageView = new ImageView(getActivity());
+        ImageView imageView2 = new ImageView(getActivity());
+        ImageView imageView3 = new ImageView(getActivity());
+
+
+        imageView.setImageResource(R.drawable.battery_ins2);
+        imageView.setLayoutParams(params);
+        imageView.setAdjustViewBounds(true);
+
+        imageView2.setImageResource(R.drawable.battery_ins3);
+        imageView2.setLayoutParams(params);
+        imageView2.setAdjustViewBounds(true);
+
+        imageView3.setImageResource(R.drawable.battery_ins1);
+        imageView3.setLayoutParams(params);
+        imageView3.setAdjustViewBounds(true);
+
+
+
+        imagen.add(imageView);
+        imagen.add(imageView2);
+        imagen.add(imageView3);
+
+
+        for(ImageView item : imagen) {
+            layoutdialog.addView(item);
+        }
+        builder.setView(view);
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
     private  void startBattery(){

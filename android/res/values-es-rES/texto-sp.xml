@@ -40,4 +40,10 @@
     <string name="txtdiv">DIVISION DE FRACCIONES</string>
     <string name="txteoriadiv">Para ello debemos multiplicar numerador por denominador</string>
     <string name="txtr_ingresa_datos">Ingresa tus datos</string>
+    <string name="cerrar_sesion">Cerrar sesion</string>
+    <string name="idioma">Idioma</string>
+    <string name="sobre">Acerca</string>
+    <string name="español">Español</string>
+    <string name="ingles">Ingles</string>
+
 </resources>

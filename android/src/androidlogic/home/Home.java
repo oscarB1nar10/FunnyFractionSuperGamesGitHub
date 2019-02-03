@@ -8,11 +8,14 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
+import android.support.design.internal.NavigationMenuView;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -36,12 +39,13 @@ import androidlogic.tutorials.TutorialQueSon;
 
 public class Home extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener,
                                                         NavigationView.OnNavigationItemSelectedListener {
-
+    //widget
     private TextView logeando;
     private ImageView config, log;
     private ImageButton US,ES;
     private Button tuto, prac, evalu;
     private GoogleApiClient googleApiClient;
+    private Menu nav_menu;
     //vars
     private SharedPreferences mSharedPreferences;
 
@@ -77,6 +81,13 @@ public class Home extends AppCompatActivity implements GoogleApiClient.OnConnect
 
         NavigationView navigationView =  findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        navigationView.setItemIconTintList(null);
+
+        NavigationMenuView navigationMenuView = (NavigationMenuView) navigationView.getChildAt(0);
+        navigationMenuView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
+
+        nav_menu = navigationView.getMenu();
 
         View header = navigationView.getHeaderView(0);
         logeando = header.findViewById(R.id.nav_header_textView);
@@ -217,6 +228,11 @@ public class Home extends AppCompatActivity implements GoogleApiClient.OnConnect
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
+        Intent refrescar = new Intent(this, Home.class);
+        refrescar.putExtra("usuario", logeando.getText().toString());
+        Locale localizacion=null;
+        Configuration config=null;
+
         switch (item.getItemId()){
             case R.id.sign_out:
                 Auth.GoogleSignInApi.signOut(googleApiClient).setResultCallback(new ResultCallback<Status>() {
@@ -231,6 +247,37 @@ public class Home extends AppCompatActivity implements GoogleApiClient.OnConnect
                         }
                     }
                 });
+                break;
+            case R.id.idioma:
+                if(nav_menu.findItem(R.id.spanish).isVisible()){
+                    nav_menu.findItem(R.id.spanish).setVisible(false);
+                    nav_menu.findItem(R.id.english).setVisible(false);
+                }else{
+                    nav_menu.findItem(R.id.spanish).setVisible(true);
+                    nav_menu.findItem(R.id.english).setVisible(true);
+                }
+                break;
+
+            case R.id.spanish:
+
+                localizacion= new Locale("es","ES");
+                Locale.setDefault(localizacion);
+                config=new Configuration();
+                config.locale=localizacion;
+                getBaseContext().getResources().updateConfiguration(config,getBaseContext().getResources().getDisplayMetrics());
+                startActivity(refrescar);
+                finish();
+                break;
+
+            case R.id.english:
+
+                localizacion= new Locale("en","US");
+                Locale.setDefault(localizacion);
+                config=new Configuration();
+                config.locale=localizacion;
+                getBaseContext().getResources().updateConfiguration(config,getBaseContext().getResources().getDisplayMetrics());
+                startActivity(refrescar);
+                finish();
                 break;
         }
 

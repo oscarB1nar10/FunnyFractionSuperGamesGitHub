@@ -40,4 +40,9 @@
     <string name="txtdiv">FRACTION DIVISION</string>
     <string name="txteoriadiv">For this we must multiply numerator by denominator</string>
     <string name="txtr_ingresa_datos">Enter your data</string>
+    <string name="cerrar_sesion">logout</string>
+    <string name="idioma">Lenguage</string>
+    <string name="sobre">About</string>
+    <string name="español">Spanish</string>
+    <string name="ingles">English</string>
 </resources>

@@ -2,11 +2,24 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <group>
         <item android:id="@+id/nav_item_one"
-            android:title="Item 1" />
-        <item android:id="@+id/nav_item_two"
+            android:title="@string/sobre" />
+        <group>
+            <item android:id="@+id/idioma"
+            android:title="@string/idioma" />
 
-            android:title="Item 2" />
+            <item android:id="@+id/spanish"
+                android:title="@string/español"
+                android:icon="@drawable/spanish"
+                android:visible="false"/>
+
+            <item android:id="@+id/english"
+                android:title="@string/ingles"
+                android:icon="@drawable/english"
+                android:visible="false"/>
+
+        </group>
+
         <item android:id="@+id/sign_out"
-            android:title="Cerrar sesion" />
+            android:title="@string/cerrar_sesion" />
     </group>
 </menu>
