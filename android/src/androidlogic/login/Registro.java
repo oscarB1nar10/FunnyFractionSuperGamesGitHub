@@ -25,6 +25,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Objects;
+
 public class Registro extends Activity{
     private TextInputLayout vect[];
     private int validacampo[];
@@ -42,14 +44,14 @@ public class Registro extends Activity{
         vEditText= new EditText[8];
         añadirEditTextA_Vector();
         ingDatos=findViewById(R.id.ingresaDatos);
-        vect[0] = (TextInputLayout) findViewById(R.id.tilnom);
-        vect[1] = (TextInputLayout) findViewById(R.id.tilapell);
-        vect[2] = (TextInputLayout) findViewById(R.id.tilusu);
-        vect[3] = (TextInputLayout) findViewById(R.id.tilPassword);
-        vect[4] = (TextInputLayout) findViewById(R.id.tilRepetirPaswword);
-        vect[5] = (TextInputLayout) findViewById(R.id.tilpre1);
-        vect[6] = (TextInputLayout) findViewById(R.id.tilpre2);
-        vect[7] = (TextInputLayout) findViewById(R.id.tilpre3);
+        vect[0] = findViewById(R.id.tilnom);
+        vect[1] = findViewById(R.id.tilapell);
+        vect[2] = findViewById(R.id.tilusu);
+        vect[3] = findViewById(R.id.tilPassword);
+        vect[4] = findViewById(R.id.tilRepetirPaswword);
+        vect[5] = findViewById(R.id.tilpre1);
+        vect[6] = findViewById(R.id.tilpre2);
+        vect[7] = findViewById(R.id.tilpre3);
         validacampo = new int[8];
         for(int i = 0 ; i < 8; i++){
             validacampo[i] = 0;
@@ -59,6 +61,7 @@ public class Registro extends Activity{
         btnregistrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 int aux = CamposVacios();
                 if(aux > 0){
                     for (int h = 0; h < 8; h++){
@@ -113,7 +116,6 @@ public class Registro extends Activity{
                 });
             }
     }
-
 
     private void cargarWebService() {
         progreso = new ProgressDialog(this);
@@ -181,11 +183,10 @@ public class Registro extends Activity{
         }
         return cantcamp;
     }
+
     @Override
     public void onBackPressed() {
         super.onBackPressed();
         overridePendingTransition(R.anim.left_in, R.anim.left_out);
     }
-
-
 }

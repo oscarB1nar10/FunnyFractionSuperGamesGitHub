@@ -36,16 +36,16 @@ card_view:cardCornerRadius="20dp">
             android:text="@string/txtQueson"
             android:textColor="#000"
             android:textSize="18sp"
+            android:layout_marginTop="25dp"
             android:gravity="center_horizontal"/>
 
-        <de.hdodenhof.circleimageview.CircleImageView
+        <ImageView
             android:id="@+id/img_example1"
             android:layout_width="160dp"
             android:layout_height="160dp"
             android:layout_below="@+id/txv_title"
-            android:layout_marginTop="20dp"
-            app:civ_border_width="2dp"
-            app:civ_border_color="#FF000000"/>
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="20dp"/>
 
         <TextView
             android:id="@+id/txv_information"
@@ -55,12 +55,17 @@ card_view:cardCornerRadius="20dp">
             android:layout_marginLeft="10dp"
             android:layout_marginTop="20dp"
             android:layout_marginRight="10dp"
-            android:layout_toRightOf="@+id/img_example1"
+            android:layout_toEndOf="@+id/img_example1"
             android:text="@string/txtdefinicion"
             android:textSize="19sp" />
-
+        <ImageView
+            android:id="@+id/optionalImg"
+            android:layout_width="400dp"
+            android:layout_height="150dp"
+            android:layout_below="@+id/txv_information"
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="200dp"
+            />
     </RelativeLayout>
-
-
 </android.support.v7.widget.CardView>
     </LinearLayout>

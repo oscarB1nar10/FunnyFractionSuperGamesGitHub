@@ -25,13 +25,13 @@ import tyrantgit.explosionfield.ExplosionField;
 import static android.support.test.InstrumentationRegistry.getContext;
 
 public class BubblesMain extends Activity implements View.OnClickListener {
-    ArrayList<ObjectAnimator> objectAnimators = new <ObjectAnimator> ArrayList();
+    ArrayList<ObjectAnimator> objectAnimators = new ArrayList<>();
     MediaPlayer sonido,waterSound;
     ExplosionField explosionField;
     ObjectAnimator objectAnimator1, objectAnimator2, objectAnimator3, objectAnimator4;
     Button opcion1, opcion2, opcion3, opcion4;
     ImageView imgoperacion, cor1, cor2, cor3, pausa;
-    int numjuegos = 0, puntuacion, heightDp,alea, vidas;
+    int numjuegos = 0, puntuacion, heightDp, alea, vidas;
     private long currentAnimation;
     Thread thread;
     boolean validateHeight = true;

@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -92,6 +93,7 @@ public class Menu extends Fragment implements View.OnClickListener {
         skip = view.findViewById(R.id.btnskip);
         play = view.findViewById(R.id.btn_jugar);
         settings = view.findViewById(R.id.btn_settings);
+        instrucciones = view.findViewById(R.id.btn_instrucciones);
         operacion = view.findViewById(R.id.imgoperacion);
 
 
@@ -99,6 +101,7 @@ public class Menu extends Fragment implements View.OnClickListener {
         operacion.setImageResource(aux);
         play.setOnClickListener(this);
         skip.setOnClickListener(this);
+        instrucciones.setOnClickListener(this);
         return view;
     }
 
@@ -118,11 +121,68 @@ public class Menu extends Fragment implements View.OnClickListener {
         super.onResume();
     }
 
+    public void instrucciones(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        LayoutInflater layout = this.getLayoutInflater();
+        View view = layout.inflate(R.layout.instrucciones, null);
+        LinearLayout layoutdialog = view.findViewById(R.id.linearDialog);
+        ArrayList<ImageView> imagen = new ArrayList<>();
+
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+
+        ImageView imageView = new ImageView(getActivity());
+        ImageView imageView2 = new ImageView(getActivity());
+        ImageView imageView3 = new ImageView(getActivity());
+        ImageView imageView4 = new ImageView(getActivity());
+        ImageView imageView5 = new ImageView(getActivity());
+        ImageView imageView6 = new ImageView(getActivity());
+
+        imageView.setImageResource(R.drawable.gotas_ins1);
+        imageView.setLayoutParams(params);
+        imageView.setAdjustViewBounds(true);
+
+        imageView2.setImageResource(R.drawable.gotas_ins2);
+        imageView2.setLayoutParams(params);
+        imageView2.setAdjustViewBounds(true);
+
+        imageView3.setImageResource(R.drawable.gotas_ins3);
+        imageView3.setLayoutParams(params);
+        imageView3.setAdjustViewBounds(true);
+
+        imageView4.setImageResource(R.drawable.gotas_ins4);
+        imageView4.setLayoutParams(params);
+        imageView4.setAdjustViewBounds(true);
+
+        imageView5.setImageResource(R.drawable.gotas_ins5);
+        imageView5.setLayoutParams(params);
+        imageView5.setAdjustViewBounds(true);
+
+        imageView6.setImageResource(R.drawable.gotas_ins6);
+        imageView6.setLayoutParams(params);
+        imageView6.setAdjustViewBounds(true);
+
+
+        imagen.add(imageView);
+        imagen.add(imageView2);
+        imagen.add(imageView3);
+        imagen.add(imageView4);
+        imagen.add(imageView5);
+        imagen.add(imageView6);
+
+        for(ImageView item : imagen) {
+            layoutdialog.addView(item);
+        }
+        builder.setView(view);
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.btn_jugar:
                 layout_division.setVisibility(View.VISIBLE);
+                layout_division.setBackgroundResource(R.drawable.fondomenugotas);
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
@@ -137,6 +197,9 @@ public class Menu extends Fragment implements View.OnClickListener {
                 Intent intent = new Intent(getContext(), AndroidLauncher.class);
                 intent.putExtra("operacion", ""+lista.get(aux));
                 startActivity(intent);
+                break;
+            case R.id.btn_instrucciones:
+                instrucciones();
                 break;
         }
     }

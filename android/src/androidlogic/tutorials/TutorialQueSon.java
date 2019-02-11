@@ -45,10 +45,6 @@ public class TutorialQueSon extends AppCompatActivity {
         //adapter to use
         mAdapter = new MyAdapter(sumaTutorialInformationsList);
         mRecyclerView.setAdapter(mAdapter);
-
-
-
-
     }
 
     /*
@@ -64,7 +60,8 @@ public class TutorialQueSon extends AppCompatActivity {
 
         sumaTutorialInformation1.setTitle(getString(R.string.txtQueson));
         sumaTutorialInformation1.setInformation(getString(R.string.txtdefinicion));
-        sumaTutorialInformation1.setMainImage(R.drawable.fraccionejemplo);
+        sumaTutorialInformation1.setMainImage(R.drawable.interrogacion);
+        sumaTutorialInformation1.setOptionalImg1(R.drawable.def_fractions);
 
         sumaTutorialInformationsList.add(sumaTutorialInformation1);
 
@@ -72,7 +69,8 @@ public class TutorialQueSon extends AppCompatActivity {
 
         sumaTutorialInformation2.setTitle(getString(R.string.txtsumhomo));
         sumaTutorialInformation2.setInformation(getString(R.string.txteoriasumhomo));
-        sumaTutorialInformation2.setMainImage(R.drawable.fraccionejemplo);
+        sumaTutorialInformation2.setMainImage(R.drawable.suma);
+        sumaTutorialInformation2.setOptionalImg1(R.drawable.sum_homo_fraction);
 
         sumaTutorialInformationsList.add(sumaTutorialInformation2);
 
@@ -80,7 +78,8 @@ public class TutorialQueSon extends AppCompatActivity {
 
         sumaTutorialInformation3.setTitle(getString(R.string.txtsumhete));
         sumaTutorialInformation3.setInformation(getString(R.string.txteoriasumhete));
-        sumaTutorialInformation3.setMainImage(R.drawable.fraccionejemplo);
+        sumaTutorialInformation3.setMainImage(R.drawable.suma);
+        sumaTutorialInformation3.setOptionalImg1(R.drawable.sum_hete_fractions);
 
         sumaTutorialInformationsList.add(sumaTutorialInformation3);
 
@@ -88,7 +87,8 @@ public class TutorialQueSon extends AppCompatActivity {
 
         sumaTutorialInformation4.setTitle(getString(R.string.txtreshomo));
         sumaTutorialInformation4.setInformation(getString(R.string.txteoriareshomo));
-        sumaTutorialInformation4.setMainImage(R.drawable.fraccionejemplo);
+        sumaTutorialInformation4.setMainImage(R.drawable.resta);
+        sumaTutorialInformation4.setOptionalImg1(R.drawable.res_homo_fraction);
 
         sumaTutorialInformationsList.add(sumaTutorialInformation4);
 
@@ -96,7 +96,8 @@ public class TutorialQueSon extends AppCompatActivity {
 
         sumaTutorialInformation5.setTitle(getString(R.string.txtreshete));
         sumaTutorialInformation5.setInformation(getString(R.string.txteoriareshete));
-        sumaTutorialInformation5.setMainImage(R.drawable.fraccionejemplo);
+        sumaTutorialInformation5.setMainImage(R.drawable.resta);
+        sumaTutorialInformation5.setOptionalImg1(R.drawable.res_hete_fractions);
 
         sumaTutorialInformationsList.add(sumaTutorialInformation5);
 
@@ -104,7 +105,8 @@ public class TutorialQueSon extends AppCompatActivity {
 
         sumaTutorialInformation6.setTitle(getString(R.string.txtmul));
         sumaTutorialInformation6.setInformation(getString(R.string.txteoriamul));
-        sumaTutorialInformation6.setMainImage(R.drawable.fraccionejemplo);
+        sumaTutorialInformation6.setMainImage(R.drawable.multiplicacion);
+        sumaTutorialInformation6.setOptionalImg1(R.drawable.mul_fractions);
 
         sumaTutorialInformationsList.add(sumaTutorialInformation6);
 
@@ -112,11 +114,10 @@ public class TutorialQueSon extends AppCompatActivity {
 
         sumaTutorialInformation7.setTitle(getString(R.string.txtdiv));
         sumaTutorialInformation7.setInformation(getString(R.string.txteoriadiv));
-        sumaTutorialInformation7.setMainImage(R.drawable.fraccionejemplo);
+        sumaTutorialInformation7.setMainImage(R.drawable.division);
+        sumaTutorialInformation7.setOptionalImg1(R.drawable.div_fractions);
 
         sumaTutorialInformationsList.add(sumaTutorialInformation7);
-
-
     }
 
     @Override
@@ -128,7 +129,5 @@ public class TutorialQueSon extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        //hom.setImageDrawable(null);
-        //img.setImageDrawable(null);
     }
 }

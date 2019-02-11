@@ -228,14 +228,49 @@ public class EvaluacionActivity extends AppCompatActivity implements EvaluationV
 
         ImageView imageView = new ImageView(this);
         ImageView imageView2 = new ImageView(this);
-        imageView.setImageResource(R.drawable.sheet);
+        ImageView imageView3 = new ImageView(this);
+        ImageView imageView4 = new ImageView(this);
+        ImageView imageView5 = new ImageView(this);
+        ImageView imageView6 = new ImageView(this);
+        ImageView imageView7 = new ImageView(this);
+
+        imageView.setImageResource(R.drawable.millonario_ins1);
         imageView.setLayoutParams(params);
         imageView.setAdjustViewBounds(true);
-        imageView2.setImageResource(R.drawable.fondoagua);
+
+        imageView2.setImageResource(R.drawable.millonario_ins2);
         imageView2.setLayoutParams(params);
         imageView2.setAdjustViewBounds(true);
+
+        imageView3.setImageResource(R.drawable.millonario_ins3);
+        imageView3.setLayoutParams(params);
+        imageView3.setAdjustViewBounds(true);
+
+        imageView4.setImageResource(R.drawable.millonario_ins4);
+        imageView4.setLayoutParams(params);
+        imageView4.setAdjustViewBounds(true);
+
+        imageView5.setImageResource(R.drawable.millonario_ins5);
+        imageView5.setLayoutParams(params);
+        imageView5.setAdjustViewBounds(true);
+
+        imageView6.setImageResource(R.drawable.millonario_ins6);
+        imageView6.setLayoutParams(params);
+        imageView6.setAdjustViewBounds(true);
+
+        imageView7.setImageResource(R.drawable.millonario_ins7);
+        imageView7.setLayoutParams(params);
+        imageView7.setAdjustViewBounds(true);
+
+
         imagen.add(imageView);
         imagen.add(imageView2);
+        imagen.add(imageView3);
+        imagen.add(imageView4);
+        imagen.add(imageView5);
+        imagen.add(imageView6);
+        imagen.add(imageView7);
+
         for(ImageView item : imagen) {
             layoutdialog.addView(item);
         }
@@ -578,6 +613,7 @@ public class EvaluacionActivity extends AppCompatActivity implements EvaluationV
                 numberQuestion = 1;
                 questionThrow(questionsList);
                 enableAnswerButton();
+                enableHelps();
                 dialog.dismiss();
                 musicafondo.start();
             }

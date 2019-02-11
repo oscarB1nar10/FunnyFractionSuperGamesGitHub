@@ -21,8 +21,6 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     //vars
     private ArrayList<SumaTutorialInformation> sumaTutorialInformationsList;
     //widget
-    RelativeLayout mRelativeLayout;
-
     public MyAdapter(ArrayList<SumaTutorialInformation> sumaTutorialInformationsList){
         this.sumaTutorialInformationsList = sumaTutorialInformationsList;
     }
@@ -45,13 +43,17 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
             holder.mRelativeLayout.setBackgroundResource(R.drawable.tutorials_cover_page);
             holder.title.setText("");
             holder.information.setText("");
-            holder.circleImageView.setVisibility(View.INVISIBLE);
+            holder.ImageView.setVisibility(View.INVISIBLE);
+            holder.optionalImg.setVisibility(View.INVISIBLE);
 
         } else {
             holder.mRelativeLayout.setBackgroundResource(R.drawable.sheet);
             holder.title.setText(sumaTutorialInformationsList.get(position).getTitle());
             holder.information.setText(sumaTutorialInformationsList.get(position).getInformation());
-            holder.circleImageView.setImageResource(sumaTutorialInformationsList.get(position).getMainImage());
+            holder.ImageView.setVisibility(View.VISIBLE);
+            holder.optionalImg.setVisibility(View.VISIBLE);
+            holder.ImageView.setImageResource(sumaTutorialInformationsList.get(position).getMainImage());
+            holder.optionalImg.setImageResource(sumaTutorialInformationsList.get(position).getOptionalImg());
         }
     }
 
@@ -63,19 +65,17 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
         TextView title, information;
-        CircleImageView circleImageView;
-        ImageView optionalImg1, optionalImg2, optionalImg3;
+        ImageView ImageView;
+        ImageView optionalImg;
         RelativeLayout mRelativeLayout;
 
         public MyViewHolder(View view) {
             super(view);
-
             title = view.findViewById(R.id.txv_title);
             information = view.findViewById(R.id.txv_information);
-            circleImageView = view.findViewById(R.id.img_example1);
+            ImageView = view.findViewById(R.id.img_example1);
             mRelativeLayout = view.findViewById(R.id.cover_page);
-
-
+            optionalImg = view.findViewById(R.id.optionalImg);
         }
     }
 }
