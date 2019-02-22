@@ -31,9 +31,7 @@ public class Menu extends Fragment implements View.OnClickListener {
     OnFragmentInteractionListener mListener;
 
     public static Menu newInstance() {
-
         Bundle args = new Bundle();
-
         Menu fragment = new Menu();
         fragment.setArguments(args);
         return fragment;

@@ -156,34 +156,7 @@ public class Home extends AppCompatActivity implements GoogleApiClient.OnConnect
         SharedPreferences.Editor editor = mSharedPreferences.edit();
         editor.putInt("currentLevel",0);
         editor.putInt("score",0);
-        editor.commit();
-    }
-
-    public void idioma(View v){
-        Intent refrescar = new Intent(this, Home.class);
-        refrescar.putExtra("usuario", logeando.getText().toString());
-        Locale localizacion=null;
-        Configuration config=null;
-        switch (v.getId()){
-            case R.id.englishH:
-                localizacion= new Locale("en","US");
-                Locale.setDefault(localizacion);
-                config=new Configuration();
-                config.locale=localizacion;
-                getBaseContext().getResources().updateConfiguration(config,getBaseContext().getResources().getDisplayMetrics());
-                startActivity(refrescar);
-                finish();
-                break;
-            case R.id.espanolH:
-                localizacion= new Locale("es","ES");
-                Locale.setDefault(localizacion);
-                config=new Configuration();
-                config.locale=localizacion;
-                getBaseContext().getResources().updateConfiguration(config,getBaseContext().getResources().getDisplayMetrics());
-                startActivity(refrescar);
-                finish();
-                break;
-        }
+        editor.apply();
     }
 
     public void banderasVisibles(View v){
@@ -199,6 +172,7 @@ public class Home extends AppCompatActivity implements GoogleApiClient.OnConnect
             ES.setEnabled(false);
         }
     }
+
     @Override
     public void onBackPressed() {
         super.onBackPressed();
@@ -232,6 +206,7 @@ public class Home extends AppCompatActivity implements GoogleApiClient.OnConnect
         refrescar.putExtra("usuario", logeando.getText().toString());
         Locale localizacion=null;
         Configuration config=null;
+        SharedPreferences.Editor editor = mSharedPreferences.edit();
 
         switch (item.getItemId()){
             case R.id.sign_out:
@@ -259,7 +234,8 @@ public class Home extends AppCompatActivity implements GoogleApiClient.OnConnect
                 break;
 
             case R.id.spanish:
-
+                editor.putString("idioma", "Spanish");
+                editor.apply();
                 localizacion= new Locale("es","ES");
                 Locale.setDefault(localizacion);
                 config=new Configuration();
@@ -270,7 +246,8 @@ public class Home extends AppCompatActivity implements GoogleApiClient.OnConnect
                 break;
 
             case R.id.english:
-
+                editor.putString("idioma", "English");
+                editor.apply();
                 localizacion= new Locale("en","US");
                 Locale.setDefault(localizacion);
                 config=new Configuration();

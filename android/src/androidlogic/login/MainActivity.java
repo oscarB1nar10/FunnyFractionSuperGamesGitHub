@@ -69,7 +69,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     private RequestQueue requestQueue;
     private JsonObjectRequest jsonObjectRequest;
     private SharedPreferences sharedP;
-    private SharedPreferences.Editor editor2;
+    private SharedPreferences.Editor editor;
     private GoogleSignInClient mGoogleSignInClient;
     private SignInButton signInButton;
     public static final int RC_SIGN_IN = 101;
@@ -96,10 +96,10 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
 
         sharedP = getSharedPreferences("SHARED_PREFERENCES", Context.MODE_PRIVATE);
 
-        editor2 = sharedP.edit();
-        editor2.putInt("currentLevel", 0);
-        editor2.putInt("score",0);
-        editor2.apply();
+        editor = sharedP.edit();
+        editor.putInt("currentLevel", 0);
+        editor.putInt("score",0);
+        editor.apply();
 
         //------------------------------ImageButton----------------
         US=findViewById(R.id.english);
@@ -207,9 +207,9 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
             Intent intent=new Intent(this,Home.class);
             intent.putExtra("usuario", user.getText().toString());
             sharedP = getSharedPreferences("SHARED_PREFERENCES", Context.MODE_PRIVATE);
-            editor2 = sharedP.edit();
-            editor2.putString("usuariologueado", user.getText().toString());
-            editor2.apply();
+            editor = sharedP.edit();
+            editor.putString("usuariologueado", user.getText().toString());
+            editor.apply();
             startActivity(intent);
         }
     }
@@ -220,6 +220,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         Configuration config=null;
         switch (v.getId()){
             case R.id.english:
+                editor.putString("idioma", "English");
+                editor.apply();
                 localizacion= new Locale("en","US");
                 Locale.setDefault(localizacion);
                 config=new Configuration();
@@ -229,6 +231,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                 finish();
                 break;
             case R.id.espanol:
+                editor.putString("idioma", "Spanish");
+                editor.apply();
                 localizacion= new Locale("es","ES");
                 Locale.setDefault(localizacion);
                 config=new Configuration();
@@ -337,9 +341,9 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
             intent.putExtra("usuario", account.getEmail());
             sharedP = getSharedPreferences("SHARED_PREFERENCES", Context.MODE_PRIVATE);
-            editor2 = sharedP.edit();
-            editor2.putString("usuariologueado", account.getEmail());
-            editor2.apply();
+            editor = sharedP.edit();
+            editor.putString("usuariologueado", account.getEmail());
+            editor.apply();
             startActivity(intent);
 
         } catch (ApiException e) {
@@ -357,9 +361,9 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
             intent.putExtra("usuario", account.getEmail());
             sharedP = getSharedPreferences("SHARED_PREFERENCES", Context.MODE_PRIVATE);
-            editor2 = sharedP.edit();
-            editor2.putString("usuariologueado", account.getEmail());
-            editor2.apply();
+            editor = sharedP.edit();
+            editor.putString("usuariologueado", account.getEmail());
+            editor.apply();
             startActivity(intent);
         }
     }

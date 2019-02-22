@@ -45,5 +45,9 @@
     <string name="sobre">Acerca</string>
     <string name="español">Español</string>
     <string name="ingles">Ingles</string>
-
+    <string name="txtjugar">Jugar</string>
+    <string name="txtinstrucciones">Instrucciones</string>
+    <string name="txtsonido">Sonido</string>
+    <string name="question">¿Cual es la respuesta correcta?</string>
+    <string name="pause">PAUSA</string>
 </resources>

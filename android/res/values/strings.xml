@@ -46,21 +46,14 @@
     <string name="sobre">Acerca</string>
     <string name="español">Español</string>
     <string name="ingles">Ingles</string>
-
-
+    <string name="txtjugar">Jugar</string>
+    <string name="txtinstrucciones">Instrucciones</string>
+    <string name="txtsonido">Sonido</string>
+    <string name="question">¿Cual es la respuesta correcta?</string>
     <!--google kye -->
-
-    <string name="navigation_drawer_open">open</string>
-    <string name="navigation_drawer_close">close</string>
-
-
+    <string name="navigation_drawer_open" translatable="false">open</string>
+    <string name="navigation_drawer_close" translatable="false">close</string>
     <!--pauseActivity-->
-    <string name="pause">PAUSE</string>
-
-    <!--Evaluation-->
-    <string name="question">¿Cual es la respuesta?</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="pause">PAUSA</string>
 
 </resources>

@@ -1,5 +1,7 @@
 package adapters;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -20,16 +22,19 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
     //vars
     private ArrayList<SumaTutorialInformation> sumaTutorialInformationsList;
+    private Context context;
+    public SharedPreferences sharedPreferences;
     //widget
-    public MyAdapter(ArrayList<SumaTutorialInformation> sumaTutorialInformationsList){
+    public MyAdapter(ArrayList<SumaTutorialInformation> sumaTutorialInformationsList, Context context){
         this.sumaTutorialInformationsList = sumaTutorialInformationsList;
+        this.context = context;
     }
 
 
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-
+        sharedPreferences = context.getSharedPreferences("SHARED_PREFERENCES", Context.MODE_PRIVATE);
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.cardview_to_tutorials,parent,false);
         return new MyViewHolder(view);
     }
@@ -38,9 +43,13 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     // Replace the contents of a view (invoked by the layout manager)
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-
         if (position == 0) {
-            holder.mRelativeLayout.setBackgroundResource(R.drawable.tutorials_cover_page);
+            if(sharedPreferences.getString("idioma","Spanish").equals("Spanish")){
+                holder.mRelativeLayout.setBackgroundResource(R.drawable.tutorials_cover_page);
+            }
+            else {
+                holder.mRelativeLayout.setBackgroundResource(R.drawable.tutorials_cover_page_english);
+            }
             holder.title.setText("");
             holder.information.setText("");
             holder.ImageView.setVisibility(View.INVISIBLE);

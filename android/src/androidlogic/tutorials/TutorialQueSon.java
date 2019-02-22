@@ -43,7 +43,7 @@ public class TutorialQueSon extends AppCompatActivity {
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         //adapter to use
-        mAdapter = new MyAdapter(sumaTutorialInformationsList);
+        mAdapter = new MyAdapter(sumaTutorialInformationsList, this);
         mRecyclerView.setAdapter(mAdapter);
     }
 

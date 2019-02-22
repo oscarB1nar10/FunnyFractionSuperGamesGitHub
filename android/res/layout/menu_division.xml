@@ -28,24 +28,24 @@
             android:id="@+id/btn_instrucciones"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="20dp"
+            android:layout_marginEnd="20dp"
             android:background="@drawable/boton_login"
-            android:text="Instrucciones"/>
+            android:text="@string/txtinstrucciones"/>
 
         <Button
             android:id="@+id/btn_jugar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="20dp"
+            android:layout_marginEnd="20dp"
             android:background="@drawable/boton_login"
-            android:text="Jugar"/>
+            android:text="@string/txtjugar"/>
 
         <Button
             android:id="@+id/btn_settings"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/boton_login"
-            android:text="Configuraciones"/>
+            android:text="@string/txtsonido"/>
     </LinearLayout>
 
 </LinearLayout>
