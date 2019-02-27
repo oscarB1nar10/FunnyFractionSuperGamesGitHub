@@ -34,7 +34,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/how_want_be_a_mellionary_button"
             android:gravity="center"
-            android:text="Continue"
+            android:text="@string/txtnewquestion"
             android:textColor="#FFFFFF"
             android:textSize="32sp" />
 
@@ -44,7 +44,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/how_want_be_a_mellionary_button"
             android:gravity="center"
-            android:text="Take my money"
+            android:text="@string/txtretirarse"
             android:textColor="#FFFFFF"
             android:textSize="32sp" />
     </LinearLayout>

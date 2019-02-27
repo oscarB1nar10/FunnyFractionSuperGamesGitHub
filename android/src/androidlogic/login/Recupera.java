@@ -55,7 +55,7 @@ public class Recupera extends Activity {
         recupera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(tilusu.getEditText().getText().toString().isEmpty() == true && tilpre1.getEditText().getText().toString().isEmpty() == true && tilpre2.getEditText().getText().toString().isEmpty() == true && tilpre3.getEditText().getText().toString().isEmpty() == true ){
+                if(tilusu.getEditText().getText().toString().isEmpty() && tilpre1.getEditText().getText().toString().isEmpty() && tilpre2.getEditText().getText().toString().isEmpty() && tilpre3.getEditText().getText().toString().isEmpty()){
                     tilusu.getEditText().setError("Campo obligatorio");
                     tilpre1.getEditText().setError("Campo obligatorio");
                     tilpre2.getEditText().setError("Campo obligatorio");

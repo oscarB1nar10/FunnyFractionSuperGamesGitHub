@@ -6,7 +6,7 @@
     <string name="txtNombre">Names</string>
     <string name="txtApellidos">Lastname</string>
     <string name="txtPassword2">Repeat Password</string>
-    <string name="txtPregunta1">Favorite VideoGame</string>
+    <string name="txtPregunta1">Favorite Animal</string>
     <string name="txtPregunta2">Favorite Color</string>
     <string name="txtPregunta3">Favorite Sport</string>
     <string name="btnIngresar">Login</string>
@@ -50,4 +50,8 @@
     <string name="txtsonido">Sound</string>
     <string name="question">What is the right answer?</string>
     <string name="pause">PAUSE</string>
+    <string name="txtnewquestion">Next question</string>
+    <string name="txtretirarse">Leave</string>
+    <string name="txtjugardenuevo">Play again</string>
+    <string name="txtsalir">Exit</string>
 </resources>

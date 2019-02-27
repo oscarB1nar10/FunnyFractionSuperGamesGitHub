@@ -6,8 +6,7 @@
     android:layout_height="match_parent"
     android:weightSum="3"
     android:orientation="vertical"
-    android:background="@drawable/f11"
-    tools:context=".EjecutableBateria">
+    android:background="@drawable/f11">
 
     <LinearLayout
         android:id="@+id/main_layout_game_battery"

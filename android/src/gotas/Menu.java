@@ -20,7 +20,7 @@ import java.util.HashMap;
 
 public class Menu extends Fragment implements View.OnClickListener {
     Button skip, play, settings, instrucciones;
-    ImageView operacion;
+    ImageView operacion, logomenu;
     Handler handler = new Handler();
     HashMap<Integer, String> lista = new HashMap<>();
     ArrayList<Integer> imagenes = new ArrayList<>();
@@ -41,7 +41,8 @@ public class Menu extends Fragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.menu, container, false);
-
+        logomenu = view.findViewById(R.id.logomenu);
+        logomenu.setBackgroundResource(R.drawable.logonicolas);
         layout_division = view.findViewById(R.id.linearLayout_division);
 
         if(getArguments() != null) {

@@ -29,6 +29,7 @@ public class MainMenu extends Fragment implements View.OnClickListener{
 
     //widgets
     private Button btn_jugar, btn_instructions;
+    private ImageView logomenu;
     private LinearLayout main_layout;
     
     //vars
@@ -44,6 +45,8 @@ public class MainMenu extends Fragment implements View.OnClickListener{
         //practiceAndFragments = getArguments().getParcelable("practiceAndFrangment");
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.menu_division, container, false);
+        logomenu = view.findViewById(R.id.logomenu);
+        logomenu.setBackgroundResource(R.drawable.logo_suma);
 
         main_layout = view.findViewById(R.id.main_layout);
         main_layout.setBackgroundResource(R.drawable.fondo_archery_game);

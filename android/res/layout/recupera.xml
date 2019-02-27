@@ -67,7 +67,7 @@
                 android:layout_height="wrap_content"
                 android:src="@drawable/control_videogames"
                 tools:layout_editor_absoluteY="167dp" />
-
+,
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/tilrecupre1"
                 android:layout_width="match_parent"

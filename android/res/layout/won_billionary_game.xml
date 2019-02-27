@@ -26,7 +26,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="$4544343"
             android:textColor="#ff0"
             android:textSize="34sp" />
 
@@ -36,7 +35,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/how_want_be_a_mellionary_button"
             android:gravity="center"
-            android:text="Play again"
+            android:text="@string/txtjugardenuevo"
             android:textColor="#FFFFFF"
             android:textSize="32sp" />
 
@@ -46,7 +45,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/how_want_be_a_mellionary_button"
             android:gravity="center"
-            android:text="Exit"
+            android:text="@string/txtsalir"
             android:textColor="#FFFFFF"
             android:textSize="32sp" />
     </LinearLayout>

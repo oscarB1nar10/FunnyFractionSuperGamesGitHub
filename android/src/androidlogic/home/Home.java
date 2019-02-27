@@ -69,7 +69,7 @@ public class Home extends AppCompatActivity implements GoogleApiClient.OnConnect
         deletePreferences();
 
         // setup DrawerLayout
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_main);
+        Toolbar toolbar = findViewById(R.id.toolbar_main);
         setSupportActionBar(toolbar);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -94,17 +94,29 @@ public class Home extends AppCompatActivity implements GoogleApiClient.OnConnect
 
 
 
-        config = (ImageView) findViewById(R.id.configurar);
-        log = (ImageView) findViewById(R.id.logeo);
+        config = findViewById(R.id.configurar);
+        log = findViewById(R.id.logeo);
         //-----------------------------ImageButton---------
         US=findViewById(R.id.englishH);
         US.setEnabled(true);
         ES=findViewById(R.id.espanolH);
         ES.setEnabled(true);
         //------------------------------END ImageButton----
-        tuto = (Button) findViewById(R.id.btntuto);
-        prac = (Button) findViewById(R.id.btnprac);
-        evalu = (Button) findViewById(R.id.btnevalu);
+        tuto = findViewById(R.id.btntuto);
+        prac = findViewById(R.id.btnprac);
+        evalu = findViewById(R.id.btnevalu);
+
+        if(mSharedPreferences.getString("idioma", "Spanish").equals("Spanish")){
+            tuto.setBackgroundResource(R.drawable.tutoriales);
+            prac.setBackgroundResource(R.drawable.practicas);
+            evalu.setBackgroundResource(R.drawable.evaluacion);
+        }
+        else{
+            tuto.setBackgroundResource(R.drawable.tutoriales_english);
+            prac.setBackgroundResource(R.drawable.practicas_english);
+            evalu.setBackgroundResource(R.drawable.evaluacion_english);
+        }
+
         log.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -37,7 +37,7 @@ public class EjecutableBateria extends Fragment implements View.OnClickListener 
     TextView enunciado, pregunta, respuesta1, respuesta2, respuesta3, respuesta4;
     ArrayList<ImageView> hearts;
     ArrayList<TextView> txtvList = new ArrayList<>();
-    ImageView operacion, selector;
+    ImageView operacion, selector, logomenu;
     ImageButton imb_pause;
     Button btn_jugar, btn_instrucciones;
     LinearLayout main_linearLayout;
@@ -55,12 +55,13 @@ public class EjecutableBateria extends Fragment implements View.OnClickListener 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-         view = inflater.inflate(R.layout.activity_ejecutable_bateria, container, false);
+        view = inflater.inflate(R.layout.activity_ejecutable_bateria, container, false);
         animacionBateria = view.findViewById(R.id.animacionBateria);
         animacionBateria.useHardwareAcceleration(true);
         startBattery();
         hearts2 = new ArrayList<>();
-
+        logomenu = view.findViewById(R.id.logomenu);
+        logomenu.setBackgroundResource(R.drawable.logonicolas);
         hearts = new ArrayList<>();
         hearts.add((ImageView) view.findViewById(R.id.heart1));
         hearts.add((ImageView) view.findViewById(R.id.heart2));
