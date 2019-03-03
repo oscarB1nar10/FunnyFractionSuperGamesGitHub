@@ -157,4 +157,5 @@ dependencies {
     //CardView widget
     implementation 'com.android.support:cardview-v7:27.+'
     implementation 'com.android.support:support-v4:27.1.1'
+    implementation 'org.jetbrains:annotations-java5:15.0'
 }

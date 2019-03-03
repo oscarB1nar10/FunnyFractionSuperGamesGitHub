@@ -25,20 +25,25 @@
     <string name="btndivi">Division</string>
     <string name="btnRecuperar">Recover password</string>
     <string name="txtQueson">¿WHAT ARE THE FRACTIONS?</string>
-    <string name="txtdefinicion">The fraction is used to represent the parts that are taken from an object (Numerator) that has been divided into equal parts (Denominator) and is represented as follows:</string>
+    <string name="txtdefinicion">Number that represents a specific portions value taken from a whole divided equally,
+                                it is represent whit a horizontal bar that separates firs value (numerator) from the second (denominator) </string>
     <string name="txtejemplo">For example, we divide a pizza into 8 equal parts and take three.</string>
     <string name="txtsumhomo">ADD FRACTIONS WITH THE SAME DENOMINATOR (HOMOGENEOUS)</string>
-    <string name="txtsumhete">ADD FRACTIONS WITH DIFFERENT DENOMINATOR (HETEROGENEOUS)</string>
     <string name="txteoriasumhomo">Debemos sumar sus numeradores y dejar su denominador igual</string>
-    <string name="txteoriasumhete">The cross product of numerator by denominator must be added to obtain the numerator result, while for the denominator result is the multiplication of denominators</string>
+    <string name="txteoriasumhete">we should use happy face technique, we must multiply the numerators with the inverse denominators
+                                and add the results, that result will be the numerator of the result fraction,
+                                    the denominator result is equal to the product of the denominators</string>
     <string name="txtreshomo">SUBTRACT FRACTIONS WITH THE SAME DENOMINATOR (HOMOGENEOUS)</string>
     <string name="txtreshete">SUBTRACT FRACTIONS WITH DIFFERENT DENOMINATOR (HETEROGENEOUS)</string>
     <string name="txteoriareshomo">We must subtract their numerators and leave their denominator equal</string>
-    <string name="txteoriareshete">The cross product of numerator by denominator must be subtracted to obtain the numerator result, while for the denominator result is the multiplication of the denominators</string>
+    <string name="txteoriareshete">we should use happy face technique, we must multiply the numerators with the inverse denominators
+                                and subtract the results, that result will be the numerator of the result fraction,
+                                    the denominator result is equal to the product of the denominators</string>
     <string name="txtmul">MULTIPLICATION OF FRACTIONS</string>
-    <string name="txteoriamul">We just have to multiply numerators and denominators</string>
+    <string name="txteoriamul">The numerators are multiplied to obtain the result numerator
+                                and multiply the denominators to get the result denominator</string>
     <string name="txtdiv">FRACTION DIVISION</string>
-    <string name="txteoriadiv">For this we must multiply numerator by denominator</string>
+    <string name="txteoriadiv">We must multiply the numerators by inverse denominators</string>
     <string name="txtr_ingresa_datos">Enter your data</string>
     <string name="cerrar_sesion">logout</string>
     <string name="idioma">Lenguage</string>

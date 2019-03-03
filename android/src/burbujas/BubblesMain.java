@@ -8,16 +8,20 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Looper;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.funnyfractions.game.R;
 import java.util.ArrayList;
+import java.util.zip.Inflater;
 
 import androidlogic.practice.Practica;
 import tyrantgit.explosionfield.ExplosionField;
@@ -25,6 +29,11 @@ import tyrantgit.explosionfield.ExplosionField;
 import static android.support.test.InstrumentationRegistry.getContext;
 
 public class BubblesMain extends Activity implements View.OnClickListener {
+    //cons
+    private static final String TAG = "BubblesMain";
+
+
+    //vars
     ArrayList<ObjectAnimator> objectAnimators = new ArrayList<>();
     MediaPlayer sonido,waterSound;
     ExplosionField explosionField;
@@ -33,8 +42,10 @@ public class BubblesMain extends Activity implements View.OnClickListener {
     ImageView imgoperacion, cor1, cor2, cor3, pausa;
     int numjuegos = 0, puntuacion, heightDp, alea, vidas;
     private long currentAnimation;
+    private  ArrayList <Pregunta> Preguntas;
     Thread thread;
     boolean validateHeight = true;
+    private View view;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -158,7 +169,7 @@ public class BubblesMain extends Activity implements View.OnClickListener {
     }
 
     public void IniciarJuego(){
-        ArrayList <Pregunta> Preguntas = ListaDePreguntas();//this function return a "question" list
+        Preguntas = ListaDePreguntas();//this function return a "question" list
         imgoperacion.setImageResource(Preguntas.get(alea).operacion);//get the image correspondent to question
         opcion1.setText(Preguntas.get(alea).opc1);//
         opcion2.setText(Preguntas.get(alea).opc2);//Add the text correspondent to question
@@ -199,19 +210,15 @@ public class BubblesMain extends Activity implements View.OnClickListener {
         ValidaJuego();
     }
 
-    public void ValidaJuego(){
-        try {
-            Bundle datos = getIntent().getExtras();
-            numjuegos = datos.getInt("llave");
-            puntuacion = datos.getInt("puntuacion");
-            if(puntuacion == 0 && numjuegos == 0){
-                puntuacion = 1000;
-            }else if (numjuegos == 10) {
-                validateHeight = false;
-                showMenu();
-            }
-        }catch (Exception e){
+    public void ValidaJuego() {
+
+        if (puntuacion == 0 && numjuegos == 0) {
+            puntuacion = 1000;
+        } else if (numjuegos == 10) {
+            validateHeight = false;
+            showMenu();
         }
+
     }
 
     @Override
@@ -233,18 +240,15 @@ public class BubblesMain extends Activity implements View.OnClickListener {
                 case 1:
                     cor1.setImageResource(R.drawable.corazon2);
                     puntuacion = (puntuacion - 50);
-                    Intent intent = getIntent();
-                    intent.putExtra("llave", (numjuegos+1));
-                    intent.putExtra("puntuacion",puntuacion);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    finish();
-                    startActivity(intent);
+                    numjuegos++;
+                    bubblesAgin();
                     break;
             }
             for(int i = 0; i < objectAnimators.size(); i++){
                 if(objectAnimators.get(i).getTarget().equals(boton)) {
                     sonido.start();
                     boton.setVisibility(View.INVISIBLE);
+                    boton.setVisibility(View.GONE);
                     explosionField.explode(boton);
                 }
             }
@@ -252,28 +256,122 @@ public class BubblesMain extends Activity implements View.OnClickListener {
         else{
             boton.setBackgroundResource(R.drawable.burbujaverde);
             Intent intent = getIntent();
-            intent.putExtra("llave", (numjuegos+1));
-            intent.putExtra("puntuacion", puntuacion);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            finish();
-            startActivity(intent);
+            thread = null;
+            numjuegos++;
+            bubblesAgin();
+            //startActivity(intent);
         }
     }
 
-    public void checkHeight(){
-        Looper.prepare();
+    private void  generateNewOperation(){
+        int random = (int) (Math.random()*40);
 
-        while(validateHeight) {
-            if (objectAnimator1.getAnimatedFraction() == 1.0) {
-                break;
+        imgoperacion.setImageResource(Preguntas.get(random).operacion);//get the image correspondent to question
+        opcion1.setText(Preguntas.get(random).opc1);//
+        opcion2.setText(Preguntas.get(random).opc2);//Add the text correspondent to question
+        opcion3.setText(Preguntas.get(random).opc3);//
+        opcion4.setText(Preguntas.get(random).opc4);//
+    }
+
+    public void checkHeight(){
+        if(Looper.myLooper() == null) {
+            Looper.prepare();
+        try {
+            while (validateHeight) {
+                if (objectAnimator1.getAnimatedFraction() == 1.0) {
+                    break;
+                }
+            }
+            if (validateHeight) {
+                bubblesAgin();
+                numjuegos++;
+                Looper.loop();
+            }
+        }catch (NullPointerException npe){
+            Log.e(TAG, "checkHeight: "+ npe);
+        }
+        }else{
+            while (validateHeight) {
+                if (objectAnimator1.getAnimatedFraction() == 1.0) {
+                    break;
+                }
+            }
+            if (validateHeight) {
+                //code here
+                bubblesAgin();
+                thread = null;
             }
         }
-        if(validateHeight) {
-            Intent intent = getIntent();
-            finish();
-            startActivity(intent);
-            Looper.loop();
+    }
+
+    private void reset(View root) {
+        if (root instanceof ViewGroup) {
+            ViewGroup parent = (ViewGroup) root;
+            for (int i = 0; i < parent.getChildCount(); i++) {
+                reset(parent.getChildAt(i));
+            }
+        } else {
+            root.setScaleX(1);
+            root.setScaleY(1);
+            root.setAlpha(1);
         }
+    }
+
+    private void  bubblesAgin(){
+        thread =  null;
+        opcion1 = findViewById(R.id.btn1);
+        opcion2 = findViewById(R.id.btn2);
+        opcion3 = findViewById(R.id.btn3);
+        opcion4 = findViewById(R.id.btn4);
+
+        opcion1.setBackgroundResource(R.drawable.burbuja);
+        opcion2.setBackgroundResource(R.drawable.burbuja);
+        opcion3.setBackgroundResource(R.drawable.burbuja);
+        opcion4.setBackgroundResource(R.drawable.burbuja);
+
+        reset( opcion1);
+        reset(opcion2);
+        reset(opcion3);
+        reset(opcion4);
+        reset((View)objectAnimator1.getTarget());
+        reset((View)objectAnimator2.getTarget());
+        reset((View)objectAnimator3.getTarget());
+        reset((View)objectAnimator4.getTarget());
+
+        generateNewOperation();
+
+        objectAnimator1 = null;
+        objectAnimator2 = null;
+        objectAnimator3 = null;
+        objectAnimator4 = null;
+
+        objectAnimator1 = ObjectAnimator.ofFloat(opcion1,"translationY",0f, -heightDp);
+        objectAnimator1.setDuration(11000);
+        objectAnimator1.start();
+        objectAnimator2 = ObjectAnimator.ofFloat(opcion2, "translationY", 0f,-heightDp);
+        objectAnimator2.setDuration(11000);
+        objectAnimator2.start();
+        objectAnimator3 = ObjectAnimator.ofFloat(opcion3, "translationY", 0f, -heightDp);
+        objectAnimator3.setDuration(11000);
+        objectAnimator3.start();
+        objectAnimator4 = ObjectAnimator.ofFloat(opcion4, "translationY", 0f, -heightDp);
+        objectAnimator4.setDuration(11000);
+        objectAnimator4.start();
+
+        objectAnimators.add(objectAnimator1);
+        objectAnimators.add(objectAnimator2);
+        objectAnimators.add(objectAnimator3);
+        objectAnimators.add(objectAnimator4);
+
+        thread = new Thread(new Runnable() {
+
+            @Override
+            public void run() {
+                checkHeight();
+            }
+        });
+        thread.start();
+        ValidaJuego();
     }
 
     public void showMenu(){

@@ -16,7 +16,6 @@ import com.funnyfractions.game.R;
 import java.util.ArrayList;
 
 import Util.SumaTutorialInformation;
-import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 

@@ -25,20 +25,27 @@
     <string name="btnmultli">Multiplicacion</string>
     <string name="btndivi">Division</string>
     <string name="txtQueson">¿QUE SON LAS FRACCIONES?</string>
-    <string name="txtdefinicion">La fracción se utiliza para representar las partes que se toman de un objeto (Numerador) que ha sido dividido en partes iguales (Denominador) y se representa de la siguiente manera:</string>
+    <string name="txtdefinicion">Número que expresa una cantidad determinada de porciones que se toman de un todo dividido en partes iguales,
+                                    se representa con una barra horizontal que separa la primera cantidad (el númerador) de la segunda
+                                    (el denominador)</string>
     <string name="txtejemplo">Por ejemplo, dividimos una pizza en 8 partes iguales y cogemos tres.</string>
     <string name="txtsumhomo">SUMAR FRACCIONES CON IGUAL DENOMINADOR (HOMOGENEAS)</string>
     <string name="txtsumhete">SUMAR FRACCIONES CON DIFERENTE DENOMINADOR (HETEROGENEAS)</string>
     <string name="txteoriasumhomo">Debemos sumar sus numeradores y dejar su denominador igual</string>
-    <string name="txteoriasumhete">El producto cruzado de numerador por denominador se debe sumar para obtener el numerador resultado, mientras que para el denominador resultado es la multiplicacion de los denominadores</string>
-    <string name="txtreshomo">RESTAR FRACCIONES CON IGUAL DENOMINADOR (HOMOGENEAS)</string>
-    <string name="txtreshete">RESTAR FRACCIONES CON DIFERENTE DENOMINADOR (HETEROGENEAS)</string>
+<string name="txteoriasumhete">Debemos aplicar la técnica de la carita feliz, multiplicar los numeradores por los denominadores
+                                    inversos y sumar los resultados, ese resultado será el numerador de la fraccion resultado, el denominador
+                                    resultado es igual al producto de los denominadores</string>
+<string name="txtreshomo">RESTAR FRACCIONES CON IGUAL DENOMINADOR (HOMOGENEAS)</string>
+<string name="txtreshete">RESTAR FRACCIONES CON DIFERENTE DENOMINADOR (HETEROGENEAS)</string>
     <string name="txteoriareshomo">Debemos restar sus numeradores y dejar su denominador igual</string>
-    <string name="txteoriareshete">El producto cruzado de numerador por denominador se debe restar para obtener el numerador resultado, mientras que para el denominador resultado es la multiplicacion de los denominadores</string>
+    <string name="txteoriareshete">Debemos aplicar la técnica de la carita feliz, multiplicar los numeradores por los denominadores
+                                    inversos y restar los resultados, ese resultado será el numerador de la fraccion resultado, el denominador
+                                    resultado es igual al producto de los denominadores</string>
     <string name="txtmul">MULTIPLICACION DE FRACCIONES</string>
-    <string name="txteoriamul">Solo debemos multiplicar numeradores y denominadores</string>
+    <string name="txteoriamul">Debemos multiplicar los numeradores para optener el numerador resultado y multiplicar los
+                                denominadores para optener el denominador resultado </string>
     <string name="txtdiv">DIVISION DE FRACCIONES</string>
-    <string name="txteoriadiv">Para ello debemos multiplicar numerador por denominador</string>
+    <string name="txteoriadiv">Debemos multiplicar los numeradores por denominadores inversos</string>
     <string name="txtr_ingresa_datos">Ingresa tus datos</string>
     <string name="cerrar_sesion">Cerrar sesion</string>
     <string name="idioma">Idioma</string>

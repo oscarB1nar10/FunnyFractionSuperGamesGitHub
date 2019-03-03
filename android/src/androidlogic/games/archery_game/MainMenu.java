@@ -1,7 +1,9 @@
 package androidlogic.games.archery_game;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -31,6 +33,8 @@ public class MainMenu extends Fragment implements View.OnClickListener{
     private Button btn_jugar, btn_instructions;
     private ImageView logomenu;
     private LinearLayout main_layout;
+    private SharedPreferences.Editor editor;
+    private SharedPreferences sharedP;
     
     //vars
     OnFragmentInteractionListener mListener;
@@ -55,6 +59,13 @@ public class MainMenu extends Fragment implements View.OnClickListener{
         btn_instructions = view.findViewById(R.id.btn_instrucciones);
         btn_jugar.setOnClickListener(this);
         btn_instructions.setOnClickListener(this);
+
+        sharedP = getContext().getSharedPreferences("SHARED_PREFERENCES", Context.MODE_PRIVATE);
+
+        editor = sharedP.edit();
+        editor.putInt("currentLevel", 0);
+        editor.putInt("score",0);
+        editor.apply();
 
         return view;
     }

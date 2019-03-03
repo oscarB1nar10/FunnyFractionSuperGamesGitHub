@@ -36,7 +36,7 @@ public class EjecutableBateria extends Fragment implements View.OnClickListener 
     ExplosionField explosionField;
     TextView enunciado, pregunta, respuesta1, respuesta2, respuesta3, respuesta4;
     ArrayList<ImageView> hearts;
-    ArrayList<TextView> txtvList = new ArrayList<>();
+    ArrayList<TextView> txtvList;
     ImageView operacion, selector, logomenu;
     ImageButton imb_pause;
     Button btn_jugar, btn_instrucciones;
@@ -57,6 +57,7 @@ public class EjecutableBateria extends Fragment implements View.OnClickListener 
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.activity_ejecutable_bateria, container, false);
         animacionBateria = view.findViewById(R.id.animacionBateria);
+        txtvList = new ArrayList<>();
         animacionBateria.useHardwareAcceleration(true);
         startBattery();
         hearts2 = new ArrayList<>();
@@ -131,26 +132,24 @@ public class EjecutableBateria extends Fragment implements View.OnClickListener 
     }
 
     private void asignarValores() {
-        int randomN = (int) (Math.random() * 8 + 1);
-        int randomA = (int) (Math.random() * 4 + 1);
+            int randomN = (int) (Math.random() * 8 + 1);
+            int randomA = (int) (Math.random() * 4 + 1);
 
-        txtvList.get(0).setText("" + (randomN) + "/" + (randomN * randomA));
-        txtvList.get(1).setText("" + (randomN + 1) + "/" + ((randomN * 2) * randomA));
-        txtvList.get(2).setText("" + (randomN + 2) + "/" + ((randomN * 3) * randomA));
-        txtvList.get(3).setText("" + (randomN + 3) + "/" + (randomN * randomA));
+            txtvList.get(0).setText("" + (randomN) + "/" + (randomN * randomA));
+            txtvList.get(1).setText("" + (randomN + 1) + "/" + ((randomN * 2) * randomA));
+            txtvList.get(2).setText("" + (randomN + 2) + "/" + ((randomN * 3) * randomA));
+            txtvList.get(3).setText("" + (randomN + 3) + "/" + (randomN * randomA));
 
-
-        txtvList.get(randomA - 1).setText("" + preguntas.get((random - 1)).answerToCompare);
-
+            txtvList.get(randomA - 1).setText("" + preguntas.get((random - 1)).answerToCompare);
     }
 
     public void extraerPreguntas() {
-        random = (int) (Math.random() * 19 + 1);
-        //generar valor aleatorio-> añadir valores a la vista
-        enunciado.setText(preguntas.get(random - 1).enunciado);
-        operacion.setImageResource(preguntas.get(random - 1).operacion);
-        pregunta.setText(preguntas.get(random - 1).pregunta);
-        numberQuestion++;
+            random = (int) (Math.random() * 19 + 1);
+            //generar valor aleatorio-> añadir valores a la vista
+            enunciado.setText(preguntas.get(random - 1).enunciado);
+            operacion.setImageResource(preguntas.get(random - 1).operacion);
+            pregunta.setText(preguntas.get(random - 1).pregunta);
+            numberQuestion++;
     }
 
     public void anadirEnunciados() {
@@ -486,18 +485,18 @@ public class EjecutableBateria extends Fragment implements View.OnClickListener 
             score = score - 50;
         }else{
             score = score - 100;
-            disableTextView();
-            Handler handler = new Handler();
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    nextQuestion();
+        disableTextView();
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                nextQuestion();
 
-                }
-            }, 1000);
-            attemps = 0;
+            }
+        }, 1000);
+        attemps = 0;
 
-        }
+    }
     }
 
     private void reset(View root) {
