@@ -38,11 +38,12 @@ public class BubblesMain extends Activity implements View.OnClickListener {
     MediaPlayer sonido,waterSound;
     ExplosionField explosionField;
     ObjectAnimator objectAnimator1, objectAnimator2, objectAnimator3, objectAnimator4;
-    Button opcion1, opcion2, opcion3, opcion4;
+    Button opcion1, opcion2, opcion3, opcion4, opcion11;
     ImageView imgoperacion, cor1, cor2, cor3, pausa;
     int numjuegos = 0, puntuacion, heightDp, alea, vidas;
     private long currentAnimation;
     private  ArrayList <Pregunta> Preguntas;
+    private boolean correctAnswer;
     Thread thread;
     boolean validateHeight = true;
     private View view;
@@ -183,13 +184,18 @@ public class BubblesMain extends Activity implements View.OnClickListener {
 
         heightDp = (displayMetrics.heightPixels*77)/100;
 
-        thread = new Thread(new Runnable() {
-
+        thread = new Thread(){
             @Override
             public void run() {
-                checkHeight();
-            }
-        });
+                //runOnUiThread(new Runnable() {
+                  //  @Override
+                  //  public void run() {
+                        checkHeight();
+                    //}
+                }
+            };
+
+
         objectAnimator1 = ObjectAnimator.ofFloat(opcion1,"translationY",0f, -heightDp);
         objectAnimator1.setDuration(11000);
         objectAnimator1.start();
@@ -208,6 +214,7 @@ public class BubblesMain extends Activity implements View.OnClickListener {
         objectAnimators.add(objectAnimator4);
         thread.start();
         ValidaJuego();
+
     }
 
     public void ValidaJuego() {
@@ -248,7 +255,7 @@ public class BubblesMain extends Activity implements View.OnClickListener {
                 if(objectAnimators.get(i).getTarget().equals(boton)) {
                     sonido.start();
                     boton.setVisibility(View.INVISIBLE);
-                    boton.setVisibility(View.GONE);
+                    //boton.setVisibility(View.GONE);
                     explosionField.explode(boton);
                 }
             }
@@ -258,19 +265,32 @@ public class BubblesMain extends Activity implements View.OnClickListener {
             Intent intent = getIntent();
             thread = null;
             numjuegos++;
+            correctAnswer = true;
             bubblesAgin();
             //startActivity(intent);
         }
     }
 
-    private void  generateNewOperation(){
-        int random = (int) (Math.random()*40);
+    private void  generateNewOperation() {
+        final int random = (int) (Math.random() * 40);
 
         imgoperacion.setImageResource(Preguntas.get(random).operacion);//get the image correspondent to question
-        opcion1.setText(Preguntas.get(random).opc1);//
-        opcion2.setText(Preguntas.get(random).opc2);//Add the text correspondent to question
-        opcion3.setText(Preguntas.get(random).opc3);//
-        opcion4.setText(Preguntas.get(random).opc4);//
+
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (opcion11 != null) {
+                    opcion11.setText(Preguntas.get(random).opc1);
+                    opcion2.setText(Preguntas.get(random).opc2);//Add the text correspondent to question
+                    opcion3.setText(Preguntas.get(random).opc3);//
+                    opcion4.setText(Preguntas.get(random).opc4);//
+
+                }
+            }
+
+            ;
+
+        });
     }
 
     public void checkHeight(){
@@ -299,7 +319,6 @@ public class BubblesMain extends Activity implements View.OnClickListener {
             if (validateHeight) {
                 //code here
                 bubblesAgin();
-                thread = null;
             }
         }
     }
@@ -318,16 +337,24 @@ public class BubblesMain extends Activity implements View.OnClickListener {
     }
 
     private void  bubblesAgin(){
-        thread =  null;
+
         opcion1 = findViewById(R.id.btn1);
         opcion2 = findViewById(R.id.btn2);
         opcion3 = findViewById(R.id.btn3);
         opcion4 = findViewById(R.id.btn4);
 
-        opcion1.setBackgroundResource(R.drawable.burbuja);
-        opcion2.setBackgroundResource(R.drawable.burbuja);
-        opcion3.setBackgroundResource(R.drawable.burbuja);
-        opcion4.setBackgroundResource(R.drawable.burbuja);
+        if(correctAnswer){
+            opcion1.setBackgroundResource(R.drawable.burbuja);
+            opcion2.setBackgroundResource(R.drawable.burbuja);
+            opcion3.setBackgroundResource(R.drawable.burbuja);
+            opcion4.setBackgroundResource(R.drawable.burbuja);
+
+            opcion1.setVisibility(View.VISIBLE);
+            opcion2.setVisibility(View.VISIBLE);
+            opcion3.setVisibility(View.VISIBLE);
+            opcion4.setVisibility(View.VISIBLE);
+            correctAnswer = false;
+        }
 
         reset( opcion1);
         reset(opcion2);
@@ -337,6 +364,12 @@ public class BubblesMain extends Activity implements View.OnClickListener {
         reset((View)objectAnimator2.getTarget());
         reset((View)objectAnimator3.getTarget());
         reset((View)objectAnimator4.getTarget());
+
+
+        imgoperacion = null;
+        imgoperacion = findViewById(R.id.imgopera);
+        Preguntas = null;
+        Preguntas = ListaDePreguntas();
 
         generateNewOperation();
 
@@ -363,13 +396,15 @@ public class BubblesMain extends Activity implements View.OnClickListener {
         objectAnimators.add(objectAnimator3);
         objectAnimators.add(objectAnimator4);
 
-        thread = new Thread(new Runnable() {
-
+        thread = null;
+        thread = new Thread() {
             @Override
             public void run() {
+
                 checkHeight();
             }
-        });
+        };
+
         thread.start();
         ValidaJuego();
     }
