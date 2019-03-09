@@ -1,4 +1,5 @@
 package burbujas;
+import android.animation.Animator;
 import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -6,6 +7,7 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Looper;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -13,11 +15,13 @@ import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.funnyfractions.game.R;
 import java.util.ArrayList;
@@ -28,7 +32,7 @@ import tyrantgit.explosionfield.ExplosionField;
 
 import static android.support.test.InstrumentationRegistry.getContext;
 
-public class BubblesMain extends Activity implements View.OnClickListener {
+public class BubblesMain extends Activity implements View.OnClickListener, Animator.AnimatorListener {
     //cons
     private static final String TAG = "BubblesMain";
 
@@ -43,16 +47,18 @@ public class BubblesMain extends Activity implements View.OnClickListener {
     int numjuegos = 0, puntuacion, heightDp, alea, vidas;
     private long currentAnimation;
     private  ArrayList <Pregunta> Preguntas;
-    private boolean correctAnswer;
+    private boolean correctAnswer, stopThread;
+    private int random;
     Thread thread;
     boolean validateHeight = true;
     private View view;
+    private ObjectAnimator objectAnimatorF;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        alea = (int) (Math.random()*40);
+        random = (int) (Math.random()*40);
         vidas = 3;
         puntuacion = 1000;
         imgoperacion = findViewById(R.id.imgopera);
@@ -171,11 +177,11 @@ public class BubblesMain extends Activity implements View.OnClickListener {
 
     public void IniciarJuego(){
         Preguntas = ListaDePreguntas();//this function return a "question" list
-        imgoperacion.setImageResource(Preguntas.get(alea).operacion);//get the image correspondent to question
-        opcion1.setText(Preguntas.get(alea).opc1);//
-        opcion2.setText(Preguntas.get(alea).opc2);//Add the text correspondent to question
-        opcion3.setText(Preguntas.get(alea).opc3);//
-        opcion4.setText(Preguntas.get(alea).opc4);//
+        imgoperacion.setImageResource(Preguntas.get(random).operacion);//get the image correspondent to question
+        opcion1.setText(Preguntas.get(random).opc1);//
+        opcion2.setText(Preguntas.get(random).opc2);//Add the text correspondent to question
+        opcion3.setText(Preguntas.get(random).opc3);//
+        opcion4.setText(Preguntas.get(random).opc4);//
 
         Display display = getWindowManager().getDefaultDisplay();
         DisplayMetrics displayMetrics = new DisplayMetrics();
@@ -198,21 +204,28 @@ public class BubblesMain extends Activity implements View.OnClickListener {
 
         objectAnimator1 = ObjectAnimator.ofFloat(opcion1,"translationY",0f, -heightDp);
         objectAnimator1.setDuration(11000);
-        objectAnimator1.start();
+        objectAnimator1.addListener(this);
         objectAnimator2 = ObjectAnimator.ofFloat(opcion2, "translationY", 0f,-heightDp);
         objectAnimator2.setDuration(11000);
-        objectAnimator2.start();
+        objectAnimator2.addListener(this);
         objectAnimator3 = ObjectAnimator.ofFloat(opcion3, "translationY", 0f, -heightDp);
         objectAnimator3.setDuration(11000);
-        objectAnimator3.start();
+        objectAnimator3.addListener(this);
         objectAnimator4 = ObjectAnimator.ofFloat(opcion4, "translationY", 0f, -heightDp);
         objectAnimator4.setDuration(11000);
-        objectAnimator4.start();
+        objectAnimator4.addListener(this);
         objectAnimators.add(objectAnimator1);
         objectAnimators.add(objectAnimator2);
         objectAnimators.add(objectAnimator3);
         objectAnimators.add(objectAnimator4);
-        thread.start();
+
+        objectAnimator1.start();
+        objectAnimator2.start();
+        objectAnimator3.start();
+        objectAnimator4.start();
+
+        correctAnswer();
+        //thread.start();
         ValidaJuego();
 
     }
@@ -232,95 +245,143 @@ public class BubblesMain extends Activity implements View.OnClickListener {
     public void onClick(View v) {
         ArrayList <Pregunta> Preguntas = ListaDePreguntas();
         Button boton = (Button) v;
-        if(!boton.getText().toString().equals(Preguntas.get(alea).rta)){
-            switch (vidas){
+        if(!boton.getText().toString().equals(Preguntas.get(random).rta)){
+            switch (vidas) {
                 case 3:
                     cor3.setImageResource(R.drawable.corazon2);
                     vidas--;
                     puntuacion = (puntuacion - 25);
+                    explosionField.explode(boton);
+                    sonido.start();
+                    boton.setVisibility(View.INVISIBLE);
                     break;
                 case 2:
                     cor2.setImageResource(R.drawable.corazon2);
                     vidas--;
                     puntuacion = (puntuacion - 25);
+                    sonido.start();
+                     boton.setVisibility(View.INVISIBLE);
+                    explosionField.explode(boton);
                     break;
                 case 1:
                     cor1.setImageResource(R.drawable.corazon2);
                     puntuacion = (puntuacion - 50);
                     numjuegos++;
-                    bubblesAgin();
+                    vidas = 3;
+                    explosionField.explode(boton);
+                    sonido.start();
+                    boton.setVisibility(View.INVISIBLE);
+                    disableeButtons();
+                    Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            objectAnimatorF.setCurrentFraction(1);
+                            onAnimationEnd(objectAnimator1);
+                        }
+                    }, 2000);
+
                     break;
             }
-            for(int i = 0; i < objectAnimators.size(); i++){
+            /*for(int i = 0; i < objectAnimators.size(); i++){
                 if(objectAnimators.get(i).getTarget().equals(boton)) {
                     sonido.start();
                     boton.setVisibility(View.INVISIBLE);
                     //boton.setVisibility(View.GONE);
                     explosionField.explode(boton);
                 }
-            }
+            }*/
         }
-        else{
+        else {
             boton.setBackgroundResource(R.drawable.burbujaverde);
             Intent intent = getIntent();
-            thread = null;
+
             numjuegos++;
+            vidas = 3;
             correctAnswer = true;
-            bubblesAgin();
-            //startActivity(intent);
+
+            if (numjuegos == 10) {
+                showMenu();
+            } else {
+                disableeButtons();
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        objectAnimatorF.setCurrentFraction(1);
+                        onAnimationEnd(objectAnimator1);
+                    }
+                }, 1000);
+                //startActivity(intent);
+            }
         }
     }
 
     private void  generateNewOperation() {
-        final int random = (int) (Math.random() * 40);
+        random = (int) (Math.random() * 40);
 
         imgoperacion.setImageResource(Preguntas.get(random).operacion);//get the image correspondent to question
 
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                if (opcion11 != null) {
-                    opcion11.setText(Preguntas.get(random).opc1);
-                    opcion2.setText(Preguntas.get(random).opc2);//Add the text correspondent to question
-                    opcion3.setText(Preguntas.get(random).opc3);//
-                    opcion4.setText(Preguntas.get(random).opc4);//
+        opcion1.setText(Preguntas.get(random).opc1);
+        opcion2.setText(Preguntas.get(random).opc2);//Add the text correspondent to question
+        opcion3.setText(Preguntas.get(random).opc3);//
+        opcion4.setText(Preguntas.get(random).opc4);
 
-                }
-            }
+        correctAnswer();
 
-            ;
+    }
 
-        });
+    private void disableeButtons(){
+        opcion1.setEnabled(false);
+        opcion2.setEnabled(false);
+        opcion3.setEnabled(false);
+        opcion4.setEnabled(false);
+    }
+
+    private void enableButtons(){
+        opcion1.setEnabled(true);
+        opcion2.setEnabled(true);
+        opcion3.setEnabled(true);
+        opcion4.setEnabled(true);
     }
 
     public void checkHeight(){
-        if(Looper.myLooper() == null) {
             Looper.prepare();
+
+            ObjectAnimator objectAnimatorF = new ObjectAnimator();
+            Button button1 = (Button) objectAnimator1.getTarget();
+            Button button2 = (Button) objectAnimator2.getTarget();
+            Button button3 = (Button) objectAnimator3.getTarget();
+            Button button4 = (Button) objectAnimator4.getTarget();
+            if(button1.getText().toString().equals(Preguntas.get(random).rta) ){
+                objectAnimatorF = objectAnimator1;
+            }else if(button2.getText().toString().equals(Preguntas.get(random).rta) ){
+                objectAnimatorF = objectAnimator2;
+            }else if(button3.getText().toString().equals(Preguntas.get(random).rta) ){
+                objectAnimatorF = objectAnimator3;
+            }else if(button4.getText().toString().equals(Preguntas.get(random).rta) ){
+                objectAnimatorF = objectAnimator4;
+            }
         try {
             while (validateHeight) {
-                if (objectAnimator1.getAnimatedFraction() == 1.0) {
-                    break;
+                if(!stopThread) {
+                    if (objectAnimatorF.getAnimatedFraction() == 1.0) {
+                        break;
+                    }
+                }else {
+                    return;
                 }
             }
-            if (validateHeight) {
+            if (validateHeight && !stopThread) {
                 bubblesAgin();
                 numjuegos++;
+                stopThread = false;
                 Looper.loop();
             }
         }catch (NullPointerException npe){
             Log.e(TAG, "checkHeight: "+ npe);
         }
-        }else{
-            while (validateHeight) {
-                if (objectAnimator1.getAnimatedFraction() == 1.0) {
-                    break;
-                }
-            }
-            if (validateHeight) {
-                //code here
-                bubblesAgin();
-            }
-        }
+
     }
 
     private void reset(View root) {
@@ -338,11 +399,7 @@ public class BubblesMain extends Activity implements View.OnClickListener {
 
     private void  bubblesAgin(){
 
-        opcion1 = findViewById(R.id.btn1);
-        opcion2 = findViewById(R.id.btn2);
-        opcion3 = findViewById(R.id.btn3);
-        opcion4 = findViewById(R.id.btn4);
-
+        /*thread = null;
         if(correctAnswer){
             opcion1.setBackgroundResource(R.drawable.burbuja);
             opcion2.setBackgroundResource(R.drawable.burbuja);
@@ -354,58 +411,56 @@ public class BubblesMain extends Activity implements View.OnClickListener {
             opcion3.setVisibility(View.VISIBLE);
             opcion4.setVisibility(View.VISIBLE);
             correctAnswer = false;
-        }
+        }*/
 
-        reset( opcion1);
+        /*reset( opcion1);
         reset(opcion2);
         reset(opcion3);
         reset(opcion4);
         reset((View)objectAnimator1.getTarget());
         reset((View)objectAnimator2.getTarget());
         reset((View)objectAnimator3.getTarget());
-        reset((View)objectAnimator4.getTarget());
+        reset((View)objectAnimator4.getTarget());*/
 
-
-        imgoperacion = null;
-        imgoperacion = findViewById(R.id.imgopera);
-        Preguntas = null;
-        Preguntas = ListaDePreguntas();
-
-        generateNewOperation();
-
-        objectAnimator1 = null;
-        objectAnimator2 = null;
-        objectAnimator3 = null;
-        objectAnimator4 = null;
 
         objectAnimator1 = ObjectAnimator.ofFloat(opcion1,"translationY",0f, -heightDp);
         objectAnimator1.setDuration(11000);
+        objectAnimator1.addListener(this);
+        objectAnimator1.setRepeatCount(10);
         objectAnimator1.start();
         objectAnimator2 = ObjectAnimator.ofFloat(opcion2, "translationY", 0f,-heightDp);
         objectAnimator2.setDuration(11000);
+        objectAnimator2.addListener(this);
+
         objectAnimator2.start();
         objectAnimator3 = ObjectAnimator.ofFloat(opcion3, "translationY", 0f, -heightDp);
         objectAnimator3.setDuration(11000);
+        objectAnimator3.addListener(this);
         objectAnimator3.start();
         objectAnimator4 = ObjectAnimator.ofFloat(opcion4, "translationY", 0f, -heightDp);
         objectAnimator4.setDuration(11000);
+        objectAnimator4.addListener(this);
         objectAnimator4.start();
-
         objectAnimators.add(objectAnimator1);
         objectAnimators.add(objectAnimator2);
         objectAnimators.add(objectAnimator3);
         objectAnimators.add(objectAnimator4);
 
-        thread = null;
-        thread = new Thread() {
+        /*objectAnimators.add(objectAnimator1);
+        objectAnimators.add(objectAnimator2);
+        objectAnimators.add(objectAnimator3);
+        objectAnimators.add(objectAnimator4);*/
+
+        generateNewOperation();
+
+        Thread thread2 = new Thread() {
             @Override
             public void run() {
 
                 checkHeight();
             }
         };
-
-        thread.start();
+        //thread2.start();
         ValidaJuego();
     }
 
@@ -475,6 +530,26 @@ public class BubblesMain extends Activity implements View.OnClickListener {
         }
     }
 
+    /**
+     * This method allow us to change the buttons visivility to "VISIBLE"
+     */
+    private void changeButtonsVisibility(){
+        opcion1.setVisibility(View.VISIBLE);
+        opcion2.setVisibility(View.VISIBLE);
+        opcion3.setVisibility(View.VISIBLE);
+        opcion4.setVisibility(View.VISIBLE);
+
+        cor1.setImageResource(R.drawable.corazon);
+        cor2.setImageResource(R.drawable.corazon);
+        cor3.setImageResource(R.drawable.corazon);
+
+        opcion1.setBackgroundResource(R.drawable.burbuja);
+        opcion2.setBackgroundResource(R.drawable.burbuja);
+        opcion3.setBackgroundResource(R.drawable.burbuja);
+        opcion4.setBackgroundResource(R.drawable.burbuja);
+
+    }
+
     @Override
     public void onBackPressed() {
         Intent intent = new Intent(getApplicationContext(), Practica.class);
@@ -501,6 +576,66 @@ public class BubblesMain extends Activity implements View.OnClickListener {
         super.onResume();
         waterSound.start();
         ResumeAnimation();
+    }
+
+    private void correctAnswer(){
+        objectAnimatorF = new ObjectAnimator();
+        Button button1 = (Button) objectAnimator1.getTarget();
+        Button button2 = (Button) objectAnimator2.getTarget();
+        Button button3 = (Button) objectAnimator3.getTarget();
+        Button button4 = (Button) objectAnimator4.getTarget();
+        if(button1.getText().toString().equals(Preguntas.get(random).rta) ){
+            objectAnimatorF = objectAnimator1;
+        }else if(button2.getText().toString().equals(Preguntas.get(random).rta) ){
+            objectAnimatorF = objectAnimator2;
+        }else if(button3.getText().toString().equals(Preguntas.get(random).rta) ){
+            objectAnimatorF = objectAnimator3;
+        }else if(button4.getText().toString().equals(Preguntas.get(random).rta) ){
+            objectAnimatorF = objectAnimator4;
+        }
+    }
+
+    @Override
+    public void onAnimationStart(Animator animator) {
+        Toast.makeText(this, "an animation has started", Toast.LENGTH_SHORT).show();
+        //correctAnswer();
+    }
+
+    @Override
+    public void onAnimationEnd(Animator animator) {
+        if(objectAnimatorF != null) {
+            if (objectAnimatorF.getAnimatedFraction() == 1.0) {
+                //objectAnimator1.setStartDelay(1000);
+                //objectAnimator2.setStartDelay(1000);
+                //objectAnimator3.setStartDelay(1000);
+                //objectAnimator4.setStartDelay(1000);
+                changeButtonsVisibility();
+                enableButtons();
+                reset((View) objectAnimator1.getTarget());
+                reset((View) objectAnimator2.getTarget());
+                reset((View) objectAnimator3.getTarget());
+                reset((View) objectAnimator4.getTarget());
+
+                objectAnimatorF = null;
+                objectAnimator1.start();
+                objectAnimator2.start();
+                objectAnimator3.start();
+                objectAnimator4.start();
+
+                generateNewOperation();
+
+            }
+        }
+    }
+
+    @Override
+    public void onAnimationCancel(Animator animator) {
+
+    }
+
+    @Override
+    public void onAnimationRepeat(Animator animator) {
+
     }
 }
 
