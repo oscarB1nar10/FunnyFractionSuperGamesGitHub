@@ -50,6 +50,7 @@ public class EjecutableBateria extends Fragment implements View.OnClickListener 
     private int numberQuestion = 0, score = 1000, attemps = 0;
     private SharedPreferences mSharedPreferences;
     OnFragmentInteractionListener mListener;
+    ObjectAnimator heart1, heart2, heart3;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -68,9 +69,9 @@ public class EjecutableBateria extends Fragment implements View.OnClickListener 
         hearts.add((ImageView) view.findViewById(R.id.heart2));
         hearts.add((ImageView) view.findViewById(R.id.heart3));
 
-        ObjectAnimator heart1 = ObjectAnimator.ofFloat(hearts.get(2), "translationY", 0, 0);
-        ObjectAnimator heart2 = ObjectAnimator.ofFloat(hearts.get(1), "translationY", 0, 0);
-        ObjectAnimator heart3 = ObjectAnimator.ofFloat(hearts.get(0), "translationY", 0, 0);
+         heart1 = ObjectAnimator.ofFloat(hearts.get(2), "translationY", 0, 0);
+         heart2 = ObjectAnimator.ofFloat(hearts.get(1), "translationY", 0, 0);
+         heart3 = ObjectAnimator.ofFloat(hearts.get(0), "translationY", 0, 0);
 
         hearts2.add(heart1);
         hearts2.add(heart2);
@@ -437,25 +438,27 @@ public class EjecutableBateria extends Fragment implements View.OnClickListener 
     private void nextQuestion(){
         if(numberQuestion < 10) {
             selector.setImageResource(R.drawable.selector);
-            hearts = null;
-            hearts = new ArrayList<>();
+            //hearts = null;
+            //hearts = new ArrayList<>();
 
-            hearts.add((ImageView) view.findViewById(R.id.heart1));
-            hearts.add((ImageView) view.findViewById(R.id.heart2));
-            hearts.add((ImageView) view.findViewById(R.id.heart3));
+            //hearts.add((ImageView) view.findViewById(R.id.heart1));
+            //hearts.add((ImageView) view.findViewById(R.id.heart2));
+            //hearts.add((ImageView) view.findViewById(R.id.heart3));
 
-            ObjectAnimator heart1 = ObjectAnimator.ofFloat(hearts.get(2), "translationY", 0, 0);
-            ObjectAnimator heart2 = ObjectAnimator.ofFloat(hearts.get(1), "translationY", 0, 0);
-            ObjectAnimator heart3 = ObjectAnimator.ofFloat(hearts.get(0), "translationY", 0, 0);
+            //ObjectAnimator heart1 = ObjectAnimator.ofFloat(hearts.get(2), "translationY", 0, 0);
+            //ObjectAnimator heart2 = ObjectAnimator.ofFloat(hearts.get(1), "translationY", 0, 0);
+            //ObjectAnimator heart3 = ObjectAnimator.ofFloat(hearts.get(0), "translationY", 0, 0);
+
+
+            animacionBateria.setProgress(0);
+            reset((ImageView)heart1.getTarget());
+            reset((ImageView)heart2.getTarget());
+            reset((ImageView)heart3.getTarget());
 
             hearts2.add(heart1);
             hearts2.add(heart2);
             hearts2.add(heart3);
 
-            animacionBateria.setProgress(0);
-            reset((ImageView) view.findViewById(R.id.heart1));
-            reset((ImageView) view.findViewById(R.id.heart2));
-            reset((ImageView) view.findViewById(R.id.heart3));
             attemps = 0;
             enableTextView();
             extraerPreguntas();
@@ -506,9 +509,13 @@ public class EjecutableBateria extends Fragment implements View.OnClickListener 
                 reset(parent.getChildAt(i));
             }
         } else {
-            root.setScaleX(1);
-            root.setScaleY(1);
-            root.setAlpha(1);
+            try {
+                root.setScaleX(1);
+                root.setScaleY(1);
+                root.setAlpha(1);
+            }catch (Exception e){
+
+            }
         }
     }
 
