@@ -48,6 +48,7 @@ public class EvaluacionActivity extends AppCompatActivity implements EvaluationV
     int randomQ = 0, numberQuestion = 1;
     private ArrayList<TextView> answerOptions;
     private int answersToDelete;
+    private ProgressBar pgb_download;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -80,6 +81,7 @@ public class EvaluacionActivity extends AppCompatActivity implements EvaluationV
         btn_public = findViewById(R.id.btn_public);
         btn_salir = findViewById(R.id.btn_exit);
         btn_salir_menu = findViewById(R.id.btn_exit_menu_millionary);
+        pgb_download = findViewById(R.id.pgb_download);
 
         //region sonidos
         musicafondo = MediaPlayer.create(this, R.raw.musicafondo);
@@ -118,6 +120,22 @@ public class EvaluacionActivity extends AppCompatActivity implements EvaluationV
     public void questionList(List<Questions> questionsList) {
         this.questionsList = questionsList;
         questionThrow(this.questionsList);
+    }
+
+    @Override
+    public void showPGB() {
+        pgb_download.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hidePGB() {
+        pgb_download.setVisibility(View.GONE);
+        btn_play_evaluation.setEnabled(true);
+    }
+
+    @Override
+    public void showMessage(String string) {
+        Toast.makeText(this, "", Toast.LENGTH_SHORT).show();
     }
 
     public void questionThrow(List<Questions> lista){
@@ -630,6 +648,8 @@ public class EvaluacionActivity extends AppCompatActivity implements EvaluationV
         txt_money.setText("$ "+((500*numberQuestion)-500));
         dialog.show();
     }
+
+
 
     public void enableHelps(){
         btn_call.setImageResource(R.drawable.call_mellionary);

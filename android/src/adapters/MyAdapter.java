@@ -1,5 +1,6 @@
 package adapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
@@ -42,6 +43,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     // Replace the contents of a view (invoked by the layout manager)
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+        final Activity activity = (Activity) context;
         if (position == 0) {
             if(sharedPreferences.getString("idioma","Spanish").equals("Spanish")){
                 holder.mRelativeLayout.setBackgroundResource(R.drawable.tutorials_cover_page);
@@ -53,8 +55,16 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
             holder.information.setText("");
             holder.ImageView.setVisibility(View.INVISIBLE);
             holder.optionalImg.setVisibility(View.INVISIBLE);
+            holder.home.setVisibility(View.VISIBLE);
+            holder.home.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    activity.onBackPressed();
+                }
+            });
 
         } else {
+            holder.home.setVisibility(View.INVISIBLE);
             holder.mRelativeLayout.setBackgroundResource(R.drawable.sheet);
             holder.title.setText(sumaTutorialInformationsList.get(position).getTitle());
             holder.information.setText(sumaTutorialInformationsList.get(position).getInformation());
@@ -76,6 +86,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         ImageView ImageView;
         ImageView optionalImg;
         RelativeLayout mRelativeLayout;
+        ImageView home;
 
         public MyViewHolder(View view) {
             super(view);
@@ -84,6 +95,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
             ImageView = view.findViewById(R.id.img_example1);
             mRelativeLayout = view.findViewById(R.id.cover_page);
             optionalImg = view.findViewById(R.id.optionalImg);
+            home = view.findViewById(R.id.homecolor);
         }
     }
 }

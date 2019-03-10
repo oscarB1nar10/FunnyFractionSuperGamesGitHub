@@ -20,16 +20,17 @@ public class EvaluationProvider  {
 
 
     public void getEvaluationQ(){
-
+        evaluationView.showPGB();
         evaluationInteractor.getQuestions(new CallbackRetrofitListener<EvaluationResponse>() {
             @Override
             public void onResponse(EvaluationResponse resultado) {
+                evaluationView.hidePGB();
                 evaluationView.questionList(resultado.getData().getPreguntas());
             }
 
             @Override
             public void onFailure(Throwable error) {
-
+                evaluationView.hidePGB();
             }
         });
 

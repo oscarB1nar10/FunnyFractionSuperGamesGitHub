@@ -15,6 +15,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -36,6 +37,7 @@ import androidlogic.evaluacion.EvaluacionActivity;
 import androidlogic.login.MainActivity;
 import androidlogic.practice.Practica;
 import androidlogic.tutorials.TutorialQueSon;
+import burbujas.BubblesMain;
 
 public class Home extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener,
                                                         NavigationView.OnNavigationItemSelectedListener {
@@ -221,6 +223,9 @@ public class Home extends AppCompatActivity implements GoogleApiClient.OnConnect
         SharedPreferences.Editor editor = mSharedPreferences.edit();
 
         switch (item.getItemId()){
+            case R.id.about:
+                    showAboutAlerDialog();
+                break;
             case R.id.sign_out:
                 Auth.GoogleSignInApi.signOut(googleApiClient).setResultCallback(new ResultCallback<Status>() {
                     @Override
@@ -271,5 +276,21 @@ public class Home extends AppCompatActivity implements GoogleApiClient.OnConnect
         }
 
         return false;
+    }
+
+    /**
+     * This method allow us to show an AlertDialog whit the specific apk information .
+     */
+    private void showAboutAlerDialog(){
+        final android.support.v7.app.AlertDialog.Builder builder = new
+                android.support.v7.app.AlertDialog.Builder(Home.this).setCancelable(true);
+        // Get the layout inflater
+        LayoutInflater inflater = getLayoutInflater();
+        View view = inflater.inflate(R.layout.about_layout, null);
+
+
+        builder.setView(view);
+        builder.create();
+        builder.show();
     }
 }
