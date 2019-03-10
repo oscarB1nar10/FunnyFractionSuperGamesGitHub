@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
@@ -51,6 +52,7 @@ public class BubblesMain extends Activity implements View.OnClickListener, Anima
     private int random;
     Thread thread;
     boolean validateHeight = true;
+    boolean itemSelected = false;
     private View view;
     private ObjectAnimator objectAnimatorF;
 
@@ -80,6 +82,7 @@ public class BubblesMain extends Activity implements View.OnClickListener, Anima
         waterSound.setLooping(true);
         waterSound.setVolume(0,0.2f);
         waterSound.start();
+
         pausa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -190,16 +193,6 @@ public class BubblesMain extends Activity implements View.OnClickListener, Anima
 
         heightDp = (displayMetrics.heightPixels*77)/100;
 
-        thread = new Thread(){
-            @Override
-            public void run() {
-                //runOnUiThread(new Runnable() {
-                  //  @Override
-                  //  public void run() {
-                        checkHeight();
-                    //}
-                }
-            };
 
 
         objectAnimator1 = ObjectAnimator.ofFloat(opcion1,"translationY",0f, -heightDp);
@@ -225,7 +218,6 @@ public class BubblesMain extends Activity implements View.OnClickListener, Anima
         objectAnimator4.start();
 
         correctAnswer();
-        //thread.start();
         ValidaJuego();
 
     }
@@ -250,6 +242,7 @@ public class BubblesMain extends Activity implements View.OnClickListener, Anima
                 case 3:
                     cor3.setImageResource(R.drawable.corazon2);
                     vidas--;
+                    itemSelected = true;
                     puntuacion = (puntuacion - 25);
                     explosionField.explode(boton);
                     sonido.start();
@@ -258,16 +251,17 @@ public class BubblesMain extends Activity implements View.OnClickListener, Anima
                 case 2:
                     cor2.setImageResource(R.drawable.corazon2);
                     vidas--;
+                    itemSelected = true;
                     puntuacion = (puntuacion - 25);
                     sonido.start();
-                     boton.setVisibility(View.INVISIBLE);
+                    boton.setVisibility(View.INVISIBLE);
                     explosionField.explode(boton);
                     break;
                 case 1:
                     cor1.setImageResource(R.drawable.corazon2);
                     puntuacion = (puntuacion - 50);
-                    numjuegos++;
                     vidas = 3;
+                    itemSelected = true;
                     explosionField.explode(boton);
                     sonido.start();
                     boton.setVisibility(View.INVISIBLE);
@@ -281,28 +275,16 @@ public class BubblesMain extends Activity implements View.OnClickListener, Anima
                         }
                     }, 2000);
 
+
                     break;
             }
-            /*for(int i = 0; i < objectAnimators.size(); i++){
-                if(objectAnimators.get(i).getTarget().equals(boton)) {
-                    sonido.start();
-                    boton.setVisibility(View.INVISIBLE);
-                    //boton.setVisibility(View.GONE);
-                    explosionField.explode(boton);
-                }
-            }*/
         }
         else {
             boton.setBackgroundResource(R.drawable.burbujaverde);
             Intent intent = getIntent();
-
-            numjuegos++;
             vidas = 3;
-            correctAnswer = true;
+            itemSelected = true;
 
-            if (numjuegos == 10) {
-                showMenu();
-            } else {
                 disableeButtons();
                 Handler handler = new Handler();
                 handler.postDelayed(new Runnable() {
@@ -312,9 +294,8 @@ public class BubblesMain extends Activity implements View.OnClickListener, Anima
                         onAnimationEnd(objectAnimator1);
                     }
                 }, 1000);
-                //startActivity(intent);
             }
-        }
+
     }
 
     private void  generateNewOperation() {
@@ -345,44 +326,7 @@ public class BubblesMain extends Activity implements View.OnClickListener, Anima
         opcion4.setEnabled(true);
     }
 
-    public void checkHeight(){
-            Looper.prepare();
 
-            ObjectAnimator objectAnimatorF = new ObjectAnimator();
-            Button button1 = (Button) objectAnimator1.getTarget();
-            Button button2 = (Button) objectAnimator2.getTarget();
-            Button button3 = (Button) objectAnimator3.getTarget();
-            Button button4 = (Button) objectAnimator4.getTarget();
-            if(button1.getText().toString().equals(Preguntas.get(random).rta) ){
-                objectAnimatorF = objectAnimator1;
-            }else if(button2.getText().toString().equals(Preguntas.get(random).rta) ){
-                objectAnimatorF = objectAnimator2;
-            }else if(button3.getText().toString().equals(Preguntas.get(random).rta) ){
-                objectAnimatorF = objectAnimator3;
-            }else if(button4.getText().toString().equals(Preguntas.get(random).rta) ){
-                objectAnimatorF = objectAnimator4;
-            }
-        try {
-            while (validateHeight) {
-                if(!stopThread) {
-                    if (objectAnimatorF.getAnimatedFraction() == 1.0) {
-                        break;
-                    }
-                }else {
-                    return;
-                }
-            }
-            if (validateHeight && !stopThread) {
-                bubblesAgin();
-                numjuegos++;
-                stopThread = false;
-                Looper.loop();
-            }
-        }catch (NullPointerException npe){
-            Log.e(TAG, "checkHeight: "+ npe);
-        }
-
-    }
 
     private void reset(View root) {
         if (root instanceof ViewGroup) {
@@ -397,96 +341,67 @@ public class BubblesMain extends Activity implements View.OnClickListener, Anima
         }
     }
 
-    private void  bubblesAgin(){
 
-        /*thread = null;
-        if(correctAnswer){
-            opcion1.setBackgroundResource(R.drawable.burbuja);
-            opcion2.setBackgroundResource(R.drawable.burbuja);
-            opcion3.setBackgroundResource(R.drawable.burbuja);
-            opcion4.setBackgroundResource(R.drawable.burbuja);
-
-            opcion1.setVisibility(View.VISIBLE);
-            opcion2.setVisibility(View.VISIBLE);
-            opcion3.setVisibility(View.VISIBLE);
-            opcion4.setVisibility(View.VISIBLE);
-            correctAnswer = false;
-        }*/
-
-        /*reset( opcion1);
-        reset(opcion2);
-        reset(opcion3);
-        reset(opcion4);
-        reset((View)objectAnimator1.getTarget());
-        reset((View)objectAnimator2.getTarget());
-        reset((View)objectAnimator3.getTarget());
-        reset((View)objectAnimator4.getTarget());*/
-
-
-        objectAnimator1 = ObjectAnimator.ofFloat(opcion1,"translationY",0f, -heightDp);
-        objectAnimator1.setDuration(11000);
-        objectAnimator1.addListener(this);
-        objectAnimator1.setRepeatCount(10);
-        objectAnimator1.start();
-        objectAnimator2 = ObjectAnimator.ofFloat(opcion2, "translationY", 0f,-heightDp);
-        objectAnimator2.setDuration(11000);
-        objectAnimator2.addListener(this);
-
-        objectAnimator2.start();
-        objectAnimator3 = ObjectAnimator.ofFloat(opcion3, "translationY", 0f, -heightDp);
-        objectAnimator3.setDuration(11000);
-        objectAnimator3.addListener(this);
-        objectAnimator3.start();
-        objectAnimator4 = ObjectAnimator.ofFloat(opcion4, "translationY", 0f, -heightDp);
-        objectAnimator4.setDuration(11000);
-        objectAnimator4.addListener(this);
-        objectAnimator4.start();
-        objectAnimators.add(objectAnimator1);
-        objectAnimators.add(objectAnimator2);
-        objectAnimators.add(objectAnimator3);
-        objectAnimators.add(objectAnimator4);
-
-        /*objectAnimators.add(objectAnimator1);
-        objectAnimators.add(objectAnimator2);
-        objectAnimators.add(objectAnimator3);
-        objectAnimators.add(objectAnimator4);*/
-
-        generateNewOperation();
-
-        Thread thread2 = new Thread() {
-            @Override
-            public void run() {
-
-                checkHeight();
-            }
-        };
-        //thread2.start();
-        ValidaJuego();
-    }
 
     public void showMenu(){
-        LayoutInflater layoutInflater = getLayoutInflater();
-        View view = layoutInflater.inflate(R.layout.game_over,null);
+        final android.support.v7.app.AlertDialog.Builder builder = new
+                        android.support.v7.app.AlertDialog.Builder(BubblesMain.this).setCancelable(false);
+        boolean soundV;
+        // Get the layout inflater
+        LayoutInflater inflater = getLayoutInflater();
+        View view = inflater.inflate(R.layout.menu_drop_game, null);
 
-        final Button btn_restar = view.findViewById(R.id.btn_restart_b);
-        Button btn_home = view.findViewById(R.id.btn_home_b);
-        Button btn_mute = view.findViewById(R.id.btn_mute_b);
-        TextView puntaje = view.findViewById(R.id.txtpuntuacionb);
+        ImageView play = view.findViewById(R.id.btn_play_drops);
+        ImageView home = view.findViewById(R.id.btn_home_drops);
+        TextView titulo = view.findViewById(R.id.titulo);
+        TextView puntuacionTV = view.findViewById(R.id.puntuacion);
+        final ImageView sound = view.findViewById(R.id.btn_sound_drops);
 
-        final AlertDialog.Builder menu = new AlertDialog.Builder(BubblesMain.this).setCancelable(false);
-        menu.setView(view);
-        final AlertDialog ad = menu.create();
-        ad.show();
-
-        if(numjuegos < 10){
-            btn_restar.setText("Resumen");
-            puntaje.setVisibility(View.INVISIBLE);
-        }else {
-            puntaje.setVisibility(View.VISIBLE);
-            puntaje.setText(puntaje.getText()+" "+puntuacion+"/1000");
+        if(waterSound.isPlaying()){
+            sound.setImageResource(R.drawable.sonido);
+        }else{
+            sound.setImageResource(R.drawable.mute);
         }
 
-        btn_home.setOnClickListener(new View.OnClickListener() {
+        if(numjuegos < 10){
+            titulo.setText("PAUSA");
+            puntuacionTV.setText("Puntuacion: "+puntuacion+" / "+1000);
+        }else {
+            titulo.setText("FINDE JUEGO");
+            puntuacionTV.setText("Puntuacion final: "+puntuacion+" / "+1000);
+            play.setImageResource(R.drawable.devolver);
+        }
+
+        builder.setView(view);
+        builder.create();
+        final android.support.v7.app.AlertDialog alertDialog = builder.show();
+
+
+            play.setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View v) {
+                    if(numjuegos < 10){
+                        ResumeAnimation();
+                        alertDialog.dismiss();
+                    }else{
+                        numjuegos = 0;
+                        puntuacion = 0;
+                        Intent intent = getIntent();
+                        intent.putExtra("llave", (numjuegos));
+                        intent.putExtra("puntuacion",puntuacion);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        finish();
+                        startActivity(intent);
+                    }
+                }
+            });
+
+
+
+
+
+        home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(),Practica.class);
@@ -496,25 +411,21 @@ public class BubblesMain extends Activity implements View.OnClickListener, Anima
             }
         });
 
-        btn_restar.setOnClickListener(new View.OnClickListener() {
+        sound.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(btn_restar.getText().equals("Resumen")){
-                    ResumeAnimation();
-                    ad.dismiss();
-                }else{
-                    numjuegos = 0;
-                    puntuacion = 0;
-                    Intent intent = getIntent();
-                    intent.putExtra("llave", (numjuegos));
-                    intent.putExtra("puntuacion",puntuacion);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    finish();
-                    startActivity(intent);
+                if(waterSound.isPlaying()){
+                    sound.setImageResource(R.drawable.mute);
+                    waterSound.pause();
+                }
+                else {
+                    sound.setImageResource(R.drawable.sonido);
+                    waterSound.start();
                 }
             }
         });
     }
+
 
     public void PauseAnimation(){
         currentAnimation = objectAnimator1.getCurrentPlayTime();
@@ -597,32 +508,38 @@ public class BubblesMain extends Activity implements View.OnClickListener, Anima
 
     @Override
     public void onAnimationStart(Animator animator) {
-        Toast.makeText(this, "an animation has started", Toast.LENGTH_SHORT).show();
-        //correctAnswer();
+
     }
 
     @Override
     public void onAnimationEnd(Animator animator) {
         if(objectAnimatorF != null) {
             if (objectAnimatorF.getAnimatedFraction() == 1.0) {
-                //objectAnimator1.setStartDelay(1000);
-                //objectAnimator2.setStartDelay(1000);
-                //objectAnimator3.setStartDelay(1000);
-                //objectAnimator4.setStartDelay(1000);
-                changeButtonsVisibility();
-                enableButtons();
-                reset((View) objectAnimator1.getTarget());
-                reset((View) objectAnimator2.getTarget());
-                reset((View) objectAnimator3.getTarget());
-                reset((View) objectAnimator4.getTarget());
 
-                objectAnimatorF = null;
-                objectAnimator1.start();
-                objectAnimator2.start();
-                objectAnimator3.start();
-                objectAnimator4.start();
+                if(numjuegos == 10){
+                    showMenu();
+                }else {
+                    numjuegos ++;
+                    changeButtonsVisibility();
+                    enableButtons();
+                    reset((View) objectAnimator1.getTarget());
+                    reset((View) objectAnimator2.getTarget());
+                    reset((View) objectAnimator3.getTarget());
+                    reset((View) objectAnimator4.getTarget());
 
-                generateNewOperation();
+                    objectAnimatorF = null;
+                    objectAnimator1.start();
+                    objectAnimator2.start();
+                    objectAnimator3.start();
+                    objectAnimator4.start();
+                    if(!itemSelected){
+                        puntuacion-=100;
+                    }else{
+                        itemSelected = false;
+                    }
+                    generateNewOperation();
+                }
+
 
             }
         }

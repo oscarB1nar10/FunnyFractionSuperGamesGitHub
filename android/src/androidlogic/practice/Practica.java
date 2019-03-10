@@ -54,7 +54,7 @@ public class Practica extends AppCompatActivity implements
 
         if(getIntent() != null){
             numFragment = getIntent().getIntExtra("numFragment",0);
-            if(numFragment == 3){
+            if(numFragment == 4){
                 showOperation = getIntent().getBooleanExtra("showOperation",false);
             }
             mViewPager.setCurrentItem(numFragment);

@@ -29,7 +29,8 @@
                                 it is represent whit a horizontal bar that separates firs value (numerator) from the second (denominator) </string>
     <string name="txtejemplo">For example, we divide a pizza into 8 equal parts and take three.</string>
     <string name="txtsumhomo">ADD FRACTIONS WITH THE SAME DENOMINATOR (HOMOGENEOUS)</string>
-    <string name="txteoriasumhomo">Debemos sumar sus numeradores y dejar su denominador igual</string>
+    <string name="txtsumhete">ADD FRACTIONS WITH DIFFERENT DENOMINATOR (HETEROGENEOUS)</string>
+    <string name="txteoriasumhomo">we must add their numerators and leave their denominator equal</string>
     <string name="txteoriasumhete">we should use happy face technique, we must multiply the numerators with the inverse denominators
                                 and add the results, that result will be the numerator of the result fraction,
                                     the denominator result is equal to the product of the denominators</string>
