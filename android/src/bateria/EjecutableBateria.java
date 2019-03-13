@@ -39,7 +39,11 @@ public class EjecutableBateria extends Fragment implements View.OnClickListener 
     ArrayList<TextView> txtvList;
     ImageView operacion, selector, logomenu;
     ImageButton imb_pause;
-    Button btn_jugar, btn_instrucciones;
+    Button btn_jugar, btn_instrucciones, btn_sound;
+    CircleImageView civ_sound_menu;
+    boolean soundOk;
+    SharedPreferences.Editor editor;
+    ObjectAnimator objectAnimator1;
     LinearLayout main_linearLayout;
     LottieAnimationView animacionBateria, animacionBateria1;
     MediaPlayer ring, heartExplosion;
@@ -63,7 +67,7 @@ public class EjecutableBateria extends Fragment implements View.OnClickListener 
         startBattery();
         hearts2 = new ArrayList<>();
         logomenu = view.findViewById(R.id.logomenu);
-        logomenu.setBackgroundResource(R.drawable.logonicolas);
+        logomenu.setBackgroundResource(R.drawable.logo_resta);
         hearts = new ArrayList<>();
         hearts.add((ImageView) view.findViewById(R.id.heart1));
         hearts.add((ImageView) view.findViewById(R.id.heart2));
@@ -78,7 +82,11 @@ public class EjecutableBateria extends Fragment implements View.OnClickListener 
         hearts2.add(heart3);
 
         imb_pause = view.findViewById(R.id.imb_pause);
+        civ_sound_menu = view.findViewById(R.id.btn_sound_menu);
+        btn_sound = view.findViewById(R.id.btn_sound);
         imb_pause.setOnClickListener(this);
+        btn_sound.setOnClickListener(this);
+
 
         ring = MediaPlayer.create(getContext(),R.raw.spatial_sound);
         heartExplosion = MediaPlayer.create(getContext(), R.raw.bubble);
@@ -89,6 +97,9 @@ public class EjecutableBateria extends Fragment implements View.OnClickListener 
         animacionBateria1 = view.findViewById(R.id.animacionBateria_initial);
 
         mSharedPreferences = this.getActivity().getSharedPreferences("SHARED_PREFERENCES", Context.MODE_PRIVATE);
+        editor = mSharedPreferences.edit();
+        soundOk = mSharedPreferences.getBoolean("battery_sound",true);
+
         btn_instrucciones = view.findViewById(R.id.btn_instrucciones);
 
         btn_instrucciones.setOnClickListener(this);
@@ -99,6 +110,9 @@ public class EjecutableBateria extends Fragment implements View.OnClickListener 
             @Override
             public void onClick(View v) {
                 main_linearLayout.setVisibility(View.VISIBLE);
+                if(soundOk){
+                    ring.start();
+                }
             }
         });
 
@@ -265,6 +279,52 @@ public class EjecutableBateria extends Fragment implements View.OnClickListener 
             case R.id.btn_instrucciones:
                     instructions();
                 break;
+            case R.id.btn_sound:
+                btn_sound.setEnabled(false);
+                civ_sound_menu.setVisibility(View.VISIBLE);
+                if(soundOk) {
+                    civ_sound_menu.setImageResource(R.drawable.mute);
+                    editor.putBoolean("battery_sound", false);
+                    soundOk = false;
+                }else{
+                    civ_sound_menu.setImageResource(R.drawable.sonido);
+                    editor.putBoolean("battery_sound", true);
+                    soundOk = true;
+                }
+                editor.apply();
+
+                objectAnimator1 = ObjectAnimator.ofFloat(civ_sound_menu, "translationY", 0f, -500);
+                objectAnimator1.setDuration(1000);
+
+                objectAnimator1.addListener(new Animator.AnimatorListener() {
+                    @Override
+                    public void onAnimationStart(Animator animation) {
+
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        civ_sound_menu.clearAnimation();
+                        civ_sound_menu.animate().alpha(1.0f).setDuration(1);
+                        civ_sound_menu.setVisibility(View.INVISIBLE);
+                        btn_sound.setEnabled(true);
+                        objectAnimator1.cancel();
+                    }
+
+                    @Override
+                    public void onAnimationCancel(Animator animation) {
+
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animator animation) {
+
+                    }
+                });
+                civ_sound_menu.animate().alpha(0.0f).setDuration(700);
+                objectAnimator1.start();
+
+                break;
         }
 
     }
@@ -356,7 +416,7 @@ public class EjecutableBateria extends Fragment implements View.OnClickListener 
     }
 
     private void launchMenu() {
-        final SharedPreferences.Editor editor = mSharedPreferences.edit();
+        editor = mSharedPreferences.edit();
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         // Get the layout inflater
         LayoutInflater inflater = this.getLayoutInflater();
@@ -420,12 +480,12 @@ public class EjecutableBateria extends Fragment implements View.OnClickListener 
                     cim_sound.setImageResource(R.drawable.mute);
                     ring.pause();
                     editor.putBoolean("battery_sound", false);
-                    editor.commit();
+                    editor.apply();
                 }else{
                     cim_sound.setImageResource(R.drawable.sonido);
                     ring.start();
                     editor.putBoolean("battery_sound", true);
-                    editor.commit();
+                    editor.apply();
                 }
             }
         });

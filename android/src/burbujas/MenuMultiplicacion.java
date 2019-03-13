@@ -1,5 +1,9 @@
 package burbujas;
 
+import android.animation.Animator;
+import android.animation.ObjectAnimator;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.support.v4.app.Fragment;
 import android.content.Intent;
 import android.net.Uri;
@@ -16,19 +20,32 @@ import com.funnyfractions.game.R;
 
 import java.util.ArrayList;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class MenuMultiplicacion extends Fragment implements View.OnClickListener {
-    public Button jugar, configuraciones, instrucciones;
+    public Button jugar, btn_sound, instrucciones;
+    CircleImageView civ_sound_menu;
     OnFragmentInteractionListener mListener;
+    private SharedPreferences.Editor editor;
+    private SharedPreferences sharedP;
+    private ObjectAnimator objectAnimator1;
+    private boolean soundOk;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view =inflater.inflate(R.layout.menu_multiplicacion, container, false);
         jugar = view.findViewById(R.id.btn_jugar_multiplicacion);
-        configuraciones = view.findViewById(R.id.btn_settings_multiplicacion);
+        btn_sound = view.findViewById(R.id.btn_settings_multiplicacion);
         instrucciones = view.findViewById(R.id.btn_instrucciones_multiplicacion);
+        civ_sound_menu = view.findViewById(R.id.btn_sound_multi);
+        sharedP = getContext().getSharedPreferences("SHARED_PREFERENCES", Context.MODE_PRIVATE);
+        soundOk = sharedP.getBoolean("sound_rain",true);
+        editor = sharedP.edit();
         jugar.setOnClickListener(this);
+        btn_sound.setOnClickListener(this);
         instrucciones.setOnClickListener(this);
+
         return view;
     }
 
@@ -37,11 +54,57 @@ public class MenuMultiplicacion extends Fragment implements View.OnClickListener
         switch (v.getId()){
             case R.id.btn_jugar_multiplicacion:
                 Intent intent = new Intent(getActivity(), BubblesMain.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
                 break;
             case R.id.btn_instrucciones_multiplicacion:
                 instrucciones();
+
+            case R.id.btn_settings_multiplicacion:
+                btn_sound.setEnabled(false);
+                civ_sound_menu.setVisibility(View.VISIBLE);
+                if(soundOk) {
+                    civ_sound_menu.setImageResource(R.drawable.mute);
+                    editor.putBoolean("sound_rain", false);
+                    soundOk = false;
+                }else{
+                    civ_sound_menu.setImageResource(R.drawable.sonido);
+                    editor.putBoolean("sound_rain", true);
+                    soundOk = true;
+                }
+                editor.apply();
+
+                objectAnimator1 = ObjectAnimator.ofFloat(civ_sound_menu, "translationY", 0f, -500);
+                objectAnimator1.setDuration(1000);
+
+                objectAnimator1.addListener(new Animator.AnimatorListener() {
+                    @Override
+                    public void onAnimationStart(Animator animation) {
+
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        civ_sound_menu.clearAnimation();
+                        civ_sound_menu.animate().alpha(1.0f).setDuration(1);
+                        civ_sound_menu.setVisibility(View.INVISIBLE);
+                        btn_sound.setEnabled(true);
+                        objectAnimator1.cancel();
+                    }
+
+                    @Override
+                    public void onAnimationCancel(Animator animation) {
+
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animator animation) {
+
+                    }
+                });
+                civ_sound_menu.animate().alpha(0.0f).setDuration(700);
+                objectAnimator1.start();
+
+                break;
         }
     }
 

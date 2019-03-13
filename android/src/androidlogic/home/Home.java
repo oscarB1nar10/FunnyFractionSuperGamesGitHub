@@ -50,6 +50,7 @@ public class Home extends AppCompatActivity implements GoogleApiClient.OnConnect
     private Menu nav_menu;
     //vars
     private SharedPreferences mSharedPreferences;
+    private SharedPreferences.Editor editor;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -68,6 +69,7 @@ public class Home extends AppCompatActivity implements GoogleApiClient.OnConnect
                 .build();
 
         mSharedPreferences = getSharedPreferences("SHARED_PREFERENCES",MODE_PRIVATE);
+        editor = mSharedPreferences.edit();
         deletePreferences();
 
         // setup DrawerLayout
@@ -161,8 +163,16 @@ public class Home extends AppCompatActivity implements GoogleApiClient.OnConnect
                 overridePendingTransition(R.anim.zoom_back_in, R.anim.zoom_back_out);
             }
         });
+
+        String usuario = "";
         Bundle dato = getIntent().getExtras();
-        String usuario = dato.getString("usuario");
+        if(dato != null) {
+            usuario = dato.getString("usuario");
+            editor.putString("userName", usuario);
+            editor.apply();
+        }else{
+            usuario = mSharedPreferences.getString("userName","carl");
+        }
         logeando.setText(usuario);
     }
 

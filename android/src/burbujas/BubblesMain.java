@@ -1,37 +1,29 @@
 package burbujas;
+
 import android.animation.Animator;
 import android.animation.ObjectAnimator;
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Looper;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.funnyfractions.game.R;
+
 import java.util.ArrayList;
-import java.util.zip.Inflater;
 
 import androidlogic.practice.Practica;
 import tyrantgit.explosionfield.ExplosionField;
-
-import static android.support.test.InstrumentationRegistry.getContext;
 
 public class BubblesMain extends Activity implements View.OnClickListener, Animator.AnimatorListener {
     //cons
@@ -43,18 +35,20 @@ public class BubblesMain extends Activity implements View.OnClickListener, Anima
     MediaPlayer sonido,waterSound;
     ExplosionField explosionField;
     ObjectAnimator objectAnimator1, objectAnimator2, objectAnimator3, objectAnimator4;
-    Button opcion1, opcion2, opcion3, opcion4, opcion11;
+    Button opcion1, opcion2, opcion3, opcion4;
     ImageView imgoperacion, cor1, cor2, cor3, pausa;
     int numjuegos = 0, puntuacion, heightDp, alea, vidas;
     private long currentAnimation;
     private  ArrayList <Pregunta> Preguntas;
-    private boolean correctAnswer, stopThread;
     private int random;
     Thread thread;
     boolean validateHeight = true;
     boolean itemSelected = false;
     private View view;
     private ObjectAnimator objectAnimatorF;
+    private SharedPreferences.Editor editor;
+    private SharedPreferences sharedP;
+    private boolean soundOk;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,8 +75,12 @@ public class BubblesMain extends Activity implements View.OnClickListener, Anima
         waterSound= MediaPlayer.create(this,R.raw.water);
         waterSound.setLooping(true);
         waterSound.setVolume(0,0.2f);
-        waterSound.start();
-
+        sharedP = getSharedPreferences("SHARED_PREFERENCES", Context.MODE_PRIVATE);
+        editor = sharedP.edit();
+        soundOk = sharedP.getBoolean("sound_rain",true);
+        if(soundOk) {
+            waterSound.start();
+        }
         pausa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -287,8 +285,6 @@ public class BubblesMain extends Activity implements View.OnClickListener, Anima
         opcion4.setEnabled(true);
     }
 
-
-
     private void reset(View root) {
         if (root instanceof ViewGroup) {
             ViewGroup parent = (ViewGroup) root;
@@ -301,8 +297,6 @@ public class BubblesMain extends Activity implements View.OnClickListener, Anima
             root.setAlpha(1);
         }
     }
-
-
 
     public void showMenu(){
         final android.support.v7.app.AlertDialog.Builder builder = new
@@ -320,6 +314,7 @@ public class BubblesMain extends Activity implements View.OnClickListener, Anima
 
         if(waterSound.isPlaying()){
             sound.setImageResource(R.drawable.sonido);
+
         }else{
             sound.setImageResource(R.drawable.mute);
         }
@@ -358,10 +353,6 @@ public class BubblesMain extends Activity implements View.OnClickListener, Anima
                 }
             });
 
-
-
-
-
         home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -378,15 +369,17 @@ public class BubblesMain extends Activity implements View.OnClickListener, Anima
                 if(waterSound.isPlaying()){
                     sound.setImageResource(R.drawable.mute);
                     waterSound.pause();
+                    editor.putBoolean("sound_rain", false);
                 }
                 else {
                     sound.setImageResource(R.drawable.sonido);
                     waterSound.start();
+                    editor.putBoolean("sound_rain", false);
                 }
+                editor.apply();
             }
         });
     }
-
 
     public void PauseAnimation(){
         currentAnimation = objectAnimator1.getCurrentPlayTime();
@@ -446,7 +439,6 @@ public class BubblesMain extends Activity implements View.OnClickListener, Anima
     @Override
     protected void onResume() {
         super.onResume();
-        waterSound.start();
         ResumeAnimation();
     }
 

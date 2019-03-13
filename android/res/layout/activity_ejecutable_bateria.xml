@@ -6,13 +6,14 @@
     android:layout_height="match_parent"
     android:weightSum="3"
     android:orientation="vertical"
-    android:background="@drawable/f11">
+    android:background="@drawable/fondomenubateria">
 
     <LinearLayout
         android:id="@+id/main_layout_game_battery"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
+        android:background="@drawable/f11"
         android:visibility="gone">
     <LinearLayout
         android:layout_width="match_parent"

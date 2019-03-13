@@ -64,7 +64,9 @@ public class Practica extends AppCompatActivity implements
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
+        Intent intent = new Intent(Practica.this, Home.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
         overridePendingTransition(R.anim.zoom_back_in, R.anim.zoom_back_out);
 
     }

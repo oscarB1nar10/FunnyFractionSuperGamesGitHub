@@ -1,5 +1,8 @@
 package androidlogic.games.archery_game;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -25,16 +28,20 @@ import com.funnyfractions.game.tutorials.AndroidLauncher2;
 
 import java.util.ArrayList;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import interfaces.PracticeAndFragments;
 
 public class MainMenu extends Fragment implements View.OnClickListener{
 
     //widgets
-    private Button btn_jugar, btn_instructions;
+    private Button btn_jugar, btn_instructions, btn_sound;
+    private CircleImageView civ_sound_menu;
     private ImageView logomenu;
     private LinearLayout main_layout;
     private SharedPreferences.Editor editor;
     private SharedPreferences sharedP;
+    private ObjectAnimator objectAnimator1;
+    private boolean soundOk;
     
     //vars
     OnFragmentInteractionListener mListener;
@@ -55,13 +62,17 @@ public class MainMenu extends Fragment implements View.OnClickListener{
         main_layout = view.findViewById(R.id.main_layout);
         main_layout.setBackgroundResource(R.drawable.fondo_archery_game);
 
+
         btn_jugar = view.findViewById(R.id.btn_jugar);
+        civ_sound_menu = view.findViewById(R.id.btn_sound_menu);
         btn_instructions = view.findViewById(R.id.btn_instrucciones);
+        btn_sound = view.findViewById(R.id.btn_sound);
         btn_jugar.setOnClickListener(this);
+        btn_sound.setOnClickListener(this);
         btn_instructions.setOnClickListener(this);
 
         sharedP = getContext().getSharedPreferences("SHARED_PREFERENCES", Context.MODE_PRIVATE);
-
+        soundOk = sharedP.getBoolean("sound",true);
         editor = sharedP.edit();
         editor.putInt("currentLevel", 0);
         editor.putInt("score",0);
@@ -136,6 +147,53 @@ public class MainMenu extends Fragment implements View.OnClickListener{
 
             case R.id.btn_instrucciones:
                 instructions();
+                break;
+
+            case R.id.btn_sound:
+                btn_sound.setEnabled(false);
+                civ_sound_menu.setVisibility(View.VISIBLE);
+                if(soundOk) {
+                    civ_sound_menu.setImageResource(R.drawable.mute);
+                    editor.putBoolean("sound", false);
+                    soundOk = false;
+                }else{
+                    civ_sound_menu.setImageResource(R.drawable.sonido);
+                    editor.putBoolean("sound", true);
+                    soundOk = true;
+                }
+                editor.apply();
+
+                objectAnimator1 = ObjectAnimator.ofFloat(civ_sound_menu, "translationY", 0f, -500);
+                objectAnimator1.setDuration(1000);
+
+                objectAnimator1.addListener(new Animator.AnimatorListener() {
+                    @Override
+                    public void onAnimationStart(Animator animation) {
+
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        civ_sound_menu.clearAnimation();
+                        civ_sound_menu.animate().alpha(1.0f).setDuration(1);
+                        civ_sound_menu.setVisibility(View.INVISIBLE);
+                        btn_sound.setEnabled(true);
+                        objectAnimator1.cancel();
+                    }
+
+                    @Override
+                    public void onAnimationCancel(Animator animation) {
+
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animator animation) {
+
+                    }
+                });
+                civ_sound_menu.animate().alpha(0.0f).setDuration(700);
+                objectAnimator1.start();
+
                 break;
         }
 

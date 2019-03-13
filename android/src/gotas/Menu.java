@@ -1,6 +1,10 @@
 package gotas;
 
+import android.animation.Animator;
+import android.animation.ObjectAnimator;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -18,15 +22,22 @@ import com.funnyfractions.game.R;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class Menu extends Fragment implements View.OnClickListener {
-    Button skip, play, settings, instrucciones;
+    Button skip, play, settings, instrucciones, btn_sound;
     ImageView operacion, logomenu;
     Handler handler = new Handler();
     HashMap<Integer, String> lista = new HashMap<>();
     ArrayList<Integer> imagenes = new ArrayList<>();
     private LinearLayout layout_division;
+    private SharedPreferences sharedP;
+    private SharedPreferences.Editor editor;
     int random = 0;
     int aux = 0;
+    private ObjectAnimator objectAnimator1;
+    private boolean soundOk;
+    private CircleImageView civ_sound_menu;
 
     OnFragmentInteractionListener mListener;
 
@@ -43,7 +54,14 @@ public class Menu extends Fragment implements View.OnClickListener {
         View view = inflater.inflate(R.layout.menu, container, false);
         logomenu = view.findViewById(R.id.logomenu);
         logomenu.setBackgroundResource(R.drawable.logonicolas);
+        civ_sound_menu = view.findViewById(R.id.btn_sound_menu);
+        btn_sound = view.findViewById(R.id.btn_sound);
+        btn_sound.setOnClickListener(this);
         layout_division = view.findViewById(R.id.linearLayout_division);
+        sharedP = getContext().getSharedPreferences("SHARED_PREFERENCES", Context.MODE_PRIVATE);
+        editor = sharedP.edit();
+
+        soundOk = sharedP.getBoolean("sound_drop",true);
 
         if(getArguments() != null) {
             if (getArguments().getBoolean("showOperation", false)) {
@@ -199,6 +217,53 @@ public class Menu extends Fragment implements View.OnClickListener {
                 break;
             case R.id.btn_instrucciones:
                 instrucciones();
+                break;
+
+            case R.id.btn_sound:
+                btn_sound.setEnabled(false);
+                civ_sound_menu.setVisibility(View.VISIBLE);
+                if(soundOk) {
+                    civ_sound_menu.setImageResource(R.drawable.mute);
+                    editor.putBoolean("sound_drop", false);
+                    soundOk = false;
+                }else{
+                    civ_sound_menu.setImageResource(R.drawable.sonido);
+                    editor.putBoolean("sound_drop", true);
+                    soundOk = true;
+                }
+                editor.apply();
+
+                objectAnimator1 = ObjectAnimator.ofFloat(civ_sound_menu, "translationY", 0f, -500);
+                objectAnimator1.setDuration(1000);
+
+                objectAnimator1.addListener(new Animator.AnimatorListener() {
+                    @Override
+                    public void onAnimationStart(Animator animation) {
+
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        civ_sound_menu.clearAnimation();
+                        civ_sound_menu.animate().alpha(1.0f).setDuration(1);
+                        civ_sound_menu.setVisibility(View.INVISIBLE);
+                        btn_sound.setEnabled(true);
+                        objectAnimator1.cancel();
+                    }
+
+                    @Override
+                    public void onAnimationCancel(Animator animation) {
+
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animator animation) {
+
+                    }
+                });
+                civ_sound_menu.animate().alpha(0.0f).setDuration(700);
+                objectAnimator1.start();
+
                 break;
         }
     }
